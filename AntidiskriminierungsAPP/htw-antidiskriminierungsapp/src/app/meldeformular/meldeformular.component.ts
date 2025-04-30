@@ -3,9 +3,10 @@ import { EmailService } from '../shared/email.service';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-meldeformular',
-  templateUrl: './meldeformular.component.html',
-  styleUrls: ['./meldeformular.component.css']
+    selector: 'app-meldeformular',
+    templateUrl: './meldeformular.component.html',
+    styleUrls: ['./meldeformular.component.css'],
+    standalone: false
 })
 
 export class MeldeformularComponent implements OnInit {

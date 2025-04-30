@@ -6,9 +6,10 @@ import { EmailContactService } from '../shared/email-contact.service';
 import { EmailService } from '../shared/email.service';
 
 @Component({
-  selector: 'app-kontaktformular',
-  templateUrl: './kontaktformular.component.html',
-  styleUrls: ['./kontaktformular.component.css']
+    selector: 'app-kontaktformular',
+    templateUrl: './kontaktformular.component.html',
+    styleUrls: ['./kontaktformular.component.css'],
+    standalone: false
 })
 export class KontaktformularComponent implements OnInit {
 

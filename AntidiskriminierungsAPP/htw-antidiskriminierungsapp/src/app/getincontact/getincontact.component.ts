@@ -4,9 +4,10 @@ import { EmailContactService } from '../shared/email-contact.service';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-getincontact',
-  templateUrl: './getincontact.component.html',
-  styleUrls: ['./getincontact.component.css']
+    selector: 'app-getincontact',
+    templateUrl: './getincontact.component.html',
+    styleUrls: ['./getincontact.component.css'],
+    standalone: false
 })
 export class GetincontactComponent {
 

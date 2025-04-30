@@ -6,9 +6,10 @@ import { EmailContactService } from '../shared/email-contact.service';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-contactlist',
-  templateUrl: './contactlist.component.html',
-  styleUrls: ['./contactlist.component.css']
+    selector: 'app-contactlist',
+    templateUrl: './contactlist.component.html',
+    styleUrls: ['./contactlist.component.css'],
+    standalone: false
 })
 export class ContactlistComponent implements OnInit {
 

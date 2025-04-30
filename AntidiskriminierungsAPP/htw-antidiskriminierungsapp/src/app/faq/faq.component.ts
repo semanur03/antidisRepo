@@ -3,9 +3,10 @@ import { Router } from '@angular/router';
 import { Location } from '@angular/common';
 
 @Component({
-  selector: 'app-faq',
-  templateUrl: './faq.component.html',
-  styleUrls: ['./faq.component.css']
+    selector: 'app-faq',
+    templateUrl: './faq.component.html',
+    styleUrls: ['./faq.component.css'],
+    standalone: false
 })
 export class FaqComponent implements OnInit {
 
