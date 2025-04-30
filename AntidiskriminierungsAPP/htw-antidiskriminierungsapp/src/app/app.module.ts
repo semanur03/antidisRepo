@@ -9,7 +9,7 @@ import { PrivacypolicyComponent } from './privacypolicy/privacypolicy.component'
 import { FaqComponent } from './faq/faq.component';
 import { GetincontactComponent } from './getincontact/getincontact.component';
 import { ContactlistComponent } from './contactlist/contactlist.component';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClient, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { FormsModule } from '@angular/forms';
@@ -25,40 +25,32 @@ export function httpTranslateLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
 }
 
-@NgModule({
-  declarations: [
-    AppComponent,
-    FooterComponent,
-    HomeComponent,
-    ImprintComponent,
-    PrivacypolicyComponent,
-    FaqComponent,
-    GetincontactComponent,
-    ContactlistComponent,
-    SuccessComponent,
-    KontaktsuccessComponent,
-    MeldesuccessComponent,
-    ErrorComponent,
-    MeldeformularComponent,
-    KontaktformularComponent,
-    FilterComponent
-  ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    HttpClientModule,
-    FormsModule,
-    TranslateModule.forRoot({
-      defaultLanguage: 'de',
-      loader: {
-        provide: TranslateLoader,
-        useFactory: (http: HttpClient) =>
-              new TranslateHttpLoader(http, '../assets/i18n/', '.json'),
-        deps: [HttpClient],
-      },
-    })
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
-})
+@NgModule({ declarations: [
+        AppComponent,
+        FooterComponent,
+        HomeComponent,
+        ImprintComponent,
+        PrivacypolicyComponent,
+        FaqComponent,
+        GetincontactComponent,
+        ContactlistComponent,
+        SuccessComponent,
+        KontaktsuccessComponent,
+        MeldesuccessComponent,
+        ErrorComponent,
+        MeldeformularComponent,
+        KontaktformularComponent,
+        FilterComponent
+    ],
+    bootstrap: [AppComponent], imports: [BrowserModule,
+        AppRoutingModule,
+        FormsModule,
+        TranslateModule.forRoot({
+            defaultLanguage: 'de',
+            loader: {
+                provide: TranslateLoader,
+                useFactory: (http: HttpClient) => new TranslateHttpLoader(http, '../assets/i18n/', '.json'),
+                deps: [HttpClient],
+            },
+        })], providers: [provideHttpClient(withInterceptorsFromDi())] })
 export class AppModule { }
