@@ -1,0 +1,60 @@
+.container {
+    width: 100%;
+    padding: 4% 4% 4% 10%;
+    margin: 0;
+    height: 100%;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    margin-top: 1rem;
+}
+
+h1 {
+    text-align: center;
+}
+
+.btn-primary {
+    background-color: #76B900;
+    width: 90%;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    border: 2px;
+    padding: 6px;
+    border: 1px solid;
+    border-radius: 6px;
+    border-color: #1b1f2326;
+}
+
+.btn-primary:hover {
+    background-color: #75b900af;
+}
+
+.text {
+    margin-top: 15px;
+    margin-bottom: 25px;
+}
+
+.buttons {
+    margin-top: 25px;
+    display: block;
+    text-align: center;
+}
+
+i {
+    cursor: pointer;
+}
+
+@media (min-width: 800px) {
+    h1 {
+        font-size: xx-large;
+        text-align: center;
+    }
+}
+
+@media (min-width: 800px) {
+    .btn-primary {
+        width: 50%;
+    }
+}

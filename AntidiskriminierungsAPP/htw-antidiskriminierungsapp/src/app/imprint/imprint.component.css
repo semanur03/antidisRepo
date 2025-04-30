@@ -1,0 +1,44 @@
+.container {
+    width: 100%;
+    padding: 4% 4% 4% 10%;
+    margin: 0;
+    height: 100%;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    margin-top: 1rem;
+}
+
+h1 {
+    text-align: center;
+}
+
+.text {
+    margin-top: 15px;
+    margin-bottom: 25px;
+}
+
+i {
+    cursor: pointer;
+}
+
+a {
+    color: #76B900;
+}
+
+@media (min-width: 800px) {
+    h1 {
+        font-size: xx-large;
+        text-align: center;
+    }
+}
+
+@media (min-width: 800px) {
+    h3 {
+        font-size: large;
+        font-weight: bold;
+        text-decoration: underline;
+    }
+}

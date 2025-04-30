@@ -1,0 +1,59 @@
+.container {
+    width: 100%;
+    padding: 4% 4% 4% 10%;
+    margin: 0;
+    height: 100%;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    margin-top: 1rem;
+}
+
+h1 {
+    text-align: center;
+    color: darkred;
+}
+
+.buttons {
+    margin-top: 25px;
+    display: block;
+    text-align: center;
+}
+
+.btn-primary {
+    background-color: #76B900;
+    width: 90%;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.btn-primary:active:focus {
+    background-color: gray;
+}
+
+.text {
+    margin-top: 25px;
+    margin-bottom: 25px;
+    color: darkred;
+}
+
+i {
+    cursor: pointer;
+}
+
+@media (min-width: 800px) {
+    h1 {
+        font-size: xx-large;
+        text-align: center;
+    }
+}
+
+@media (min-width: 800px) {
+    h3 {
+        font-size: large;
+        font-weight: bold;
+        text-decoration: underline;
+    }
+}

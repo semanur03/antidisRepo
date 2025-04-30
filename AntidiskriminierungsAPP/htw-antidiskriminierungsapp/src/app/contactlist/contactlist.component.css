@@ -1,0 +1,46 @@
+.container {
+    margin-bottom: 4rem;
+}
+
+.card-title {
+    color: #76B900;
+}
+
+.name-contact {
+    display: flex;
+    justify-content: space-between;
+}
+
+.fa-envelope {
+    color: #76B900;
+    font-size: large;
+    cursor: pointer;
+    margin-right: 1rem;
+}
+
+.btn-primary {
+    background-color: white;
+    border: 2px solid #76B900;
+    width: 90%;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    color: #76B900;
+}
+
+.btn-primary:active:focus {
+    background-color: gray;
+}
+
+.information {
+    display: flex;
+    align-items: baseline;
+    background-color: #fffdf6;
+    border: solid #ffeaae 1px;
+    border-radius: 10px;
+    padding: 20px 10px 10px 10px;
+}
+
+i {
+    color: orange;
+    width: 40px;
+}

@@ -1,0 +1,39 @@
+.container {
+    width: 100%;
+    padding: 4% 4% 4% 10%;
+    margin: 0;
+    height: 100%;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    margin-top: 1rem;
+}
+
+a {
+    color: #76B900;
+}
+
+h1 {
+    text-align: center;
+}
+
+i {
+    cursor: pointer;
+}
+
+@media (min-width: 800px) {
+    h1 {
+        font-size: xx-large;
+        text-align: center;
+    }
+}
+
+@media (min-width: 800px) {
+    h3 {
+        font-size: large;
+        font-weight: bold;
+        text-decoration: underline;
+    }
+}

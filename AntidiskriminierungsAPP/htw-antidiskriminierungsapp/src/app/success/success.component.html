@@ -1,0 +1,44 @@
+<body>
+    <div class="container">
+        <div class="col-12">
+            <div class="header row">
+                <i class="col-1 fa-solid fa-chevron-left" [routerLink]="''"></i>
+                <h1 class="col-9">{{ 'success.page.title.thanks' | translate }}</h1>
+                <div class="col-1"></div>
+            </div>
+            <div class="text">
+                <div class="case">
+                    <p>Case-ID: xxx</p>
+                </div>
+                <div>
+                    {{ 'success.page.p.1' | translate }}
+                </div>
+            </div>
+            <div class="text">
+                <p class="bold">{{ 'success.page.p.2' | translate }}</p>
+                <p>{{ 'success.page.l.1' | translate }}</p>
+                <p>{{ 'success.page.l.2' | translate }}</p>
+            </div>
+            <div class="col-12 faq">
+                <p [innerHTML]="'success.page.p.3' | translate"></p>
+            </div>
+            <br>
+            <br>
+            <br>
+            <div class="text">
+                <div class="case">
+                    <p>Case-ID: xxx</p>
+                </div>
+                <div>
+                    {{ 'success.page.p.4' | translate }}
+                </div>
+            </div>
+            <div class="col-12 faq">
+                <p [innerHTML]="'success.page.p.3' | translate"></p>
+            </div>
+        </div>
+    </div>
+    <br>
+    <br>
+    <br>
+</body>

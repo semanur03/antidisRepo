@@ -1,0 +1,66 @@
+.container {
+    width: 100%;
+    padding: 4% 4% 12% 10%;
+    margin: 0;
+    height: 100%;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    margin-top: 1rem;
+}
+
+h1 {
+    text-align: center;
+}
+
+.cards {
+    margin-top: 2rem;
+}
+
+.question {
+    display: flex;
+}
+
+.fa-circle-plus {
+    color: #76B900;
+    align-self: center;
+}
+
+.fa-circle-minus {
+    color: #76B900;
+    align-self: center;
+}
+
+.question p {
+    align-self: center;
+    padding-top: 1rem;
+}
+
+.answer {
+    margin-left: 2rem;
+}
+
+.answer p {
+    color: gray;
+}
+
+i {
+    cursor: pointer;
+}
+
+@media (min-width: 800px) {
+    h1 {
+        font-size: xx-large;
+        text-align: center;
+    }
+}
+
+@media (min-width: 800px) {
+    h3 {
+        font-size: large;
+        font-weight: bold;
+        text-decoration: underline;
+    }
+}

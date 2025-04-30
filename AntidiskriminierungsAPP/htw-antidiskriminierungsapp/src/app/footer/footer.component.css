@@ -1,0 +1,33 @@
+a {
+    text-decoration: none;
+    color: #979C9E;
+}
+
+a :hover {
+    color: #76B900;
+}
+
+.active-link {
+    color: #76B900;
+}
+
+select {
+    border: none;
+    background: none;
+    cursor: pointer;
+    color: #979C9E;
+}
+
+select:focus {
+    outline: none !important;
+    box-shadow: none !important;
+    color: #76B900;
+}
+
+select :hover {
+    cursor: pointer;
+}
+
+option {
+    height: 2rem;
+}

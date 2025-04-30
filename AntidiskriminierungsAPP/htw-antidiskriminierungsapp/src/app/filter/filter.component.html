@@ -1,0 +1,87 @@
+<body>
+    <div class="container">
+        <div class="col-12">
+            <div class="header row">
+                <i class="col-1 fa-solid fa-chevron-left" [routerLink]="'/getincontact'"></i>
+                <h1 class="col-9">{{ 'filter.title' | translate }}</h1>
+                <div class="col-1"></div>
+            </div>
+            <div>
+                <br>
+                <p>{{ 'filter.hint' | translate }}</p>
+            </div>
+
+            <div class="form">
+                <form (ngSubmit)="submitForm()" #filterForm="ngForm">
+                    <div>
+                        <label for="mitgliedergruppe">{{ 'contactlist.membergroup' | translate }}</label>
+                        <br>
+                        <select id="mitgliedergruppe" name="mitgliedergruppe" required
+                            [(ngModel)]="formData.mitgliedergruppe">
+                            <option value="" disabled selected>{{ 'select' | translate }}</option>
+                            <option value="EMPLOYEE_TECH">{{ 'EMPLOYEE_TECH' | translate }}</option>
+                            <option value="STUDENT">{{ 'STUDENT' | translate }}</option>
+                            <option value="PROFESSOR">{{ 'PROFESSOR' | translate }}</option>
+                            <option value="RESEARCH_ASSISTANT">{{ 'RESEARCH_ASSISTANT' | translate }}</option>
+                        </select>
+                    </div>
+                    <br>
+                    <div>
+                        <label for="gremium">{{ 'contactlist.committee' | translate }}</label>
+                        <br>
+                        <select id="gremium" name="gremium" required [(ngModel)]="formData.gremium">
+                            <option value="" disabled selected>{{ 'select' | translate }}</option>
+                            <option value="WOMEN_AND_EQOP_OFFICER">{{ 'WOMEN_AND_EQOP_OFFICER' | translate }}</option>
+                            <option value="DEPUTY_DISABLED_EMPLOYEES">{{ 'DEPUTY_DISABLED_EMPLOYEES' | translate }}</option>
+                            <option value="ASTA">{{ 'ASTA' | translate }}</option>
+                            <option value="COUNCIL">{{ 'COUNCIL' | translate }}</option>
+                            <option value="REP_DISABLED_STUDENTS">{{ 'REP_DISABLED_STUDENTS' | translate }}</option>
+                            <option value="PERSON_OF_TRUST_DISABLED_EMP">{{ 'PERSON_OF_TRUST_DISABLED_EMP' | translate }}</option>
+                            <option value="MEMBER_TRUST_TEAM">{{ 'MEMBER_TRUST_TEAM' | translate }}</option>
+                            <option value="DEPUTY_MEMBER_ANTIDIS_COUNCIL">{{ 'DEPUTY_MEMBER_ANTIDIS_COUNCIL' | translate }}</option>
+                            <option value="DEPUTY_1">{{ 'DEPUTY_1' | translate }}</option>
+                            <option value="DEPUTY_2">{{ 'DEPUTY_2' | translate }}</option>
+                            <option value="FT_WOMEN_AND_EQOP_REP">{{ 'FT_WOMEN_AND_EQOP_REP' | translate }}</option>
+                        </select>
+                    </div>
+                    <br>
+                    <div>
+                        <label for="organisationseinheit">{{ 'contactlist.organizational.unit' | translate }}</label>
+                        <br>
+                        <select id="organisationseinheit" name="organisationseinheit" required
+                            [(ngModel)]="formData.organisationseinheit">
+                            <option value="" disabled selected>{{ 'select' | translate }}</option>
+                            <option value="FB 1">FB 1</option>
+                            <option value="COMMUNICATION_DEPARTMENT"> {{ 'COMMUNICATION_DEPARTMENT' | translate }}</option>
+                            <option value="FB 2">FB 2</option>
+                            <option value="FB 3">FB 3</option>
+                            <option value="FB 4">FB 4</option>
+                            <option value="FB 5">FB 5</option>
+                            <option value="UNIVERSITY_MANAGEMENT"> {{ 'UNIVERSITY_MANAGEMENT' | translate }} </option>
+                            <option value="UNIVERSITY_LIBRARY"> {{ 'UNIVERSITY_LIBRARY' | translate }} </option>
+                            <option value="STUDENT_ADVISE"> {{ 'STUDENT_ADVISE' | translate }} </option>
+                            <option value="FACILITY_FOREIGN_LANG"> {{ 'FACILITY_FOREIGN_LANG' | translate }} </option>
+                            <option value="INTERNATIONAL_OFFICE"> {{ 'INTERNATIONAL_OFFICE' | translate }} </option>
+                            <option value="UNIVERSITY_COMP_CENTER"> {{ 'UNIVERSITY_COMP_CENTER' | translate }} </option>
+                            <option value="HR"> {{ 'HR' | translate }} </option>
+                            <option value="GENERAL_STUDENT_SERVICE"> {{ 'GENERAL_STUDENT_SERVICE' | translate }}</option>
+                            <option value="PROMOTION_WOMEN"> {{ 'PROMOTION_WOMEN' | translate }} </option>
+                        </select>
+                    </div>
+                    <br>
+                    <div>
+                        <label for="sprache">{{ 'language' | translate }}</label>
+                        <br>
+                        <select id="sprache" name="sprache" required [(ngModel)]="formData.sprache">
+                            <option value="" disabled selected>{{ 'select' | translate }}</option>
+                            <option value="Deutsch">Deutsch</option>
+                            <option value="Englisch">Englisch</option>
+                            <option value="Deutsch, Englisch">Deutsch, Englisch</option>
+                        </select>
+                    </div>
+                    <button class="btn-primary " type="submit">{{ 'find' | translate }}</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>

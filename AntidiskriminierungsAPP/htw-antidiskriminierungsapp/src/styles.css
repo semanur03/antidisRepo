@@ -1,0 +1,42 @@
+@import "~bootstrap/dist/css/bootstrap.css";
+
+@font-face {
+    font-family: HTWBerlinRegular;
+    src: url(assets/fonts/HTW-font/HTWBerlinOffice-Regular.ttf);
+}
+
+@font-face {
+    font-family: HTWBerlinBold;
+    src: url(assets/fonts/HTW-font/HTWBerlinOffice-Bold.ttf);
+}
+
+@font-face {
+    font-family: HTWBerlinItalic;
+    src: url(assets/fonts/HTW-font/HTWBerlinOffice-Italic.ttf);
+}
+
+@font-face {
+    font-family: HTWBerlinBoldItalic;
+    src: url(assets/fonts/HTW-font/HTWBerlinOffice-BoldItalic.ttf);
+}
+
+html,
+body {
+    font-family: 'HTWBerlinRegular';
+}
+
+body {
+    width: 100%;
+}
+
+h1 {
+    font-family: 'HTWBerlinBold';
+}
+
+h2 {
+    font-family: 'HTWBerlinBold';
+}
+
+.link-inside-translation {
+    color: #76B900;
+}

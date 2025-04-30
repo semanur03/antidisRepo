@@ -1,0 +1,31 @@
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="header">
+                    <h3>{{ 'home.page.title.welcome' | translate }}</h3>
+                </div>
+                <div>
+                    <p class="bold">{{ 'home.page.p.1' | translate }}</p>
+                    <p [innerHTML]="'home.page.p.2' | translate"></p>
+                </div>
+                <div class="buttons">
+                    <div>
+                        <button class="btn btn-primary" type="submit" [routerLink]="'/getincontact'">{{ 'home.page.button.get.in.contact' | translate }}</button>
+                    </div>
+                    <div>
+                        <button class="btn btn-primary" type="submit"  [routerLink]="'/meldeformular'">{{ 'home.page.button.report.incident' | translate }}</button>
+                    </div>
+                </div>
+            </div>
+            <div class="image d-md-none">
+                <img src="../../assets/images/csm_HTW_Berlin_AntidiskriminierungsIllustration_1280x700_2_b6611479dc.jpg" alt="Illustration einer Personenreihe von hinten, die sich gegenseitig auf die Schulter fassen / Illustration of a row of people from behind, holding each other on the shoulder">
+            </div>
+            <div class="image d-none d-md-block">
+                <img src="../../assets/images/csm_HTW_Berlin_AntidiskriminierungsIllustration_1280x700_2_b6611479dc.jpg" alt="">
+            </div>
+        </div>
+    </div>
+    <br>
+    <br>
+</body>

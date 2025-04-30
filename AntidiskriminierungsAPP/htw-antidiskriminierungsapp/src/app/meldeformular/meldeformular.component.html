@@ -1,0 +1,139 @@
+<body>
+  <div class="container">
+    <div class="col-12">
+      <div class="header row">
+        <div class="modal" id=MyModal tabindex="-1">
+          <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title">{{ 'meldeformular.page.m.1' | translate }} </h5>
+                <button type="button" class="btn-close" aria-label="Close" (click)="CloseModel()"></button>
+              </div>
+              <div class="modal-body">
+                <p>
+                  {{ 'meldeformular.page.m.2' | translate }} <a [routerLink]="'/getincontact'">{{ 'meldeformular.page.m.3' | translate }}</a>{{ 'meldeformular.page.m.4' | translate }}
+                  <a href="https://www.htw-berlin.de/einrichtungen/zentrale-referate/frauenfoerderung-gleichstellung/sexualisierte-diskriminierung-gewalt/#c10576">{{ 'meldeformular.page.m.5' | translate }}</a>.
+                </p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="CloseModel()">{{ 'meldeformular.page.m.7' | translate }}</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <i class="col-1 fa-solid fa-chevron-left" *ngIf="!weiter" [routerLink]="''"></i>
+        <i class="col-1 fa-solid fa-chevron-left" *ngIf="weiter" (click)="goBack()"></i>
+        <h1 class="col-9">{{ 'meldeformular.page.h.1' | translate }}</h1>
+        <div class="col-1"> </div>
+      </div>
+      <br>
+      <form (ngSubmit)="submitForm()" #contactForm="ngForm" id="myForm">
+        <div class="formdiv" *ngIf="!weiter">
+          <div>
+            <label for="mitgliedergruppe">{{ 'meldeformular.page.q.1' | translate }}</label>
+            <br>
+            <select #errorGruppe="ngModel" id="mitgliedergruppe" name="mitgliedergruppe" required
+              [(ngModel)]="formData.mitgliedergruppe">
+              <option value="" disabled selected>{{ 'meldeformular.page.s.1' | translate }}</option>
+              <option>{{ 'meldeformular.page.a.1' | translate }}</option>
+              <option>{{ 'meldeformular.page.a.2' | translate }}</option>
+              <option>{{ 'meldeformular.page.a.3' | translate }}</option>
+              <option>{{ 'meldeformular.page.a.4' | translate }}</option>
+              <option>{{ 'meldeformular.page.a.5' | translate }} </option>
+              <option>{{ 'meldeformular.page.a.6' | translate }}</option>
+              <option>{{ 'meldeformular.page.a.7' | translate }}</option>
+              <option>{{ 'meldeformular.page.a.8' | translate }}</option>
+            </select>
+          </div>
+          <div *ngIf="errorGruppe.touched && errorGruppe.invalid" class="error-message">{{ 'meldeformular.page.e.1' | translate }}</div>
+          <br>
+          <div>
+            <label for="message">{{ 'meldeformular.page.q.2' | translate }}</label>
+            <textarea #errorGeschichte="ngModel" minlength="10" id="message" name="message" rows="4" required
+              [(ngModel)]="formData.message"></textarea>
+          </div>
+          <div *ngIf="errorGeschichte.invalid && errorGeschichte.touched" class="error-message">{{ 'meldeformular.page.e.2' | translate }}</div>
+          <br>
+          <div>
+            <label for="category">{{ 'meldeformular.page.q.3' | translate }} <div id="optional">(optional)</div></label>
+            <select id="category" name="category" [(ngModel)]="formData.category">
+              <option disabled selected>{{'meldeformular.page.s.2' | translate }}</option>
+              <option>{{ 'meldeformular.page.a.9' | translate }}</option>
+              <option>{{ 'meldeformular.page.a.10' | translate }}</option>
+              <option>{{ 'meldeformular.page.a.11' | translate }}</option>
+              <option>{{ 'meldeformular.page.a.12' | translate }}</option>
+              <option>{{ 'meldeformular.page.a.13' | translate }}</option>
+              <option>{{ 'meldeformular.page.a.14' | translate }}</option>
+              <option>{{ 'meldeformular.page.a.15' | translate }}</option>
+            </select>
+          </div>
+          <br>
+          <div class="checkbox-text">
+            <input type="checkbox" id="fluency" [checked]="isLoggedIn" (change)="isLoggedIn = !isLoggedIn">
+            <label for="Kontaktaufnahme">{{ 'meldeformular.page.q.4' | translate }}</label>
+          </div>
+          <br>
+          <div id="Kontaktdaten" *ngIf="isLoggedIn">
+            <div>
+              <label for="lastname">{{ 'meldeformular.page.n.1' | translate }}<div id="optional">(optional)</div></label>
+              <input type="text" id="lastname" name="lastname" [(ngModel)]="formData.lastname">
+            </div>
+            <div *ngIf="errorGruppe.touched && errorGruppe.invalid" class="error-message">{{ 'meldeformular.page.e.1' | translate }}</div>
+            <br>
+            <div>
+              <label for="firstname">{{ 'meldeformular.page.n.2' | translate }}<div id="optional">(optional)</div></label>
+              <input type="text" id="firstname" name="firstname" [(ngModel)]="formData.firstname">
+            </div>
+            <div *ngIf="errorGeschichte.invalid && errorGeschichte.touched" class="error-message">{{ 'meldeformular.page.e.2' | translate }}</div>
+            <br>
+            <div>
+              <label for="email">{{ 'meldeformular.page.n.3' | translate }}</label>
+              <input #errorEmail="ngModel" type="email" id="email" name="email" required email
+                [(ngModel)]="formData.email">
+            </div>
+            <div *ngIf="errorEmail.touched && errorEmail.invalid" class="error-message">{{ 'meldeformular.page.e.3' | translate }}</div>
+          </div>
+          <div id="hinweisdiv" *ngIf="!isLoggedIn">
+            <p id="Hinweis"> {{ 'meldeformular.page.n.4' | translate }} </p>
+          </div>
+          <br>
+          <div id="Datenschutz">{{ 'meldeformular.page.p.3' | translate }}</div>
+          <br>
+          <div [innerHTML]="'meldeformular.page.p.4' | translate"></div>
+          <div class="form-group form-check">
+            <br>
+            <div class="checkbox-text">
+              <input required class="form-check-input" #accept="ngModel" type="checkbox" id="Bestätigung"
+                [(ngModel)]="formData.checkbox" name="accept">
+              <label for="Bestätigung">{{ 'meldeformular.page.p.5' | translate }}</label>
+            </div>
+            <div *ngIf="accept.invalid && accept.touched" class="error-message">{{ 'meldeformular.page.e.4' | translate }}</div>
+          </div>
+          <br>
+          <br>
+          <div id="bttn-container"><button class="btn-primary " (click)="onWeiter()" [disabled]="!contactForm.valid" id="bttnweiter">{{ 'meldeformular.page.b.1' | translate }}</button></div>
+        </div>
+        <div class="summary" *ngIf="weiter">
+          <header>{{ 'meldeformular.page.h.2' | translate }}</header>
+          <br>
+          <div> {{ 'meldeformular.page.q.1' | translate }} <br> {{ formData.mitgliedergruppe }}</div>
+          <br>
+          <div> {{ 'meldeformular.page.q.2' | translate }} <br> {{ formData.message }}</div>
+          <br>
+          <div> {{ 'meldeformular.page.q.3' | translate }} <br> {{ formData.category }}</div>
+          <br>
+          <div *ngIf="isLoggedIn"> {{ 'meldeformular.page.q.4' | translate }}
+            <br>
+            <div> {{ 'meldeformular.page.n.1' | translate }} <br> {{ formData.lastname }}</div>
+            <div> {{ 'meldeformular.page.n.2' | translate }} <br> {{ formData.firstname }}</div>
+            <div> {{ 'meldeformular.page.n.3' | translate }} <br> {{ formData.email }}</div>
+          </div>
+          <div id="bttn-container"><button class="btn-primary " type="submit" [disabled]="!contactForm.valid">{{ 'meldeformular.page.b.2' | translate }}</button></div>
+        </div>
+        <p>{{'meldeformular.page.p.1' | translate }}</p>
+      </form>
+    </div>
+  </div>
+  <br>
+  <br>
+</body>

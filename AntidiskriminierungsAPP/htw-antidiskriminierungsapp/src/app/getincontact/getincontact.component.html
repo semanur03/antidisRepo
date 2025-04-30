@@ -1,0 +1,27 @@
+<body>
+    <div class="container">
+        <div class="col-12">
+            <div class="header row">
+                <i class="col-1 fa-solid fa-chevron-left" (click)="navigateBack()"></i>
+                <h1 class="col-9">{{ 'getincontact.page.title.contact' | translate }}</h1>
+                <div class="col-1"></div>
+            </div>
+            <div class="buttons">
+                <div>
+                    <button class="btn btn-primary" type="submit" [routerLink]="'/filter'">
+                        <i class="fa-solid fa-magnifying-glass" style="margin-right: 5px;"></i>{{ 'getincontact.page.button.find.contact.person' | translate }}</button>
+                </div>
+                <div>
+                    <button class="btn btn-primary" type="submit" (click)="navigateContactPerson()">{{ 'getincontact.page.button.get.in.contact' | translate }}</button>
+                </div>
+            </div>
+            <div class="col-12 text">
+                <p>{{ 'getincontact.page.p.1' | translate }}</p>
+                <p><app-contactlist></app-contactlist></p>
+            </div>
+        </div>
+    </div>
+    <br>
+    <br>
+    <br>
+</body>
