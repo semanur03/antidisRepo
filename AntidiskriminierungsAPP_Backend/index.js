@@ -7,6 +7,11 @@ require('dotenv').config();
 const app = express();
 const PORT = process.env.serverport;
 const https = require('https');
+
+//const contactreqRoutes = require('./routes/contactreq');
+const contactinfoRoutes = require('./routes/contactinfo');
+app.use('/api', contactinfoRoutes);
+
 /*const fs = require('fs');
 const privkeyLink = fs.readlinkSync("/etc/letsencrypt/live/antidis.f4.htw-berlin.de/privkey.pem");
 console.log(privkeyLink);
@@ -19,6 +24,9 @@ const https_options = {
 
 app.use(bodyParser.json());
 app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+//app.use('/contactreq', contactreqRoutes); -> wenn ich die Kontaktaufnahme auslagere
 
 // console.log('from', process.env.from)
 // console.log('to', process.env.to)
