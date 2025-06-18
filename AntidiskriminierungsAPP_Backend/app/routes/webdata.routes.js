@@ -1,0 +1,150 @@
+module.exports = app => {
+    const person = require("../controller/person.controller.js")
+    const personSprache = require("../controller/personSprache.controller.js");
+    const sprache = require("../controller/sprache.controller.js");
+    const personGremium = require("../controller/personGremium.controller.js");
+    const gremium = require("../controller/gremium.controller.js");
+    const personMitgliedsgruppe = require("../controller/personMitgliedsgruppe.controller.js");
+    const mitgliedsgruppe = require("../controller/mitgliedsgruppe.controller.js");
+
+//Create a new Person
+app.post("/person", person.create);
+
+//Get all Persons
+app.get("/person", person.findAll);
+
+//Get all informations joined
+app.get("/person/joined", person.getAllJoin);
+
+//Get one single Person with person_id
+app.get("/person/:person_id", person.findOne);
+
+//Update a single Person with person_id
+app.put("/person/:person_id", person.update);
+
+//Delete a single Person with person_id
+app.delete("/person/:person_id", person.delete);
+
+//////////////////////////////////////////////////////////////////////////////////////////
+
+//Create a new Entry in person_sprache
+app.post("/person-sprache", personSprache.create);
+
+//Get all Entries based on person_id
+app.get("/person-sprache/person/:person_id", personSprache.findByPerson);
+
+//Get an Entries based on sprache_id
+app.get("/person-sprache/sprache/:sprache_id", personSprache.findBySprache);
+
+//Get all Entries
+app.get("/person-sprache", personSprache.findAll);
+
+//Get an Entry based on id
+app.get("/person-sprache/person/:person_id/sprache/:sprache_id", personSprache.findCombination);
+
+//Update an Entry in person_sprache based on person_id
+app.put("/person-sprache/person/:person_id/sprache/:sprache_id", personSprache.update)
+
+//Delete an Entry in person_sprache with person_id
+app.delete("/person-sprache/person/:person_id/sprache/:sprache_id", personSprache.delete);
+
+//////////////////////////////////////////////////////////////////////////////////////////
+
+//Create a new Sprache
+app.post("/sprache", sprache.create);
+
+//Get all Sprache
+app.get("/sprache", sprache.findAll);
+
+//Get one single Sprache with sprache_id
+app.get("/sprache/:sprache_id", sprache.findOne);
+
+//Update a single Sprache with sprache_id
+app.put("/sprache/:sprache_id", sprache.update);
+
+//Delete a single Sprache with sprache_id
+app.delete("/sprache/:sprache_id", sprache.delete);
+
+//////////////////////////////////////////////////////////////////////////////////////////
+
+//Create a new Entry in person_gremium
+app.post("/person-gremium", personGremium.create);
+
+//Get all Entries based on person_id
+app.get("/person-gremium/person/:person_id", personGremium.findByPerson);
+
+//Get an Entries based on gremium_id
+app.get("/person-gremium/gremium/:gremium_id", personGremium.findByGremium);
+
+//Get all Entries
+app.get("/person-gremium", personGremium.findAll);
+
+//Get an Entry based on id
+app.get("/person-gremium/person/:person_id/gremium/:gremium_id", personGremium.findCombination);
+
+//Update an Entry in person_gremium based on person_id
+app.put("/person-gremium/person/:person_id/gremium/:gremium_id", personGremium.update)
+
+//Delete an Entry in person_gremium with person_id
+app.delete("/person-gremium/person/:person_id/gremium/:gremium_id", personGremium.delete);
+
+//////////////////////////////////////////////////////////////////////////////////////////
+
+//Create a new Gremium
+app.post("/gremium", gremium.create);
+
+//Get all Gremium
+app.get("/gremium", gremium.findAll);
+
+//Get one single Gremium with gremium_id
+app.get("/gremium/:gremium_id", gremium.findOne);
+
+//Update a single Gremium with gremium_id
+app.put("/gremium/:gremium_id", gremium.update);
+
+//Delete a single Gremium with gremium_id
+app.delete("/gremium/:gremium_id", gremium.delete);
+
+//////////////////////////////////////////////////////////////////////////////////////////
+
+//Create a new Entry in person_mitgliedsgruppe
+app.post("/person-mitgliedsgruppe", personMitgliedsgruppe.create);
+
+//Get all Entries based on person_id
+app.get("/person-mitgliedsgruppe/person/:person_id", personMitgliedsgruppe.findByPerson);
+
+//Get an Entries based on mitgliedsgruppe_id
+app.get("/person-mitgliedsgruppe/mitgliedsgruppe/:mitgliedsgruppe_id", personMitgliedsgruppe.findByMitgliedsgruppe);
+
+//Get all Entries
+app.get("/person-mitgliedsgruppe", personMitgliedsgruppe.findAll);
+
+//Get an Entry based on id
+app.get("/person-mitgliedsgruppe/person/:person_id/mitgliedsgruppe/:mitgliedsgruppe_id", personMitgliedsgruppe.findCombination);
+
+//Update an Entry in person_mitgliedsgruppe based on person_id
+app.put("/person-mitgliedsgruppe/person/:person_id/mitgliedsgruppe/:mitgliedsgruppe_id", personMitgliedsgruppe.update)
+
+//Delete an Entry in person_mitgliedsgruppe with person_id
+app.delete("/person-mitgliedsgruppe/person/:person_id/mitgliedsgruppe/:mitgliedsgruppe_id", personMitgliedsgruppe.delete);
+
+//////////////////////////////////////////////////////////////////////////////////////////
+
+//Create a new Mitgliedsgruppe
+app.post("/mitgliedsgruppe", mitgliedsgruppe.create);
+
+//Get all Mitgliedsgruppe
+app.get("/mitgliedsgruppe", mitgliedsgruppe.findAll);
+
+//Get one single Mitgliedsgruppe with mitgliedsgruppe_id
+app.get("/mitgliedsgruppe/:mitgliedsgruppe_id", mitgliedsgruppe.findOne);
+
+//Update a single Mitgliedsgruppe with mitgliedsgruppe_id
+app.put("/mitgliedsgruppe/:mitgliedsgruppe_id", mitgliedsgruppe.update);
+
+//Delete a single Mitgliedsgruppe with mitgliedsgruppe_id
+app.delete("/mitgliedsgruppe/:mitgliedsgruppe_id", mitgliedsgruppe.delete);
+
+//////////////////////////////////////////////////////////////////////////////////////////
+
+};
