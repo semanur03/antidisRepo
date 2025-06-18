@@ -16,7 +16,7 @@ exports.create = (req, res) => {
 
     Gremium.create(gremium, (err, data) => {
         if(err)
-            res.status(500).send({
+            return res.status(500).send({
                 message: 
                     err.message || "Some error occureed while creating Gremium"
             });
@@ -28,28 +28,28 @@ exports.create = (req, res) => {
 exports.findAll = (req, res) => {
     Gremium.getAll((err, data) => {
         if (err)
-            res.status(500).send({
+            return res.status(500).send({
                 message:
                     err.message || "Some error occurred while retrieving Gremium."
             });
-        else res.send(data);
+        else return res.send(data);
     });
 };
 
 // Find a single Gremium with a gremium_id
 exports.findOne = (req, res) => {
-    Gremium.findById(req.params.gremiumId, (err, data) => {
+    Gremium.findById(req.params.gremium_id, (err, data) => {
         if (err) {
             if (err.kind === "not_found") {
-                res.status(404).send({
-                    message: `Not found Gremium with id ${req.params.gremiumId}.`
+                return res.status(404).send({
+                    message: `Not found Gremium with id ${req.params.gremium_id}.`
                 });
             } else {
-                res.status(500).send({
-                    message: "Error retrieving Gremium with id " + req.params.gremiumId
+                return res.status(500).send({
+                    message: "Error retrieving Gremium with id " + req.params.gremium_id
                 });
             }
-        } else res.send(data);
+        } else return res.send(data);
     });
 };
 
@@ -65,34 +65,34 @@ exports.update = (req, res) => {
         gremium: req.body.gremium,
     });
 
-    Gremium.updateById( req.params.gremiumId, gremium, (err, data) => {
+    Gremium.updateById( req.params.gremium_id, gremium, (err, data) => {
             if (err) {
                 if (err.kind === "not_found") {
-                    res.status(404).send({
-                        message: `Not found Gremium with id ${req.params.gremiumId}`
+                    return res.status(404).send({
+                        message: `Not found Gremium with id ${req.params.gremium_id}`
                     });
                 } else {
-                    res.status(500).send({
-                        message: "Error updating Gremium with Id " + req.params.gremiumId
+                    return res.status(500).send({
+                        message: "Error updating Gremium with Id " + req.params.gremium_id
                     });
                 }
-            } else res.send(data);
+            } else return res.send(data);
         }
     );
 };
 
 exports.delete = (req, res) => {
-    Gremium.remove(req.params.gremiumId, (err, data) => {
+    Gremium.remove(req.params.gremium_id, (err, data) => {
         if (err) {
             if(err.kind === "not_found") {
-                res.status(404).send({
-                    message: `Not found Gremium with id ${req.params.gremiumId}.`
+                return res.status(404).send({
+                    message: `Not found Gremium with id ${req.params.gremium_id}.`
                 });
             } else {
-                res.status(500).send({
-                    message: "Could not delete Gremium with id " + req.params.gremiumId
+                return res.status(500).send({
+                    message: "Could not delete Gremium with id " + req.params.gremium_id
                 });
             }
-        } else res.send({ message: `Gremium was deleted succesfully!`});
+        } else return res.send({ message: `Gremium was deleted succesfully!`});
     });
 };

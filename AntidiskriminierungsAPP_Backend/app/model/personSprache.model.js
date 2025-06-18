@@ -25,8 +25,8 @@ PersonSprache.create = (newEntry, result) => {
             return;
         }
         
-        console.log(`Created Entry in person_sprache : person_id=${entry.person_id}, sprache_id=${entry.sprache_id}`);
-        result(null, entry);
+        console.log(`Created Entry in person_sprache : person_id=${newEntry.person_id}, sprache_id=${newEntry.sprache_id}`);
+        result(null, newEntry);
     });
 };
 

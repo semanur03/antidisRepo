@@ -16,7 +16,7 @@ exports.create = (req, res) => {
 
     Sprache.create(sprache, (err, data) => {
         if(err)
-            res.status(500).send({
+            return res.status(500).send({
                 message: 
                     err.message || "Some error occureed while creating Sprache"
             });
@@ -28,7 +28,7 @@ exports.create = (req, res) => {
 exports.findAll = (req, res) => {
     Sprache.getAll((err, data) => {
         if (err)
-            res.status(500).send({
+            return res.status(500).send({
                 message:
                     err.message || "Some error occurred while retrieving Sprache."
             });
@@ -38,18 +38,18 @@ exports.findAll = (req, res) => {
 
 // Find a single Sprache with a sprache_id
 exports.findOne = (req, res) => {
-    Sprache.findById(req.params.spracheId, (err, data) => {
+    Sprache.findById(req.params.sprache_id, (err, data) => {
         if (err) {
             if (err.kind === "not_found") {
-                res.status(404).send({
-                    message: `Not found Sprache with id ${req.params.spracheId}.`
+                return res.status(404).send({
+                    message: `Not found Sprache with id ${req.params.sprache_id}.`
                 });
             } else {
-                res.status(500).send({
-                    message: "Error retrieving Sprache with id " + req.params.spracheId
+                return res.status(500).send({
+                    message: "Error retrieving Sprache with id " + req.params.sprache_id
                 });
             }
-        } else res.send(data);
+        } else return res.send(data);
     });
 };
 
@@ -65,34 +65,34 @@ exports.update = (req, res) => {
         sprache: req.body.sprache,
     });
 
-    Sprache.updateById( req.params.spracheId, sprache, (err, data) => {
+    Sprache.updateById( req.params.sprache_id, sprache, (err, data) => {
             if (err) {
                 if (err.kind === "not_found") {
-                    res.status(404).send({
-                        message: `Not found Sprache with id ${req.params.spracheId}`
+                    return res.status(404).send({
+                        message: `Not found Sprache with id ${req.params.sprache_id}`
                     });
                 } else {
-                    res.status(500).send({
-                        message: "Error updating Sprache with Id " + req.params.spracheId
+                    return res.status(500).send({
+                        message: "Error updating Sprache with Id " + req.params.sprache_id
                     });
                 }
-            } else res.send(data);
+            } else return res.send(data);
         }
     );
 };
 
 exports.delete = (req, res) => {
-    Sprache.remove(req.params.spracheId, (err, data) => {
+    Sprache.remove(req.params.sprache_id, (err, data) => {
         if (err) {
             if(err.kind === "not_found") {
-                res.status(404).send({
-                    message: `Not found Sprache with id ${req.params.spracheId}.`
+                return res.status(404).send({
+                    message: `Not found Sprache with id ${req.params.sprache_id}.`
                 });
             } else {
-                res.status(500).send({
-                    message: "Could not delete Sprache with id " + req.params.spracheId
+                return res.status(500).send({
+                    message: "Could not delete Sprache with id " + req.params.sprache_id
                 });
             }
-        } else res.send({ message: `Sprache was deleted succesfully!`});
+        } else return res.send({ message: `Sprache was deleted succesfully!`});
     });
 };

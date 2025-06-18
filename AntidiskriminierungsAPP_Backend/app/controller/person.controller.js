@@ -20,11 +20,11 @@ exports.create = (req, res) => {
 
     Person.create(person, (err, data) => {
         if(err)
-            res.status(500).send({
+            return res.status(500).send({
                 message: 
                     err.message || "Some error occureed while creating Person"
             });
-        else res.send(data);
+        else return res.send(data);
     });
 };
 
@@ -32,46 +32,46 @@ exports.create = (req, res) => {
 exports.findAll = (req, res) => {
     Person.getAll((err, data) => {
         if (err)
-            res.status(500).send({
+            return res.status(500).send({
                 message:
                     err.message || "Some error occurred while retrieving Person."
             });
-        else res.send(data);
+        else return res.send(data);
     });
 };
 
 // Find a single Person with a person_id
 exports.findOne = (req, res) => {
-    Person.findById(req.params.personId, (err, data) => {
+    Person.findById(req.params.person_id, (err, data) => {
         if (err) {
             if (err.kind === "not_found") {
-                res.status(404).send({
-                    message: `Not found Person with id ${req.params.personId}.`
+                return res.status(404).send({
+                    message: `Not found Person with id ${req.params.person_id}.`
                 });
             } else {
-                res.status(500).send({
-                    message: "Error retrieving Person with id " + req.params.personId
+                return res.status(500).send({
+                    message: "Error retrieving Person with id " + req.params.person_id
                 });
             }
-        } else res.send(data);
+        } else return res.send(data);
     });
 };
 
 exports.getAllJoin = (req, res) => {
     Person.getAllJoin((err, data) => {
         if (err)
-            res.status(500).send({
+            return res.status(500).send({
                 message:
                     err.message || "Some error occurred while retrieving Person."
             });
-        else res.send(data);
+        else return res.send(data);
     });
 };
 
 exports.update = (req, res) => {
     //Validate Request
     if(!req.body) {
-        res.status(400).send({
+        return res.status(400).send({
             message: "Content can not be empty!"
         });
     }
@@ -84,34 +84,34 @@ exports.update = (req, res) => {
         email: req.body.email,
     });
 
-    Person.updateById( req.params.personId, person, (err, data) => {
+    Person.updateById( req.params.person_id, person, (err, data) => {
             if (err) {
                 if (err.kind === "not_found") {
-                    res.status(404).send({
-                        message: `Not found Person with id ${req.params.personId}`
+                    return res.status(404).send({
+                        message: `Not found Person with id ${req.params.person_id}`
                     });
                 } else {
-                    res.status(500).send({
-                        message: "Error updating Person with Id " + req.params.personId
+                    return res.status(500).send({
+                        message: "Error updating Person with Id " + req.params.person_id
                     });
                 }
-            } else res.send(data);
+            } else return res.send(data);
         }
     );
 };
 
 exports.delete = (req, res) => {
-    Person.remove(req.params.personId, (err, data) => {
+    Person.remove(req.params.person_id, (err, data) => {
         if (err) {
             if(err.kind === "not_found") {
-                res.status(404).send({
-                    message: `Not found Person with id ${req.params.personId}.`
+                return res.status(404).send({
+                    message: `Not found Person with id ${req.params.person_id}.`
                 });
             } else {
-                res.status(500).send({
-                    message: "Could not delete Person with id " + req.params.personId
+                return res.status(500).send({
+                    message: "Could not delete Person with id " + req.params.person_id
                 });
             }
-        } else res.send({ message: `Person was deleted succesfully!`});
+        } else return res.send({ message: `Person was deleted succesfully!`});
     });
 };
