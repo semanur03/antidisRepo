@@ -25,7 +25,7 @@ PersonGremium.create = (newEntry, result) => {
             return;
         }
         
-        console.log(`Created Entry in person_gremium : person_id=${newEntryntry.person_id}, gremium_id=${newEntry.gremium_id}`);
+        console.log(`Created Entry in person_gremium : person_id=${newEntry.person_id}, gremium_id=${newEntry.gremium_id}`);
         result(null, newEntry);
     });
 };
