@@ -4,7 +4,7 @@ const Person = require("../model/person.model.js");
 exports.create = (req, res) => {
     //Validate request
     if (!req.body) {
-        res.status(400).send({
+        return res.status(400).send({
             message: "Content can not be empty"
         })
     }
@@ -84,11 +84,7 @@ exports.update = (req, res) => {
         email: req.body.email,
     });
 
-    Person.updateById(
-        req.params.personId,
-        person,
-
-        (err, data) => {
+    Person.updateById( req.params.personId, person, (err, data) => {
             if (err) {
                 if (err.kind === "not_found") {
                     res.status(404).send({
@@ -117,70 +113,5 @@ exports.delete = (req, res) => {
                 });
             }
         } else res.send({ message: `Person was deleted succesfully!`});
-    });
-};
-
-
-exports.findBySprache = (req, res) => {
-    Person.findBySprache(req.params.personSprache, (err, data) => {
-        if (err) {
-            if (err.kind === "not_found") {
-                res.status(404).send({
-                    message: `Not found Person with sprache ${req.params.personSprache}.`
-                });
-            } else {
-                res.status(500).send({
-                    message: "Error retrieving Person with sprache " + req.params.personSprache
-                });
-            }
-        } else res.send(data);
-    });
-};
-
-exports.findByGremium = (req, res) => {
-    Person.findByGremium(req.params.personGremium, (err, data) => {
-        if (err) {
-            if (err.kind === "not_found") {
-                res.status(404).send({
-                    message: `Not found Person with gremium ${req.params.personGremium}.`
-                });
-            } else {
-                res.status(500).send({
-                    message: "Error retrieving Person with gremium " + req.params.personGremium
-                });
-            }
-        } else res.send(data);
-    });
-};
-
-exports.findByMitgliedsgruppe = (req, res) => {
-    Person.findByMitgliedsgruppe(req.params.personMitgliedsgruppe, (err, data) => {
-        if (err) {
-            if (err.kind === "not_found") {
-                res.status(404).send({
-                    message: `Not found Person with mitgliedsgruppe ${req.params.personMitgliedsgruppe}.`
-                });
-            } else {
-                res.status(500).send({
-                    message: "Error retrieving Person with mitgliedsgruppe " + req.params.personMitgliedsgruppe
-                });
-            }
-        } else res.send(data);
-    });
-};
-
-exports.findByOrganisationseinheit = (req, res) => {
-    Person.findByOrganisationseinheit(req.params.personOrganisationseinheit, (err, data) => {
-        if (err) {
-            if (err.kind === "not_found") {
-                res.status(404).send({
-                    message: `Not found Person with organisationseinheit ${req.params.personOrganisationseinheit}.`
-                });
-            } else {
-                res.status(500).send({
-                    message: "Error retrieving Person with organisationseinheit " + req.params.personOrganisationseinheit
-                });
-            }
-        } else res.send(data);
     });
 };

@@ -2,22 +2,19 @@ const sql = require("../db/webDaten.js")
 
 // constructor
 const Person = function(person) {
-    this.id = person.id;
     this.titel = person.titel;
     this.vorname = person.vorname;
     this.nachname = person.nachname;
     this.telefon = person.telefon;
     this.email = person.email;
-    this.sprachen = person.sprachen;
-    this.mitgliedsgruppen = person.mitgliedsgruppen;
-    this.gremien = person.gremien;
-    this.organisationseinheit = person.organisationseinheit;
 };
 
 Person.create = (newPerson, result) => {
     const query = `
-    INSERT INTO person (titel, vorname, nachname, telefon, email)
-    VALUES (?, ?, ?, ?, ?)
+    INSERT INTO 
+        person (titel, vorname, nachname, telefon, email)
+    VALUES 
+        (?, ?, ?, ?, ?)
     `;
 
     const values = [
@@ -30,41 +27,53 @@ Person.create = (newPerson, result) => {
 
     sql.run(query, values, function(err) {
         if (err) {
-            console.log("Fehler beim Erstellen der Person: ", err);
-            result(err, null);
-            return;
+            console.log("Error while creating Person: ", err);
+            return result(err, null);
         }
         
-        // Neue ID zurückgeben
-        result(null, { id: this.lastID, ...newPerson});
+        console.log("Succesfully created Person with Id:", this.lastID);
+        return result(null, {
+            id: this.lastID,
+            titel: newPerson.titel,
+            vorname: newPerson.vorname,
+            nachname: newPerson.nachname,
+            telefon: newPerson.telefon,
+            email: newPerson.email
+        });
     });
 };
 
 Person.getAll = (result) => {
     const query = `
-    SELECT * FROM person
+    SELECT 
+        * 
+    FROM 
+        person
     `;
 
     sql.all(query, [], (err, res) => {
         if (err) {
-            console.log("Fehler beim Aufrufen der Personen: ", err)
+            console.log("Error while retrieving all Person: ", err)
             result(err, null);
             return;
         }
 
-        console.log("Personen: ", res);
+        console.log("All Person: ", res);
         result(null, res);
     });
 };
 
 Person.getAllJoin = (result) => {
     const query = `
-    SELECT * FROM contacts
+    SELECT 
+        * 
+    FROM 
+        contacts
     `;
 
     sql.all(query, [], (err, res) => {
         if (err) {
-            console.log("Fehler beim Aufrufen der View Contacts: ", err)
+            console.log("Error while retrieving the view contacts: ", err)
             result(err, null);
             return;
         }
@@ -76,18 +85,23 @@ Person.getAllJoin = (result) => {
 
 Person.findById = (personId, result) => {
     const query = `
-    SELECT * FROM person WHERE id = ?
+    SELECT 
+        * 
+    FROM 
+        person 
+    WHERE 
+        id = ?
     `;
 
     sql.get(query, [personId], (err, res) => {
         if (err) {
-            console.log("Fehler beim Aufrufen der Person mit der Id: ", err)
+            console.log("Error while retrieving Person with Id: ", err)
             result(err, null);
             return;
         }
         
         if(res) {
-            console.log("gefndene Person: ", res);
+            console.log("found person: ", res);
             result(null, res);
             return;
         }
@@ -98,7 +112,16 @@ Person.findById = (personId, result) => {
 
 Person.updateById = (id, person, result) => {
     const query = `
-    UPDATE person SET titel = ?, vorname = ?, nachname = ?, telefon = ?, email = ? WHERE id = ?
+    UPDATE 
+        person 
+    SET 
+        titel = ?, 
+        vorname = ?, 
+        nachname = ?, 
+        telefon = ?, 
+        email = ? 
+    WHERE 
+        id = ?
     `;
 
     const values = [
@@ -112,12 +135,12 @@ Person.updateById = (id, person, result) => {
 
     sql.run(query, values, function(err) {
         if (err) {
-            console.log("Fehler beim Update der Person: ", err);
+            console.log("Error while updating Person: ", err);
             result(err, null);
             return;
         }
 
-        if (this.changes == 0) {
+        if (this.changes === 0) {
             // not found Person with the id
             result({ kind: "not_found" }, null);
             return;
@@ -130,24 +153,27 @@ Person.updateById = (id, person, result) => {
 
 Person.remove = (id, result) => {
     const query = `
-    DELETE FROM person WHERE id = ?
+    DELETE FROM 
+        person 
+    WHERE 
+        id = ?
     `; 
 
     sql.run(query, [id], function(err) {
         if (err) {
-            console.log("Fehler beim löschen der Person: ", err);
+            console.log("Error while deleting Person: ", err);
             result(err, null);
             return;
         }
 
-        if (this.changes == 0) {
+        if (this.changes === 0) {
             // not found Person with the id
             result({ kind: "not_found" }, null);
             return;
         }
 
         console.log("deleted person with id: ", id);
-        result(null, { message: "deleted person"});
+        result(null, { message: "succesfully deleted person"});
     });
 };
 
