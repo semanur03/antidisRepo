@@ -8,6 +8,7 @@ module.exports = app => {
     const mitgliedsgruppe = require("../controller/mitgliedsgruppe.controller.js");
     const personOrganisationseinheit = require("../controller/personOrganisationseinheit.controller.js");
     const organisationseinheit = require("../controller/organisationseinheit.controller.js");
+    const mehrsprachigkeit = require("../controller/mehrsprachigkeit.controller.js");
 
 //Create a new Person
 app.post("/person", person.create);
@@ -186,6 +187,29 @@ app.put("/organisationseinheit/:organisationseinheit_id", organisationseinheit.u
 
 //Delete a single Organisationseinheit with organisationseinheit_id
 app.delete("/organisationseinheit/:organisationseinheit_id", organisationseinheit.delete);
+
+//////////////////////////////////////////////////////////////////////////////////////////
+
+//Create a new Mehrsprachigkeit
+app.post("/mehrsprachigkeit", mehrsprachigkeit.create);
+
+//Get all Mehrsprachigkeit
+app.get("/mehrsprachigkeit", mehrsprachigkeit.findAll);
+
+//Get one single Mehrsprachigkeit with mehrsprachigkeit_id
+app.get("/mehrsprachigkeit/:mehrsprachigkeit_id", mehrsprachigkeit.findOne);
+
+//Update a single Mehrsprachigkeit with mehrsprachigkeit_id
+app.put("/mehrsprachigkeit/:mehrsprachigkeit_id", mehrsprachigkeit.update);
+
+//Delete a single Mehrsprachigkeit with mehrsprachigkeit_id
+app.delete("/mehrsprachigkeit/:mehrsprachigkeit_id", mehrsprachigkeit.delete);
+
+//Get an Entry based on the choosen language
+app.get("/mehrsprachigkeit/sprache/:lang", mehrsprachigkeit.findByLanguage);
+
+//Get an Entry based on the id and choosen language
+app.get("/mehrsprachigkeit/:id/sprache/:lang", mehrsprachigkeit.findByIdAndLanguage);
 
 //////////////////////////////////////////////////////////////////////////////////////////
 
