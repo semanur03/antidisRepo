@@ -6,6 +6,8 @@ module.exports = app => {
     const gremium = require("../controller/gremium.controller.js");
     const personMitgliedsgruppe = require("../controller/personMitgliedsgruppe.controller.js");
     const mitgliedsgruppe = require("../controller/mitgliedsgruppe.controller.js");
+    const personOrganisationseinheit = require("../controller/personOrganisationseinheit.controller.js");
+    const organisationseinheit = require("../controller/organisationseinheit.controller.js");
 
 //Create a new Person
 app.post("/person", person.create);
@@ -144,6 +146,46 @@ app.put("/mitgliedsgruppe/:mitgliedsgruppe_id", mitgliedsgruppe.update);
 
 //Delete a single Mitgliedsgruppe with mitgliedsgruppe_id
 app.delete("/mitgliedsgruppe/:mitgliedsgruppe_id", mitgliedsgruppe.delete);
+
+//////////////////////////////////////////////////////////////////////////////////////////
+
+//Create a new Entry in person_organisationseinheit
+app.post("/person-organisationseinheit", personOrganisationseinheit.create);
+
+//Get all Entries based on person_id
+app.get("/person-organisationseinheit/person/:person_id", personOrganisationseinheit.findByPerson);
+
+//Get an Entries based on organisationseinheit_id
+app.get("/person-organisationseinheit/organisationseinheit/:organisationseinheit_id", personOrganisationseinheit.findByOrganisationseinheit);
+
+//Get all Entries
+app.get("/person-organisationseinheit", personOrganisationseinheit.findAll);
+
+//Get an Entry based on id
+app.get("/person-organisationseinheit/person/:person_id/organisationseinheit/:organisationseinheit_id", personOrganisationseinheit.findCombination);
+
+//Update an Entry in person_organisationseinheit based on person_id
+app.put("/person-organisationseinheit/person/:person_id/organisationseinheit/:organisationseinheit_id", personOrganisationseinheit.update)
+
+//Delete an Entry in personorganisationseinheit with person_id
+app.delete("/person-organisationseinheit/person/:person_id/organisationseinheit/organisationseinheit_id", personOrganisationseinheit.delete);
+
+//////////////////////////////////////////////////////////////////////////////////////////
+
+//Create a new Organisationseinheit
+app.post("/organisationseinheit", organisationseinheit.create);
+
+//Get all Organisationseinheit
+app.get("/organisationseinheit", organisationseinheit.findAll);
+
+//Get one single Organisationseinheit with organisationseinheit_id
+app.get("/organisationseinheit/:organisationseinheit_id", organisationseinheit.findOne);
+
+//Update a single Organisationseinheit with organisationseinheit_id
+app.put("/organisationseinheit/:organisationseinheit_id", organisationseinheit.update);
+
+//Delete a single Organisationseinheit with organisationseinheit_id
+app.delete("/organisationseinheit/:organisationseinheit_id", organisationseinheit.delete);
 
 //////////////////////////////////////////////////////////////////////////////////////////
 
