@@ -9,6 +9,7 @@ module.exports = app => {
     const personOrganisationseinheit = require("../controller/personOrganisationseinheit.controller.js");
     const organisationseinheit = require("../controller/organisationseinheit.controller.js");
     const mehrsprachigkeit = require("../controller/mehrsprachigkeit.controller.js");
+    const user = require("../controller/admin.controller.js");
 
 //Create a new Person
 app.post("/person", person.create);
@@ -210,6 +211,32 @@ app.get("/mehrsprachigkeit/sprache/:lang", mehrsprachigkeit.findByLanguage);
 
 //Get an Entry based on the id and choosen language
 app.get("/mehrsprachigkeit/:id/sprache/:lang", mehrsprachigkeit.findByIdAndLanguage);
+
+//////////////////////////////////////////////////////////////////////////////////////////
+
+//Get all Admin Users
+app.get("/adm", user.findAll);
+
+//Register a new Admin User
+app.post("/adm/register", user.register);
+
+//Login a Admin User
+app.post("/adm/login", user.login);
+
+//Update a single Admin User
+app.put("/adm/:id", user.update);
+
+//Find an Admin User by their username
+app.get("/adm/username/:name", user.findByUsername);
+
+//Find an Admin User by their email
+app.get("/adm/email/:email", user.findByEmail);
+
+//Find an Admin User by id
+app.get("/adm/:id", user.findOne);
+
+//Delete a single Admin User with their id
+app.delete("/adm/:id", user.delete);
 
 //////////////////////////////////////////////////////////////////////////////////////////
 
