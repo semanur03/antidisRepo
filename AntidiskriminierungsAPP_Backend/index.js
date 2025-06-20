@@ -8,8 +8,7 @@ const app = express();
 const PORT = process.env.serverport;
 const https = require('https');
 
-const webdataRoutes = require('./app/routes/webdata.routes');
-app.use('/api', webdataRoutes);
+require('./app/routes/webdata.routes')(app);
 
 /*const fs = require('fs');
 const privkeyLink = fs.readlinkSync("/etc/letsencrypt/live/antidis.f4.htw-berlin.de/privkey.pem");
