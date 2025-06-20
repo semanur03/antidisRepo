@@ -33,9 +33,10 @@ PersonSprache.create = (newEntry, result) => {
 PersonSprache.findByPerson = (personId, result) => {
     const query = `
     SELECT 
-        ps.person_id, ps.sprache_id, 
-        s.sprache, 
-        p.vorname, p.nachname 
+        ps.person_id,
+        p.vorname, p.nachname,
+        ps.sprache_id, 
+        s.sprache
     FROM 
         person_sprache ps
     JOIN
@@ -66,9 +67,10 @@ PersonSprache.findByPerson = (personId, result) => {
 PersonSprache.findBySprache = (spracheId, result) => {
     const query = `
     SELECT 
-        ps.person_id, ps.sprache_id, 
-        s.sprache, 
-        p.vorname, p.nachname 
+        ps.person_id,
+        p.vorname, p.nachname,
+        ps.sprache_id, 
+        s.sprache
     FROM 
         person_sprache ps
     JOIN
@@ -99,9 +101,10 @@ PersonSprache.findBySprache = (spracheId, result) => {
 PersonSprache.getAll = (result) => {
     const query = `
     SELECT 
-        ps.person_id, ps.sprache_id, 
-        s.sprache, 
-        p.vorname, p.nachname 
+        ps.person_id,
+        p.vorname, p.nachname,
+        ps.sprache_id, 
+        s.sprache 
     FROM 
         person_sprache ps
     JOIN
@@ -125,9 +128,10 @@ PersonSprache.getAll = (result) => {
 PersonSprache.findCombination = (personId, spracheId, result) => {
     const query = `
     SELECT 
-        ps.person_id, ps.sprache_id, 
-        s.sprache, 
-        p.vorname, p.nachname 
+        ps.person_id,
+        p.vorname, p.nachname,
+        ps.sprache_id, 
+        s.sprache
     FROM 
         person_sprache ps
     JOIN

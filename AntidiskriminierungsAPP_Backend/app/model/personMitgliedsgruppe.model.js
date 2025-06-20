@@ -33,9 +33,10 @@ PersonMitgliedsgruppe.create = (newEntry, result) => {
 PersonMitgliedsgruppe.findByPerson = (personId, result) => {
     const query = `
     SELECT 
-        pm.person_id, pm.mitgliedsgruppe_id, 
-        m.mitgliedsgruppe, 
-        p.vorname, p.nachname 
+        pm.person_id,
+        p.vorname, p.nachname,
+        pm.mitgliedsgruppe_id, 
+        m.mitgliedsgruppe
     FROM 
         person_mitgliedsgruppe pm
     JOIN
@@ -66,9 +67,10 @@ PersonMitgliedsgruppe.findByPerson = (personId, result) => {
 PersonMitgliedsgruppe.findByMitgliedsgruppe = (mitgliedsgruppeId, result) => {
     const query = `
     SELECT 
-        pm.person_id, pm.mitgliedsgruppe_id, 
-        m.mitgliedsgruppe, 
-        p.vorname, p.nachname 
+        pm.person_id,
+        p.vorname, p.nachname,
+        pm.mitgliedsgruppe_id, 
+        m.mitgliedsgruppe
     FROM 
         person_mitgliedsgruppe pm
     JOIN
@@ -99,9 +101,10 @@ PersonMitgliedsgruppe.findByMitgliedsgruppe = (mitgliedsgruppeId, result) => {
 PersonMitgliedsgruppe.getAll = (result) => {
     const query = `
     SELECT 
-        pm.person_id, pm.mitgliedsgruppe_id, 
-        m.mitgliedsgruppe, 
-        p.vorname, p.nachname 
+        pm.person_id,
+        p.vorname, p.nachname,
+        pm.mitgliedsgruppe_id, 
+        m.mitgliedsgruppe
     FROM 
         person_mitgliedsgruppe pm
     JOIN
@@ -125,9 +128,10 @@ PersonMitgliedsgruppe.getAll = (result) => {
 PersonMitgliedsgruppe.findCombination = (personId, mitgliedsgruppeId, result) => {
     const query = `
     SELECT 
-        pm.person_id, pm.mitgliedsgruppe_id, 
-        m.mitgliedsgruppe, 
-        p.vorname, p.nachname 
+        pm.person_id,
+        p.vorname, p.nachname,
+        pm.mitgliedsgruppe_id, 
+        m.mitgliedsgruppe
     FROM 
         person_mitgliedsgruppe pm
     JOIN

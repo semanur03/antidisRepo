@@ -33,9 +33,10 @@ PersonGremium.create = (newEntry, result) => {
 PersonGremium.findByPerson = (personId, result) => {
     const query = `
     SELECT 
-        pg.person_id, pg.gremium_id, 
-        g.gremium, 
-        p.vorname, p.nachname 
+        pg.person_id, 
+        p.vorname, p.nachname, 
+        pg.gremium_id, 
+        g.gremium 
     FROM 
         person_gremium pg
     JOIN
@@ -66,9 +67,10 @@ PersonGremium.findByPerson = (personId, result) => {
 PersonGremium.findByGremium = (gremiumId, result) => {
     const query = `
     SELECT 
-        pg.person_id, pg.gremium_id, 
-        g.gremium, 
-        p.vorname, p.nachname 
+        pg.person_id, 
+        p.vorname, p.nachname, 
+        pg.gremium_id, 
+        g.gremium 
     FROM 
         person_gremium pg
     JOIN
@@ -99,9 +101,10 @@ PersonGremium.findByGremium = (gremiumId, result) => {
 PersonGremium.getAll = (result) => {
     const query = `
     SELECT 
-        pg.person_id, pg.gremium_id, 
-        g.gremium, 
-        p.vorname, p.nachname 
+        pg.person_id, 
+        p.vorname, p.nachname, 
+        pg.gremium_id, 
+        g.gremium 
     FROM 
         person_gremium pg
     JOIN
@@ -125,9 +128,10 @@ PersonGremium.getAll = (result) => {
 PersonGremium.findCombination = (personId, gremiumId, result) => {
     const query = `
     SELECT 
-        pg.person_id, pg.gremium_id, 
-        g.gremium, 
-        p.vorname, p.nachname 
+        pg.person_id, 
+        p.vorname, p.nachname, 
+        pg.gremium_id, 
+        g.gremium  
     FROM 
         person_gremium pg
     JOIN
