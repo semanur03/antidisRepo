@@ -8,7 +8,6 @@ const app = express();
 const PORT = process.env.serverport;
 const https = require('https');
 
-require('./app/routes/webdata.routes')(app);
 
 /*const fs = require('fs');
 const privkeyLink = fs.readlinkSync("/etc/letsencrypt/live/antidis.f4.htw-berlin.de/privkey.pem");
@@ -20,11 +19,12 @@ const https_options = {
 	cert: fs.readFileSync("/etc/letsencrypt/live/antidis.f4.htw-berlin.de/" + fullchainLink)
 };*/ //private key auskommentiert zum entwickeln
 
-app.use(bodyParser.json());
+//app.use(bodyParser.json());
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+require('./app/routes/webdata.routes')(app);
 // console.log('from', process.env.from)
 // console.log('to', process.env.to)
 
