@@ -19,7 +19,7 @@ const https_options = {
 	cert: fs.readFileSync("/etc/letsencrypt/live/antidis.f4.htw-berlin.de/" + fullchainLink)
 };*/ //private key auskommentiert zum entwickeln
 
-//app.use(bodyParser.json());
+app.use(bodyParser.json());
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
