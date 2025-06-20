@@ -70,6 +70,7 @@ Person.getAllJoin = (result) => {
     FROM 
         contacts
     `;
+    //contacts ist eine view in der DB
 
     sql.all(query, [], (err, res) => {
         if (err) {
