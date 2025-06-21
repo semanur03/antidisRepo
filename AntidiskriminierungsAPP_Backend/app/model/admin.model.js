@@ -95,29 +95,50 @@ User.findByEmail = (email, result) => {
 User.create = (newUser, result) => {
     // First check if username or email exists
     User.findByUsername(newUser.username, (err, usernameExists) => {
-        if (err) return result(err, null);
-        if (usernameExists) return result({ kind: "username_exists" }, null);
+        if (err && err.kind !== "not_found") {
+            console.error("Username Check Error:", err);
+            return result(err);
+        }
         
+        if (usernameExists) {
+            console.log("Username existiert bereits");
+            return result({ kind: "username_exists" });
+        }
+
         User.findByEmail(newUser.email, (err, emailExists) => {
-            if (err) return result(err, null);
-            if (emailExists) return result({ kind: "email_exists" }, null);
+            if (err && err.kind !== "not_found") {
+                console.error("Email Check Error:", err);
+                return result(err);
+            }
+            
+            if (emailExists) {
+                console.log("Email existiert bereits");
+                return result({ kind: "email_exists" });
+            }
 
             // Hash password before saving
             bcrypt.hash(newUser.password, saltRounds, (err, hash) => {
-                if (err) return result(err, null);
+                if (err) {
+                    console.error("Bcrypt Error:", err);
+                    return result(err);
+                }
+
+                console.log("Password succesfully hashed");
                 
+                // 4. Datenbank-Insert
                 const query = `
                 INSERT INTO 
                     admin (username, password, email) 
                 VALUES 
                     (?, ?, ?)
                 `;
-                
-                const values = [newUser.username, hash, newUser.email];
-                
-                sql.run(query, values, function(err) {
-                    if (err) return result(err, null);
+                sql.run(query, [newUser.username, hash, newUser.email], function(err) {
+                    if (err) {
+                        console.error("Database Insert Error:", err);
+                        return result(err);
+                    }
                     
+                    console.log("succesfully created user with id:", this.lastID);
                     result(null, {
                         id: this.lastID,
                         username: newUser.username,

@@ -3,8 +3,10 @@ const bcrypt = require('bcrypt');
 
 exports.register = async (req, res) => {
     if (!req.body || !req.body.username || !req.body.password || !req.body.email) {
-        return res.status(400).send({
-            message: "Username, password and email are required"
+        console.error('missing fields:', req.body);
+        return res.status(400).json({
+            error: "Username, password and email are required",
+            received: req.body
         });
     }
 
@@ -16,21 +18,48 @@ exports.register = async (req, res) => {
 
     User.create(user, (err, data) => {
         if (err) {
+            console.error('register error:', {
+                error: err,
+                stack: err.stack
+            });
+
             if (err.kind === "username_exists") {
-                return res.status(400).send({
-                    message: "Username already exists"
+                return res.status(400).json({
+                    error: "Username already exists",
+                    suggestion: "please choose another username"
                 });
             }
             if (err.kind === "email_exists") {
-                return res.status(400).send({
-                    message: "Email already exists"
+                return res.status(400).json({
+                    error: "Email already exists",
+                    suggestion: "please user another e-mail adress"
                 });
             }
-            return res.status(500).send({
-                message: err.message || "Error creating user"
+            
+            // SQLite Fehler abfangen
+            if (err.code === "SQLITE_CONSTRAINT") {
+                return res.status(400).json({
+                    error: "Database constraint failed",
+                    details: err.message
+                });
+            }
+
+            return res.status(500).json({
+                error: "Error creating user",
+                systemError: err.message,
+                code: err.code
             });
         }
-        res.send(data);
+        
+        console.log('succfesfully registered:', data.username);
+        res.status(201).json({
+            success: true,
+            user: {
+                id: data.id,
+                username: data.username,
+                email: data.email
+            }
+        });
     });
 };
 
