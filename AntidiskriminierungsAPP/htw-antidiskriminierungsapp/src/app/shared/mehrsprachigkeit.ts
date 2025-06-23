@@ -3,3 +3,8 @@ export interface Mehrsprachigkeit {
     deutsch: string;
     englisch: string;
 }
+
+export interface MehrsprachigkeitEntry {
+    id: string;
+    text: string;
+}
