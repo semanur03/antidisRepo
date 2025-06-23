@@ -13,6 +13,7 @@ import { Mitgliedsgruppe } from './mitgliedsgruppe';
 import { PersonOrganisationseinheit } from './personOrganisationseinheit';
 import { Organisationseinheit } from './organisationseinheit';
 import { Mehrsprachigkeit } from './mehrsprachigkeit';
+import { MehrsprachigkeitEntry } from './mehrsprachigkeit';
 
 
 @Injectable({
@@ -278,12 +279,12 @@ export class BackendService {
     return this.http.delete<any>(this.baseUrl + '/mehrsprachigkeit/' + id, {observe: 'response'});
   }
 
-  getAllMehrsprachigkeitByLanguage(lang: string): Observable<Mehrsprachigkeit>{
-    return this.http.get<Mehrsprachigkeit>(this.baseUrl + '/mehrsprachigkeit/sprache/' + lang);
+  getAllMehrsprachigkeitByLanguage(lang: string): Observable<MehrsprachigkeitEntry[]>{
+    return this.http.get<MehrsprachigkeitEntry[]>(this.baseUrl + '/mehrsprachigkeit/sprache/' + lang);
   }
 
-  getOneMehrsprachigkeitByLanguage(id: string, lang: string): Observable<Mehrsprachigkeit>{
-    return this.http.get<Mehrsprachigkeit>(this.baseUrl + '/mehrsprachigkeit/' + id + '/sprache/' + lang);
+  getOneMehrsprachigkeitByLanguage(id: string, lang: string): Observable<MehrsprachigkeitEntry>{
+    return this.http.get<MehrsprachigkeitEntry>(this.baseUrl + '/mehrsprachigkeit/' + id + '/sprache/' + lang);
   }
 
 //////////////////////////////////////////////////////////////////////////////////////////
