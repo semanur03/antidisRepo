@@ -1,15 +1,17 @@
 import { Injectable } from '@angular/core';
-import { Contacts } from './contacts';
+import { BackendService } from './backend.service';
+import { ContactsView } from './contacts';
+import { firstValueFrom } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ContactsService {
 
-  async getAllContacts(): Promise<Contacts[]> {
-    let response = await fetch('../../assets/data/contacts.json');
-    let contacts = await response.json();
+  constructor(private backend: BackendService) {}
 
-    return contacts;
+  async getAllContacts(): Promise<ContactsView[]> {
+    const result = await firstValueFrom(this.backend.getAllPersonInformation());
+    return result ?? [];
   }
 }

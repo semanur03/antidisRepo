@@ -1,6 +1,6 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { ContactsService } from './../shared/contacts.service';
-import { Contacts } from '../shared/contacts';
+import { ContactsView } from '../shared/contacts';
 import { FilterService } from '../shared/filter.service';
 import { EmailContactService } from '../shared/email-contact.service';
 import { Router } from '@angular/router';
@@ -16,41 +16,44 @@ export class ContactlistComponent implements OnInit {
   constructor(private filterService: FilterService, private emailService: EmailContactService, private router: Router) { }
 
   private service = inject(ContactsService);
-  allcontacts: Contacts[] = [];
-  filteredContacts: Contacts[] = [];
+  allcontacts: ContactsView[] = [];
+  filteredContacts: ContactsView[] = [];
   emailContactPerson: string = '';
   nachnameContactPerson: string = '';
   showFilterMessage = false;
 
   async ngOnInit(): Promise<void> {
     this.allcontacts = await this.service.getAllContacts();
-    this.filteredContacts = this.filter(this.filterService);
+    this.filteredContacts = this.filter();
   }
 
-  filter(filterService: FilterService): Contacts[] {
+  filter(): ContactsView[] {
     let filteredContacts = this.allcontacts;
 
-    const mitgliedergruppe = filterService.getMitgliedergruppe();
-    const gremium = filterService.getGremium();
-    const gremium1 = filterService.getGremium1();
-    const gremium2 = filterService.getGremium2();
-    const organisationseinheit = filterService.getOrganisationseinheit();
+    const mitgliedergruppe = this.filterService.getMitgliedergruppe();
+    const gremium = this.filterService.getGremium();
+    const gremium1 = this.filterService.getGremium1();
+    const gremium2 = this.filterService.getGremium2();
+    const organisationseinheit = this.filterService.getOrganisationseinheit();
     const sprache = this.filterService.getSprache();
 
-    if (mitgliedergruppe || gremium || organisationseinheit || sprache) {
-      filteredContacts = filteredContacts.filter((contact) => 
-        contact.mitgliedergruppe === mitgliedergruppe || (contact.gremium != "" && (
-        gremium != "" && contact.gremium === gremium || 
-        gremium1 != "" && contact.gremium === gremium1 || 
-        gremium2 != "" && contact.gremium === gremium2)) || (contact.gremium1 != "" && (
-        gremium != "" && contact.gremium1 === gremium || 
-        gremium1 != "" && contact.gremium1 === gremium1 || 
-        gremium2 != "" && contact.gremium1 === gremium2)) || (contact.gremium2 != "" && (
-        gremium != "" && contact.gremium2 === gremium || 
-        gremium1 != "" && contact.gremium2 === gremium1 || 
-        gremium2 != "" && contact.gremium2 === gremium2)) ||
-        contact.organisationseinheit === organisationseinheit || 
-        contact.sprache === sprache);
+    if (mitgliedergruppe || gremium || gremium1 || gremium2 || organisationseinheit || sprache) {
+      filteredContacts = filteredContacts.filter(contact =>
+        // Mitgleidergruppe-Filter (nur wenn gesetzt)
+        (!mitgliedergruppe || contact.mitgliedergruppe === mitgliedergruppe) &&
+        // Gremium-Filter: mind. eins der drei gremium-Felder muss passen, wenn einer gesetzt ist
+        (
+          (gremium !== "" && (contact.gremium === gremium || contact.gremium1 === gremium || contact.gremium2 === gremium)) ||
+          (gremium1 !== "" && (contact.gremium === gremium1 || contact.gremium1 === gremium1 || contact.gremium2 === gremium1)) ||
+          (gremium2 !== "" && (contact.gremium === gremium2 || contact.gremium1 === gremium2 || contact.gremium2 === gremium2)) ||
+          // Falls kein Gremium-Filter gesetzt ist, immer true
+          (gremium === "" && gremium1 === "" && gremium2 === "")
+        ) &&
+        // Organisationsfilter (nur wenn gesetzt)
+        (!organisationseinheit || contact.organisationseinheit === organisationseinheit) &&
+        // Sprachfilter (nur wenn gesetzt)
+        (!sprache || contact.sprache === sprache)
+      );
     }
     if (filteredContacts.length < this.allcontacts.length) {
       this.showFilterMsg();
