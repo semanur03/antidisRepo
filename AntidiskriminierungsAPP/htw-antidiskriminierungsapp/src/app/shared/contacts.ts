@@ -1,13 +1,17 @@
 export interface Contacts {
-    titel: string;
+    id: number;
+    titel?: string;
     vorname: string;
     nachname: string;
-    telefon: string;
+    telefon?: string;
     email: string;
-    sprache: string;
-    mitgliedergruppe: string;
-    gremium: string;
-    gremium1: string;
-    gremium2: string;
-    organisationseinheit: string;
+}
+
+export interface ContactsView extends Contacts {
+    sprache?: string;
+    mitgliedergruppe?: string;
+    gremium?: string;
+    gremium1?: string;
+    gremium2?: string;
+    organisationseinheit?: string;
 }

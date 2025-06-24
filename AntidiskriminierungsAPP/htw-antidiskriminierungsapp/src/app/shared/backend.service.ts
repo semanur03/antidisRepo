@@ -2,8 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
-import { Person } from './person';
-import { PersonView } from './person';
+import { Contacts, ContactsView } from './contacts';
 import { PersonSprache } from './personSprache';
 import { Sprache } from './sprache';
 import { PersonGremium } from './personGremium';
@@ -25,24 +24,24 @@ export class BackendService {
 
   constructor(private http: HttpClient) { }
 
-  createPerson(data: Person): Observable<Person>{
-    return this.http.post<Person>(this.baseUrl + '/person', data);
+  createPerson(data: Contacts): Observable<Contacts>{
+    return this.http.post<Contacts>(this.baseUrl + '/person', data);
   }
 
-  getAllPerson(): Observable<Person[]>{
-    return this.http.get<Person[]>(this.baseUrl+ '/person');
+  getAllPerson(): Observable<Contacts[]>{
+    return this.http.get<Contacts[]>(this.baseUrl+ '/person');
   }
 
-  getAllPersonInformation(): Observable<PersonView[]>{
-    return this.http.get<PersonView[]>(this.baseUrl + '/person/joined');
+  getAllPersonInformation(): Observable<ContactsView[]>{
+    return this.http.get<ContactsView[]>(this.baseUrl + '/person/joined');
   }
 
-  getOnePerson(id: number): Observable<Person>{
-    return this.http.get<Person>(this.baseUrl + '/person/' + id);
+  getOnePerson(id: number): Observable<Contacts>{
+    return this.http.get<Contacts>(this.baseUrl + '/person/' + id);
   }
 
-  updatePerson(id: number, data: Person): Observable<Person>{
-    return this.http.put<Person>(this.baseUrl + '/person/' + id, data);
+  updatePerson(id: number, data: Contacts): Observable<Contacts>{
+    return this.http.put<Contacts>(this.baseUrl + '/person/' + id, data);
   }
 
   deletePerson(id: number): Observable<any>{
