@@ -4,8 +4,8 @@ module.exports = app => {
     const sprache = require("../controller/sprache.controller.js");
     const personGremium = require("../controller/personGremium.controller.js");
     const gremium = require("../controller/gremium.controller.js");
-    const personMitgliedsgruppe = require("../controller/personMitgliedsgruppe.controller.js");
-    const mitgliedsgruppe = require("../controller/mitgliedsgruppe.controller.js");
+    const personMitgliedergruppe = require("../controller/personMitgliedergruppe.controller.js");
+    const mitgliedergruppe = require("../controller/mitgliedergruppe.controller.js");
     const personOrganisationseinheit = require("../controller/personOrganisationseinheit.controller.js");
     const organisationseinheit = require("../controller/organisationseinheit.controller.js");
     const mehrsprachigkeit = require("../controller/mehrsprachigkeit.controller.js");
@@ -111,43 +111,43 @@ app.delete("/gremium/:gremium_id", gremium.delete);
 
 //////////////////////////////////////////////////////////////////////////////////////////
 
-//Create a new Entry in person_mitgliedsgruppe
-app.post("/person-mitgliedsgruppe", personMitgliedsgruppe.create);
+//Create a new Entry in person_mitgliedergruppe
+app.post("/person-mitgliedergruppe", personMitgliedergruppe.create);
 
 //Get all Entries based on person_id
-app.get("/person-mitgliedsgruppe/person/:person_id", personMitgliedsgruppe.findByPerson);
+app.get("/person-mitgliedergruppe/person/:person_id", personMitgliedergruppe.findByPerson);
 
-//Get an Entries based on mitgliedsgruppe_id
-app.get("/person-mitgliedsgruppe/mitgliedsgruppe/:mitgliedsgruppe_id", personMitgliedsgruppe.findByMitgliedsgruppe);
+//Get an Entries based on mitgliedergruppe_id
+app.get("/person-mitgliedergruppe/mitgliedergruppe/:mitgliedergruppe_id", personMitgliedergruppe.findByMitgliedergruppe);
 
 //Get all Entries
-app.get("/person-mitgliedsgruppe", personMitgliedsgruppe.findAll);
+app.get("/person-mitgliedergruppe", personMitgliedergruppe.findAll);
 
 //Get an Entry based on id
-app.get("/person-mitgliedsgruppe/person/:person_id/mitgliedsgruppe/:mitgliedsgruppe_id", personMitgliedsgruppe.findCombination);
+app.get("/person-mitgliedergruppe/person/:person_id/mitgliedergruppe/:mitgliedergruppe_id", personMitgliedergruppe.findCombination);
 
-//Update an Entry in person_mitgliedsgruppe based on person_id
-app.put("/person-mitgliedsgruppe/person/:person_id/mitgliedsgruppe/:mitgliedsgruppe_id", personMitgliedsgruppe.update)
+//Update an Entry in person_mitgliedergruppe based on person_id
+app.put("/person-mitgliedergruppe/person/:person_id/mitgliedergruppe/:mitgliedergruppe_id", personMitgliedergruppe.update)
 
-//Delete an Entry in person_mitgliedsgruppe with person_id
-app.delete("/person-mitgliedsgruppe/person/:person_id/mitgliedsgruppe/:mitgliedsgruppe_id", personMitgliedsgruppe.delete);
+//Delete an Entry in person_mitgliedergruppe with person_id
+app.delete("/person-mitgliedergruppe/person/:person_id/mitgliedergruppe/:mitgliedergruppe_id", personMitgliedergruppe.delete);
 
 //////////////////////////////////////////////////////////////////////////////////////////
 
-//Create a new Mitgliedsgruppe
-app.post("/mitgliedsgruppe", mitgliedsgruppe.create);
+//Create a new Mitgliedergruppe
+app.post("/mitgliedergruppe", mitgliedergruppe.create);
 
-//Get all Mitgliedsgruppe
-app.get("/mitgliedsgruppe", mitgliedsgruppe.findAll);
+//Get all Mitgliedergruppe
+app.get("/mitgliedergruppe", mitgliedergruppe.findAll);
 
-//Get one single Mitgliedsgruppe with mitgliedsgruppe_id
-app.get("/mitgliedsgruppe/:mitgliedsgruppe_id", mitgliedsgruppe.findOne);
+//Get one single Mitgliedergruppe with mitgliedergruppe_id
+app.get("/mitgliedergruppe/:mitgliedergruppe_id", mitgliedergruppe.findOne);
 
-//Update a single Mitgliedsgruppe with mitgliedsgruppe_id
-app.put("/mitgliedsgruppe/:mitgliedsgruppe_id", mitgliedsgruppe.update);
+//Update a single Mitgliedergruppe with mitgliedergruppe_id
+app.put("/mitgliedergruppe/:mitgliedergruppe_id", mitgliedergruppe.update);
 
-//Delete a single Mitgliedsgruppe with mitgliedsgruppe_id
-app.delete("/mitgliedsgruppe/:mitgliedsgruppe_id", mitgliedsgruppe.delete);
+//Delete a single Mitgliedergruppe with mitgliedergruppe_id
+app.delete("/mitgliedergruppe/:mitgliedergruppe_id", mitgliedergruppe.delete);
 
 //////////////////////////////////////////////////////////////////////////////////////////
 

@@ -8,8 +8,8 @@ import { PersonSprache } from './personSprache';
 import { Sprache } from './sprache';
 import { PersonGremium } from './personGremium';
 import { Gremium } from './gremium';
-import { PersonMitgliedsgruppe } from './personMitgliedsgruppe';
-import { Mitgliedsgruppe } from './mitgliedsgruppe';
+import { PersonMitgliedergruppe } from './personMitgliedergruppe';
+import { Mitgliedergruppe } from './mitgliedergruppe';
 import { PersonOrganisationseinheit } from './personOrganisationseinheit';
 import { Organisationseinheit } from './organisationseinheit';
 import { Mehrsprachigkeit } from './mehrsprachigkeit';
@@ -155,54 +155,54 @@ export class BackendService {
 
 //////////////////////////////////////////////////////////////////////////////////////////
 
-  createPersonMitgliedsgruppe(data: PersonMitgliedsgruppe): Observable<PersonMitgliedsgruppe>{
-    return this.http.post<PersonMitgliedsgruppe>(this.baseUrl + '/person-mitgliedsgruppe', data);
+  createPersonMitgliedergruppe(data: PersonMitgliedergruppe): Observable<PersonMitgliedergruppe>{
+    return this.http.post<PersonMitgliedergruppe>(this.baseUrl + '/person-mitgliedergruppe', data);
   }
   
-  getAllPersonMitgliedsgruppe(): Observable<PersonMitgliedsgruppe[]>{
-    return this.http.get<PersonMitgliedsgruppe[]>(this.baseUrl+ '/person-mitgliedsgruppe');
+  getAllPersonMitgliedergruppe(): Observable<PersonMitgliedergruppe[]>{
+    return this.http.get<PersonMitgliedergruppe[]>(this.baseUrl+ '/person-mitgliedergruppe');
   }
 
-  getAllPersonMitgliedsgruppeByPersonId(person_id: number): Observable<PersonMitgliedsgruppe[]>{
-    return this.http.get<PersonMitgliedsgruppe[]>(this.baseUrl + '/person-mitgliedsgruppe/person/' + person_id);
+  getAllPersonMitgliedergruppeByPersonId(person_id: number): Observable<PersonMitgliedergruppe[]>{
+    return this.http.get<PersonMitgliedergruppe[]>(this.baseUrl + '/person-mitgliedergruppe/person/' + person_id);
   }
 
-  getAllPersonMitgliedsgruppeByMitgliedsgruppeId(mitgliedsgruppe_id: number): Observable<PersonMitgliedsgruppe[]>{
-    return this.http.get<PersonMitgliedsgruppe[]>(this.baseUrl + '/person-mitgliedsgruppe/mitgliedsgruppe/' + mitgliedsgruppe_id);
+  getAllPersonMitgliedergruppeByMitgliedergruppeId(mitgliedergruppe_id: number): Observable<PersonMitgliedergruppe[]>{
+    return this.http.get<PersonMitgliedergruppe[]>(this.baseUrl + '/person-mitgliedergruppe/mitgliedergruppe/' + mitgliedergruppe_id);
   }
 
-  getOnePersonMitgliedsgruppe(person_id: number, mitgliedsgruppe_id: number): Observable<PersonMitgliedsgruppe>{
-    return this.http.get<PersonMitgliedsgruppe>(this.baseUrl + '/person-mitgliedsgruppe/person/' + person_id + '/mitgliedsgruppe/' +mitgliedsgruppe_id);
+  getOnePersonMitgliedergruppe(person_id: number, mitgliedergruppe_id: number): Observable<PersonMitgliedergruppe>{
+    return this.http.get<PersonMitgliedergruppe>(this.baseUrl + '/person-mitgliedergruppe/person/' + person_id + '/mitgliedergruppe/' +mitgliedergruppe_id);
   }
 
-  updatePersonMitgliedsgruppe(person_id: number, mitgliedsgruppe_id: number, data: PersonMitgliedsgruppe): Observable<PersonMitgliedsgruppe>{
-    return this.http.put<PersonMitgliedsgruppe>(this.baseUrl + '/person-mitgliedsgruppe/person/' + person_id + '/mitgliedsgruppe/' + mitgliedsgruppe_id, data);
+  updatePersonMitgliedergruppe(person_id: number, mitgliedergruppe_id: number, data: PersonMitgliedergruppe): Observable<PersonMitgliedergruppe>{
+    return this.http.put<PersonMitgliedergruppe>(this.baseUrl + '/person-mitgliedergruppe/person/' + person_id + '/mitgliedergruppe/' + mitgliedergruppe_id, data);
   }
 
-  deletePersonMitgliedsgruppe(person_id: number, mitgliedsgruppe_id: number): Observable<any>{
-    return this.http.delete<any>(this.baseUrl + '/person-mitgliedsgruppe/person/' + person_id + '/mitgliedsgruppe/' + mitgliedsgruppe_id, {observe: 'response'});
+  deletePersonMitgliedergruppe(person_id: number, mitgliedergruppe_id: number): Observable<any>{
+    return this.http.delete<any>(this.baseUrl + '/person-mitgliedergruppe/person/' + person_id + '/mitgliedergruppe/' + mitgliedergruppe_id, {observe: 'response'});
   }
 
 //////////////////////////////////////////////////////////////////////////////////////////
 
-  createMitgliedsgruppe(data: Mitgliedsgruppe): Observable<Mitgliedsgruppe>{
-    return this.http.post<Mitgliedsgruppe>(this.baseUrl + '/mitgliedsgruppe', data);
+  createMitgliedergruppe(data: Mitgliedergruppe): Observable<Mitgliedergruppe>{
+    return this.http.post<Mitgliedergruppe>(this.baseUrl + '/mitgliedergruppe', data);
   }
 
-  getAllMitgliedsgruppe(): Observable<Mitgliedsgruppe[]>{
-    return this.http.get<Mitgliedsgruppe[]>(this.baseUrl+ '/mitgliedsgruppe');
+  getAllMitgliedergruppe(): Observable<Mitgliedergruppe[]>{
+    return this.http.get<Mitgliedergruppe[]>(this.baseUrl+ '/mitgliedergruppe');
   }
 
-  getOneMitgliedsgruppe(id: number): Observable<Mitgliedsgruppe>{
-    return this.http.get<Mitgliedsgruppe>(this.baseUrl + '/mitgliedsgruppe/' + id);
+  getOneMitgliedergruppe(id: number): Observable<Mitgliedergruppe>{
+    return this.http.get<Mitgliedergruppe>(this.baseUrl + '/mitgliedergruppe/' + id);
   }
 
-  updateMitgliedsgruppe(id: number, data: Mitgliedsgruppe): Observable<Mitgliedsgruppe>{
-    return this.http.put<Mitgliedsgruppe>(this.baseUrl + '/mitgliedsgruppe/' + id, data);
+  updateMitgliedergruppe(id: number, data: Mitgliedergruppe): Observable<Mitgliedergruppe>{
+    return this.http.put<Mitgliedergruppe>(this.baseUrl + '/mitgliedergruppe/' + id, data);
   }
 
-  deleteMitgliedsgruppe(id: number): Observable<any>{
-    return this.http.delete<any>(this.baseUrl + '/mitgliedsgruppe/' + id, {observe: 'response'});
+  deleteMitgliedergruppe(id: number): Observable<any>{
+    return this.http.delete<any>(this.baseUrl + '/mitgliedergruppe/' + id, {observe: 'response'});
   }
 
 //////////////////////////////////////////////////////////////////////////////////////////

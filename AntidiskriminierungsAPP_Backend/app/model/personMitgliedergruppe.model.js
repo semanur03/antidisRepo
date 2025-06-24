@@ -1,48 +1,48 @@
 const sql = require('../db/webDaten.js');
 
-const PersonMitgliedsgruppe = function(pm) {
+const PersonMitgliedergruppe = function(pm) {
     this.person_id = pm.person_id;
-    this.mitgliedsgruppe_id = pm.mitgliedsgruppe_id;
+    this.mitgliedergruppe_id = pm.mitgliedergruppe_id;
 };
 
-PersonMitgliedsgruppe.create = (newEntry, result) => {
+PersonMitgliedergruppe.create = (newEntry, result) => {
     const query = `
     INSERT INTO 
-        person_mitgliedsgruppe (person_id, mitgliedsgruppe_id) 
+        person_mitgliedergruppe (person_id, mitgliedergruppe_id) 
     VALUES 
         (?, ?)
     `;
 
     const values = [
         newEntry.person_id, 
-        newEntry.mitgliedsgruppe_id
+        newEntry.mitgliedergruppe_id
     ];
 
     sql.run(query, values, function(err) {
         if (err) {
-            console.log("Error while creating a new Entry in person_mitgliedsgruppe: ", err);
+            console.log("Error while creating a new Entry in person_mitgliedergruppe: ", err);
             result(err, null);
             return;
         }
         
-        console.log(`Created Entry in person_mitgliedsgruppe : person_id=${newEntry.person_id}, mitgliedsgruppe_id=${newEntry.mitgliedsgruppe_id}`);
+        console.log(`Created Entry in person_mitgliedergruppe : person_id=${newEntry.person_id}, mitgliedergruppe_id=${newEntry.mitgliedergruppe_id}`);
         result(null, newEntry);
     });
 };
 
-PersonMitgliedsgruppe.findByPerson = (personId, result) => {
+PersonMitgliedergruppe.findByPerson = (personId, result) => {
     const query = `
     SELECT 
         pm.person_id,
         p.vorname, p.nachname,
-        pm.mitgliedsgruppe_id, 
-        m.mitgliedsgruppe
+        pm.mitgliedergruppe_id, 
+        m.mitgliedergruppe
     FROM 
-        person_mitgliedsgruppe pm
+        person_mitgliedergruppe pm
     JOIN
         person p ON pm.person_id = p.id
     JOIN
-        mitgliedsgruppe m ON pm.mitgliedsgruppe_id = m.id
+        mitgliedergruppe m ON pm.mitgliedergruppe_id = m.id
     WHERE 
         pm.person_id = ?
     `
@@ -64,32 +64,32 @@ PersonMitgliedsgruppe.findByPerson = (personId, result) => {
     });
 };
 
-PersonMitgliedsgruppe.findByMitgliedsgruppe = (mitgliedsgruppeId, result) => {
+PersonMitgliedergruppe.findByMitgliedergruppe = (mitgliedergruppeId, result) => {
     const query = `
     SELECT 
         pm.person_id,
         p.vorname, p.nachname,
-        pm.mitgliedsgruppe_id, 
-        m.mitgliedsgruppe
+        pm.mitgliedergruppe_id, 
+        m.mitgliedergruppe
     FROM 
-        person_mitgliedsgruppe pm
+        person_mitgliedergruppe pm
     JOIN
         person p ON pm.person_id = p.id
     JOIN
-        mitgliedsgruppe m ON pm.mitgliedsgruppe_id = m.id
+        mitgliedergruppe m ON pm.mitgliedergruppe_id = m.id
     WHERE 
-        pm.mitgliedsgruppe_id = ?
+        pm.mitgliedergruppe_id = ?
     `
 
-    sql.all(query, [mitgliedsgruppeId], (err, res) => {
+    sql.all(query, [mitgliedergruppeId], (err, res) => {
         if (err) {
-            console.log("Error while retrieveing Entry with mitgliedsgruppe_id: ", err)
+            console.log("Error while retrieveing Entry with mitgliedergruppe_id: ", err)
             result(err, null);
             return;
         }
         
         if(res) {
-            console.log("Found Entries with mitgliedsgruppe_id: ", res);
+            console.log("Found Entries with mitgliedergruppe_id: ", res);
             result(null, res);
             return;
         }
@@ -98,51 +98,51 @@ PersonMitgliedsgruppe.findByMitgliedsgruppe = (mitgliedsgruppeId, result) => {
     });
 };
 
-PersonMitgliedsgruppe.getAll = (result) => {
+PersonMitgliedergruppe.getAll = (result) => {
     const query = `
     SELECT 
         pm.person_id,
         p.vorname, p.nachname,
-        pm.mitgliedsgruppe_id, 
-        m.mitgliedsgruppe
+        pm.mitgliedergruppe_id, 
+        m.mitgliedergruppe
     FROM 
-        person_mitgliedsgruppe pm
+        person_mitgliedergruppe pm
     JOIN
         person p ON pm.person_id = p.id
     JOIN
-        mitgliedsgruppe m ON pm.mitgliedsgruppe_id = m.id
+        mitgliedergruppe m ON pm.mitgliedergruppe_id = m.id
     `;
 
     sql.all(query, [], (err, res) => {
         if (err) {
-            console.log("Error while retrieveing person_mitgliedsgruppe: ", err)
+            console.log("Error while retrieveing person_mitgliedergruppe: ", err)
             result(err, null);
             return;
         }
 
-        console.log("person_mitgliedsgruppe: ", res);
+        console.log("person_mitgliedergruppe: ", res);
         result(null, res);
     });
 };
 
-PersonMitgliedsgruppe.findCombination = (personId, mitgliedsgruppeId, result) => {
+PersonMitgliedergruppe.findCombination = (personId, mitgliedergruppeId, result) => {
     const query = `
     SELECT 
         pm.person_id,
         p.vorname, p.nachname,
-        pm.mitgliedsgruppe_id, 
-        m.mitgliedsgruppe
+        pm.mitgliedergruppe_id, 
+        m.mitgliedergruppe
     FROM 
-        person_mitgliedsgruppe pm
+        person_mitgliedergruppe pm
     JOIN
         person p ON pm.person_id = p.id
     JOIN
-        mitgliedsgruppe m ON pm.mitgliedsgruppe_id = m.id
+        mitgliedergruppe m ON pm.mitgliedergruppe_id = m.id
     WHERE 
-        person_id = ? AND mitgliedsgruppe_id = ?
+        person_id = ? AND mitgliedergruppe_id = ?
     `
 
-    sql.all(query, [personId, mitgliedsgruppeId], (err, res) => {
+    sql.all(query, [personId, mitgliedergruppeId], (err, res) => {
         if (err) {
             console.log("Error while retrivieng Entry with combination: ", err)
             result(err, null);
@@ -159,22 +159,22 @@ PersonMitgliedsgruppe.findCombination = (personId, mitgliedsgruppeId, result) =>
     });
 };
 
-PersonMitgliedsgruppe.update = (person_id, mitgliedsgruppe_id, pm, result) => {
+PersonMitgliedergruppe.update = (person_id, mitgliedergruppe_id, pm, result) => {
     const query = `
     UPDATE 
-        person_mitgliedsgruppe
+        person_mitgliedergruppe
     SET 
         person_id = ?, 
-        mitgliedsgruppe_id = ?
+        mitgliedergruppe_id = ?
     WHERE 
-        person_id = ? AND mitgliedsgruppe_id = ?
+        person_id = ? AND mitgliedergruppe_id = ?
     `;
 
     const values = [
         pm.person_id,
-        pm.mitgliedsgruppe_id,
+        pm.mitgliedergruppe_id,
         person_id,
-        mitgliedsgruppe_id
+        mitgliedergruppe_id
     ];
 
     sql.run(query, values, function(err) {
@@ -190,20 +190,20 @@ PersonMitgliedsgruppe.update = (person_id, mitgliedsgruppe_id, pm, result) => {
             return;
         }
 
-        console.log("Updated Entry: ", { person_id: pm.person_id, mitgliedsgruppe_id: pm.mitgliedsgruppe_id });
-        result(null, {  person_id: pm.person_id, mitgliedsgruppe_id: pm.mitgliedsgruppe_id });
+        console.log("Updated Entry: ", { person_id: pm.person_id, mitgliedergruppe_id: pm.mitgliedergruppe_id });
+        result(null, {  person_id: pm.person_id, mitgliedergruppe_id: pm.mitgliedergruppe_id });
     });
 };
 
-PersonMitgliedsgruppe.remove = (personId, mitgliedsgruppeId, result) => {
+PersonMitgliedergruppe.remove = (personId, mitgliedergruppeId, result) => {
     const query = `
     DELETE FROM 
-        person_mitgliedsgruppe
+        person_mitgliedergruppe
     WHERE 
-        person_id = ? AND mitgliedsgruppe_id = ?
+        person_id = ? AND mitgliedergruppe_id = ?
     `; 
 
-    sql.run(query, [personId, mitgliedsgruppeId], function(err) {
+    sql.run(query, [personId, mitgliedergruppeId], function(err) {
         if (err) {
             console.log("Error while deleting the Entry: ", err);
             result(err, null);
@@ -216,9 +216,9 @@ PersonMitgliedsgruppe.remove = (personId, mitgliedsgruppeId, result) => {
             return;
         }
 
-        console.log(`Deleted Entry: person_id=${personId}, mitgliedsgruppe_id=${mitgliedsgruppeId}`);
+        console.log(`Deleted Entry: person_id=${personId}, mitgliedergruppe_id=${mitgliedergruppeId}`);
         result(null, { message: "Succesfully deleted Entry!"});
     });
 };
 
-module.exports = PersonMitgliedsgruppe;
+module.exports = PersonMitgliedergruppe;

@@ -1,4 +1,4 @@
-const PersonMitgliedsgruppe = require("../model/personMitgliedsgruppe.model.js");
+const PersonMitgliedergruppe = require("../model/personMitgliedergruppe.model.js");
 
 //Create and Save a new Entry
 exports.create = (req, res) => {
@@ -10,12 +10,12 @@ exports.create = (req, res) => {
     }
 
     //Create a new Entry
-    const personMitgliedsgruppe = new PersonMitgliedsgruppe({
+    const personMitgliedergruppe = new PersonMitgliedergruppe({
         person_id: req.body.person_id,
-        mitgliedsgruppe_id: req.body.mitgliedsgruppe_id_id,
+        mitgliedergruppe_id: req.body.mitgliedergruppe_id_id,
     });
 
-    PersonMitgliedsgruppe.create(personMitgliedsgruppe, (err, data) => {
+    PersonMitgliedergruppe.create(personMitgliedergruppe, (err, data) => {
         if(err)
             return res.status(500).send({
                 message: 
@@ -27,7 +27,7 @@ exports.create = (req, res) => {
 
 // Retrieve all Entries from the database.
 exports.findAll = (req, res) => {
-    PersonMitgliedsgruppe.getAll((err, data) => {
+    PersonMitgliedergruppe.getAll((err, data) => {
         if (err)
             return res.status(500).send({
                 message:
@@ -39,7 +39,7 @@ exports.findAll = (req, res) => {
 
 // Find Entries with  person_id
 exports.findByPerson = (req, res) => {
-    PersonMitgliedsgruppe.findByPerson(req.params.person_id, (err, data) => {
+    PersonMitgliedergruppe.findByPerson(req.params.person_id, (err, data) => {
         if (err) {
             if (err.kind === "not_found") {
                 return res.status(404).send({
@@ -54,16 +54,16 @@ exports.findByPerson = (req, res) => {
     });
 };
 
-exports.findByMitgliedsgruppe = (req, res) => {
-    PersonMitgliedsgruppe.findByMitgliedsgruppe(req.params.mitgliedsgruppe_idid, (err, data) => {
+exports.findByMitgliedergruppe = (req, res) => {
+    PersonMitgliedergruppe.findByMitgliedergruppe(req.params.mitgliedergruppe_idid, (err, data) => {
         if (err) {
             if (err.kind === "not_found") {
                 return res.status(404).send({
-                    message: `Not found entry with mitgliedsgruppe_id ${req.params.mitgliedsgruppe_id}.`
+                    message: `Not found entry with mitgliedergruppe_id ${req.params.mitgliedergruppe_id}.`
                 });
             } else {
                 return res.status(500).send({
-                    message: "Error retrieving entry with mitgliedsgruppe_id " + req.params.mitgliedsgruppe_id
+                    message: "Error retrieving entry with mitgliedergruppe_id " + req.params.mitgliedergruppe_id
                 });
             }
         } else return res.send(data);
@@ -71,11 +71,11 @@ exports.findByMitgliedsgruppe = (req, res) => {
 };
 
 exports.findCombination = (req, res) => {
-    PersonMitgliedsgruppe.findCombination(req.params.person_id, req.params.mitgliedsgruppe_id, (err, data) => {
+    PersonMitgliedergruppe.findCombination(req.params.person_id, req.params.mitgliedergruppe_id, (err, data) => {
         if (err) {
             return res.status(500).send({
                 message:
-                    err.message || "Some error occurred while retrieving Person with Mitgliedsgruppe."
+                    err.message || "Some error occurred while retrieving Person with Mitgliedergruppe."
             });
         } else return res.send(data);
     });
@@ -90,25 +90,25 @@ exports.update = (req, res) => {
         });
     }
 
-    const personMitgliedsgruppe = new PersonMitgliedsgruppe({
+    const personMitgliedergruppe = new PersonMitgliedergruppe({
         person_id: req.body.person_id,
-        mitgliedsgruppe_id: req.body.mitgliedsgruppe_id,
+        mitgliedergruppe_id: req.body.mitgliedergruppe_id,
     });
 
-    PersonMitgliedsgruppe.update(
+    PersonMitgliedergruppe.update(
         req.params.person_id,
-        req.params.mitgliedsgruppe_id,
-        personMitgliedsgruppe,
+        req.params.mitgliedergruppe_id,
+        personMitgliedergruppe,
 
         (err, data) => {
             if (err) {
                 if (err.kind === "not_found") {
                     return res.status(404).send({
-                        message: `Not found person_id ${req.params.person_id} and mitgliedsgruppe_id ${req.params.mitgliedsgruppe_id}`
+                        message: `Not found person_id ${req.params.person_id} and mitgliedergruppe_id ${req.params.mitgliedergruppe_id}`
                     });
                 } else {
                     return res.status(500).send({
-                        message: "Error updating person_id " + req.params.person_id + " and mitgliedsgruppe_id " + req.params.mitgliedsgruppe_id
+                        message: "Error updating person_id " + req.params.person_id + " and mitgliedergruppe_id " + req.params.mitgliedergruppe_id
                     });
                 }
             } else return res.send(data);
@@ -117,15 +117,15 @@ exports.update = (req, res) => {
 };
 
 exports.delete = (req, res) => {
-    PersonMitgliedsgruppe.remove(req.params.person_id, req.params.mitgliedsgruppe_id, (err, data) => {
+    PersonMitgliedergruppe.remove(req.params.person_id, req.params.mitgliedergruppe_id, (err, data) => {
         if (err) {
             if (err.kind === "not_found") {
                 return res.status(404).send({
-                    message: `Not found entry with person_id ${req.params.person_id} and mitgliedsgruppe_id ${req.params.mitgliedsgruppe_id}.`
+                    message: `Not found entry with person_id ${req.params.person_id} and mitgliedergruppe_id ${req.params.mitgliedergruppe_id}.`
                 });
             } else {
                 return res.status(500).send({
-                    message: "Could not delete entry with person_id " + req.params.person_id + " and mitgliedsgruppe_id " + req.params.mitgliedsgruppe_id
+                    message: "Could not delete entry with person_id " + req.params.person_id + " and mitgliedergruppe_id " + req.params.mitgliedergruppe_id
                 });
             }
         } else {

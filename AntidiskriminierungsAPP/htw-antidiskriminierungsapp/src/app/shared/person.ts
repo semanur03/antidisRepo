@@ -9,7 +9,7 @@ export interface Person {
 
 export interface PersonView extends Person {
     sprache: string;
-    mitgliedsgruppe: string;
+    mitgliedergruppe: string;
     gremium: string;
     organisationseinheit: string;
 }
