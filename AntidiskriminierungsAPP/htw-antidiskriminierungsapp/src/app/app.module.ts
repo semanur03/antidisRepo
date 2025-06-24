@@ -20,9 +20,10 @@ import { ErrorComponent } from './error/error.component';
 import { MeldeformularComponent } from './meldeformular/meldeformular.component';
 import { KontaktformularComponent } from './kontaktformular/kontaktformular.component';
 import { FilterComponent } from './filter/filter.component';
+import { TranslationLoader } from './shared/translationLoader';
 
 export function httpTranslateLoaderFactory(http: HttpClient) {
-  return new TranslateHttpLoader(http);
+  return new TranslationLoader(http);
 }
 
 @NgModule({ declarations: [
@@ -49,7 +50,7 @@ export function httpTranslateLoaderFactory(http: HttpClient) {
             defaultLanguage: 'de',
             loader: {
                 provide: TranslateLoader,
-                useFactory: (http: HttpClient) => new TranslateHttpLoader(http, '../assets/i18n/', '.json'),
+                useFactory: httpTranslateLoaderFactory,
                 deps: [HttpClient],
             },
         })], providers: [provideHttpClient(withInterceptorsFromDi())] })
