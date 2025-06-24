@@ -170,7 +170,7 @@ app.get("/person-organisationseinheit/person/:person_id/organisationseinheit/:or
 app.put("/person-organisationseinheit/person/:person_id/organisationseinheit/:organisationseinheit_id", personOrganisationseinheit.update)
 
 //Delete an Entry in personorganisationseinheit with person_id
-app.delete("/person-organisationseinheit/person/:person_id/organisationseinheit/organisationseinheit_id", personOrganisationseinheit.delete);
+app.delete("/person-organisationseinheit/person/:person_id/organisationseinheit/:organisationseinheit_id", personOrganisationseinheit.delete);
 
 //////////////////////////////////////////////////////////////////////////////////////////
 
