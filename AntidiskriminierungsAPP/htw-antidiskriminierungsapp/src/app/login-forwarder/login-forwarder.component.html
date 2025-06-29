@@ -1,0 +1,23 @@
+<body>
+    <div class="container">
+        <div class="col-12">
+            <div class="header row">
+                <i class="col-1 fa-solid fa-chevron-left" [routerLink]="''"></i>
+                <h1 class="col-9">{{ 'login-forwarder.page.title.admin' | translate }}</h1>
+                <div class="col-1"></div>
+            </div>
+            <div>
+                <br>
+                <p [innerHTML]="'login-forwarder.page.p.1' | translate"></p>
+                <div class="buttons">
+                    <div>
+                        <button class="btn btn-primary" type="submit" [routerLink]="'/login'">{{ 'login-forwarder.page.button.login' | translate }}</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <br>
+    <br>
+</body>

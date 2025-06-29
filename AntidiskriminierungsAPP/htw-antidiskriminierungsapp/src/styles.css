@@ -40,3 +40,5 @@ h2 {
 .link-inside-translation {
     color: #76B900;
 }
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

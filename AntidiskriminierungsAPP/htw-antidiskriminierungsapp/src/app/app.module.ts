@@ -21,6 +21,8 @@ import { MeldeformularComponent } from './meldeformular/meldeformular.component'
 import { KontaktformularComponent } from './kontaktformular/kontaktformular.component';
 import { FilterComponent } from './filter/filter.component';
 import { TranslationLoader } from './shared/translationLoader';
+import { LoginForwarderComponent } from './login-forwarder/login-forwarder.component';
+import { RouterModule } from '@angular/router';
 
 export function httpTranslateLoaderFactory(http: HttpClient) {
   return new TranslationLoader(http);
@@ -41,11 +43,13 @@ export function httpTranslateLoaderFactory(http: HttpClient) {
         ErrorComponent,
         MeldeformularComponent,
         KontaktformularComponent,
-        FilterComponent
+        FilterComponent,
+        LoginForwarderComponent,
     ],
     bootstrap: [AppComponent], imports: [BrowserModule,
         AppRoutingModule,
         FormsModule,
+        RouterModule,
         TranslateModule.forRoot({
             defaultLanguage: 'de',
             loader: {

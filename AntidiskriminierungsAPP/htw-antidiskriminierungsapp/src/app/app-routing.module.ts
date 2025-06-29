@@ -12,6 +12,8 @@ import { ErrorComponent } from './error/error.component';
 import { MeldeformularComponent } from './meldeformular/meldeformular.component';
 import { KontaktformularComponent } from './kontaktformular/kontaktformular.component';
 import { FilterComponent } from './filter/filter.component';
+import { LoginComponent } from './login/login.component';
+import { LoginForwarderComponent } from './login-forwarder/login-forwarder.component';
 
 const routes: Routes = [
   { path: "", component: HomeComponent, pathMatch: 'full' },
@@ -25,7 +27,9 @@ const routes: Routes = [
   { path: 'error', component: ErrorComponent },
   { path: 'meldeformular', component: MeldeformularComponent },
   { path: 'kontaktformular', component: KontaktformularComponent },
-  { path: 'filter', component: FilterComponent }
+  { path: 'filter', component: FilterComponent },
+  { path: 'login', component: LoginComponent },
+  { path: 'login-forwarder', component: LoginForwarderComponent },
 ];
 
 @NgModule({
