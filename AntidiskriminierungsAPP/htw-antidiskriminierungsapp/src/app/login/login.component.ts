@@ -36,12 +36,12 @@ export class LoginComponent implements OnInit{
     this.auth.loginAdmin(username!, password!).subscribe({
         next: (response) => {
           console.log('login response',response);
-          if(response.status == 201)
+          if(response.status == 200 || response.status === 201)
           {
             this.auth.getOneAdminByUsername(username!).subscribe(
               (response) => {
                 this.auth.login(response);
-                this.router.navigate(['/mytasklist'])
+                this.router.navigate(['/imprint'])
               }
             )
           } else {

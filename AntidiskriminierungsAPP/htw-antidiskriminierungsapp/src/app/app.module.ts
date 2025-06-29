@@ -12,7 +12,7 @@ import { ContactlistComponent } from './contactlist/contactlist.component';
 import { HttpClient, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SuccessComponent } from './success/success.component';
 import { KontaktsuccessComponent } from './kontaktsuccess/kontaktsuccess.component';
 import { MeldesuccessComponent } from './meldesuccess/meldesuccess.component';
@@ -22,8 +22,15 @@ import { KontaktformularComponent } from './kontaktformular/kontaktformular.comp
 import { FilterComponent } from './filter/filter.component';
 import { TranslationLoader } from './shared/translationLoader';
 import { LoginForwarderComponent } from './login-forwarder/login-forwarder.component';
+import { LoginComponent } from './login/login.component';
 import { RouterModule } from '@angular/router';
 
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatCardModule } from '@angular/material/card';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 export function httpTranslateLoaderFactory(http: HttpClient) {
   return new TranslationLoader(http);
 }
@@ -44,12 +51,19 @@ export function httpTranslateLoaderFactory(http: HttpClient) {
         MeldeformularComponent,
         KontaktformularComponent,
         FilterComponent,
+        LoginComponent,
         LoginForwarderComponent,
     ],
-    bootstrap: [AppComponent], imports: [BrowserModule,
+    imports: [BrowserModule,
         AppRoutingModule,
         FormsModule,
         RouterModule,
+        ReactiveFormsModule,
+        MatCardModule,
+        MatFormFieldModule,
+        MatInputModule,
+        MatIconModule,
+        MatButtonModule,
         TranslateModule.forRoot({
             defaultLanguage: 'de',
             loader: {
@@ -57,5 +71,7 @@ export function httpTranslateLoaderFactory(http: HttpClient) {
                 useFactory: httpTranslateLoaderFactory,
                 deps: [HttpClient],
             },
-        })], providers: [provideHttpClient(withInterceptorsFromDi())] })
+        })], 
+        providers: [provideHttpClient(withInterceptorsFromDi())],
+        bootstrap: [AppComponent], })
 export class AppModule { }

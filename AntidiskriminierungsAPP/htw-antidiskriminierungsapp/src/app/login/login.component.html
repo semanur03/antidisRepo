@@ -1,1 +1,41 @@
-<p>login works haalloooooooooooo!</p>
+<form [formGroup]="loginForm" novalidate (ngSubmit)="onSubmit()" id="login-content" aria-labelledby="login-form-title">
+  <section>
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Login</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <div class="form-group">
+          <mat-form-field class="full-width">
+            <mat-label for="username">Nutzername</mat-label>
+            <input matInput id="username" placeholder="Nutzername" formControlName="username"
+                   aria-describedby="username-error">
+            <mat-icon matSuffix>person</mat-icon>
+            <mat-error *ngIf="loginForm.controls['username'].hasError('required')">
+              <strong>Nutzername erforderlich</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <div class="form-group">
+          <mat-form-field class="full-width">
+            <mat-label for="password">Passwort</mat-label>
+            <input matInput id="password" placeholder="Passwort" formControlName="password"
+                   [type]="hide ? 'password' : 'text'" aria-describedby="password-error">
+            <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+                    [attr.aria-pressed]="hide">
+              <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </button>
+            <mat-error id="password-error" *ngIf="loginForm.controls['password'].hasError('required')">
+              <strong>Passwort erforderlich</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-raised-button color="primary" type="submit">Login</button>
+      </mat-card-actions>
+    </mat-card>
+  </section>
+</form>
