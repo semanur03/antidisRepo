@@ -14,6 +14,7 @@ import { KontaktformularComponent } from './kontaktformular/kontaktformular.comp
 import { FilterComponent } from './filter/filter.component';
 import { LoginComponent } from './login/login.component';
 import { LoginForwarderComponent } from './login-forwarder/login-forwarder.component';
+import { AdminHomeComponent } from './admin/admin-home/admin-home.component';
 
 const routes: Routes = [
   { path: "", component: HomeComponent, pathMatch: 'full' },
@@ -30,6 +31,14 @@ const routes: Routes = [
   { path: 'filter', component: FilterComponent },
   { path: 'login', component: LoginComponent },
   { path: 'login-forwarder', component: LoginForwarderComponent },
+  { path: 'admin-home', component: AdminHomeComponent, 
+    //canActivate: [AuthGuard], // später aktivieren!
+    //children: [
+      //{ path: '', component:  },
+    //unterseiten hier angeben
+    // ... weitere
+  //]
+  },
 ];
 
 @NgModule({

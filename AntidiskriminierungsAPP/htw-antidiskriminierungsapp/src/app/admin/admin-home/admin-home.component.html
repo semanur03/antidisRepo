@@ -1,0 +1,26 @@
+<body>
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="header">
+          <h3>{{ 'home.page.title.welcome' | translate }}</h3>
+        </div>
+        <div>
+          <p class="bold">{{ 'home.page.p.1' | translate }}</p>
+          <p [innerHTML]="'home.page.p.2' | translate"></p>
+        </div>
+
+        <div class="buttons">
+          <div>
+            <button class="btn btn-primary" type="button" [routerLink]="['/admin/admins']">
+              Admins verwalten
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  <br>
+  <br>
+</body>
