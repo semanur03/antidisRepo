@@ -31,3 +31,16 @@ select :hover {
 option {
     height: 2rem;
 }
+
+.logout-button {
+  background: none;
+  border: none;
+  color: #979C9E;
+  cursor: pointer;
+  padding: 0;
+  font: inherit;
+}
+
+.logout-button:hover {
+  color: #76B900;
+}

@@ -13,6 +13,7 @@ import { MeldeformularComponent } from './meldeformular/meldeformular.component'
 import { KontaktformularComponent } from './kontaktformular/kontaktformular.component';
 import { FilterComponent } from './filter/filter.component';
 import { LoginComponent } from './login/login.component';
+import { AuthguardGuard } from './shared/authguard.guard';
 import { LoginForwarderComponent } from './login-forwarder/login-forwarder.component';
 import { AdminHomeComponent } from './admin/admin-home/admin-home.component';
 
@@ -32,7 +33,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'login-forwarder', component: LoginForwarderComponent },
   { path: 'admin-home', component: AdminHomeComponent, 
-    //canActivate: [AuthGuard], // später aktivieren!
+    canActivate: [AuthguardGuard], // später aktivieren!
     //children: [
       //{ path: '', component:  },
     //unterseiten hier angeben
