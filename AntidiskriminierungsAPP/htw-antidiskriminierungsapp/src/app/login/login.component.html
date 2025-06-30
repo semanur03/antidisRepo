@@ -33,6 +33,10 @@
         </div>
 
       </mat-card-content>
+      <!-- Fehlerhinweis, nur wenn errorMessage nicht leer ist -->
+      <div *ngIf="errorMessage" class="error-message" role="alert" aria-live="assertive">
+        {{ errorMessage }}
+      </div>
       <mat-card-actions>
         <button mat-raised-button color="primary" type="submit">Login</button>
       </mat-card-actions>

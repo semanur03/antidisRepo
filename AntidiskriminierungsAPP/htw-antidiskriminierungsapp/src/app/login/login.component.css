@@ -101,3 +101,16 @@ mat-icon-button:focus {
     width: 50%;
   }
 }
+
+.mat-error {
+  color: red; /* z.B. kräftiges Rot */
+  font-weight: bold; /* Optional: fett */
+}
+
+.error-message {
+  color: red;
+  margin: 12px 0;
+  font-weight: bold;
+  text-align: center;
+  font-family: HTWBerlinBold, sans-serif;
+}
