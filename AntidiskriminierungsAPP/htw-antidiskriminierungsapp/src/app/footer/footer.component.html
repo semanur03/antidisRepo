@@ -39,15 +39,15 @@
         <div class="col-3 text-center">
             <a class="nav-link" [routerLink]="'/privacypolicy'" routerLinkActive="active-link">{{ 'footer.privacy' | translate }}</a>
         </div>
-        <div class="col-1 text-center">
-            <button (click)="confirmLogout()" class="logout-button">
-                <i class="bi bi-box-arrow-right"></i> <!-- Logout-Icon -->
-            </button>
-        </div>
-        <div class="col-2 text-center" *ngIf="isLoggedIn">
+        <div class="col-1 text-center" *ngIf="isLoggedIn">
             <a [routerLink]="'/admin-home'" class="nav-link">
                 <i class="bi bi-house-door"></i>
             </a>
+        </div>
+        <div class="col-2 text-center">
+            <button (click)="confirmLogout()" class="logout-button">
+                <i class="bi bi-box-arrow-right"></i> <!-- Logout-Icon -->
+            </button>
         </div>
         <div class="col-1 text-center">
             <select [(ngModel)]="selectedLanguage" (ngModelChange)="selectLang()">
@@ -97,15 +97,15 @@
         <div class="col-3 text-center">
             <a class="nav-link" [routerLink]="'/privacypolicy'" routerLinkActive="active-link">{{ 'footer.privacy' | translate }}</a>
         </div>
-        <div class="col-1" text-center>
-            <button (click)="confirmLogout()" class="logout-button">
-                <i class="bi bi-box-arrow-right"></i> <!-- Logout-Icon -->
-            </button>
-        </div>
-        <div class="col-1 text-center" *ngIf="isLoggedIn">
+        <div class="col-1 text-left" *ngIf="isLoggedIn">
             <a [routerLink]="'/admin-home'" class="nav-link">
                 <i class="bi bi-house-door"></i>
             </a>
+        </div>
+        <div class="col-1 text-center">
+            <button (click)="confirmLogout()" class="logout-button">
+                <i class="bi bi-box-arrow-right"></i> <!-- Logout-Icon -->
+            </button>
         </div>
         <div class="col-2 text-center">
             <select [(ngModel)]="selectedLanguage" (ngModelChange)="selectLang()">
