@@ -40,7 +40,7 @@ export class LoginComponent implements OnInit{
           this.auth.getOneAdminByUsername(username!).subscribe(
             (admin) => {
               this.auth.login(admin);
-              this.router.navigate(['/imprint']);
+              this.router.navigate(['/admin-home']);
             }
           );
         } else {
