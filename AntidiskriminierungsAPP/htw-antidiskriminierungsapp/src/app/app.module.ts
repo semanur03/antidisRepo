@@ -24,6 +24,7 @@ import { TranslationLoader } from './shared/translationLoader';
 import { LoginForwarderComponent } from './login-forwarder/login-forwarder.component';
 import { LoginComponent } from './login/login.component';
 import { AdminHomeComponent } from './admin/admin-home/admin-home.component';
+import { AdminUpdateComponent } from './admin/admin-update/admin-update.component';
 import { RouterModule } from '@angular/router';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -58,6 +59,7 @@ export function httpTranslateLoaderFactory(http: HttpClient) {
         LoginComponent,
         LoginForwarderComponent,
         AdminHomeComponent,
+        AdminUpdateComponent,
     ],
     imports: [BrowserModule,
         AppRoutingModule,

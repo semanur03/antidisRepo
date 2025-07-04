@@ -1,0 +1,71 @@
+<form [formGroup]="updateForm" novalidate (ngSubmit)="onSubmit()" id="update-content" aria-labelledby="update-form-title">
+  <section>
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>{{ 'login.page.title' | translate }}</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <!-- Benutzername -->
+        <div class="form-group">
+          <mat-form-field class="full-width">
+            <mat-label for="username">{{ 'admin-update.page.n.1' | translate }}</mat-label>
+            <input matInput id="username" formControlName="username">
+            <mat-icon matSuffix>person</mat-icon>
+          </mat-form-field>
+        </div>
+        <!-- Email -->
+        <div class="form-group">
+          <mat-form-field class="full-width">
+            <mat-label for="email">{{ 'admin-update.page.n.2' | translate }}</mat-label>
+            <input matInput id="email" formControlName="email" type="email">
+            <mat-icon matSuffix>email</mat-icon>
+            <mat-error *ngIf="updateForm.controls['email'].hasError('email')">
+              Ungültige E-Mail-Adresse.
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <!-- Aktuelles Passwort -->
+        <div class="form-group">
+          <mat-form-field class="full-width">
+            <mat-label for="currentPassword">{{ 'admin-update.page.n.3' | translate }}</mat-label>
+            <input matInput id="currentPassword"
+                   formControlName="currentPassword"
+                   [type]="hideCurrent ? 'password' : 'text'">
+            <button mat-icon-button matSuffix (click)="hideCurrent = !hideCurrent" type="button"
+                    [attr.aria-label]="'Hide Password'"
+                    [attr.aria-pressed]="!hideCurrent">
+              <mat-icon>{{hideCurrent ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </button>
+            <mat-error *ngIf="updateForm.controls['currentPassword'].hasError('required')">
+              Aktuelles Passwort ist erforderlich.
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <!-- Neues Passwort -->
+        <div class="form-group">
+          <mat-form-field class="full-width">
+            <mat-label for="newPassword">{{ 'admin-update.page.n.4' | translate }}</mat-label>
+            <input matInput id="newPassword"
+                   formControlName="newPassword"
+                   [type]="hideNew ? 'password' : 'text'">
+            <button mat-icon-button matSuffix (click)="hideNew = !hideNew" type="button"
+                    [attr.aria-label]="'Hide Password'"
+                    [attr.aria-pressed]="!hideNew">
+              <mat-icon>{{hideNew ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </button>
+          </mat-form-field>
+        </div>
+      </mat-card-content>
+      <!-- Fehler/Erfolg -->
+      <div *ngIf="errorMessage" class="error-message" role="alert" aria-live="assertive">
+        {{ errorMessage }}
+      </div>
+      <div *ngIf="successMessage" class="success-message" role="status" aria-live="polite">
+        {{ successMessage }}
+      </div>
+      <mat-card-actions>
+        <button mat-raised-button color="primary" type="submit" [disabled]="!updateForm.valid">{{ 'admin-update.page.b.1' | translate }}</button>
+      </mat-card-actions>
+    </mat-card>
+  </section>
+</form>

@@ -8,7 +8,7 @@
         <div class="form-group">
           <mat-form-field class="full-width">
             <mat-label for="username">{{ 'login.page.n.1' | translate }}</mat-label>
-            <input matInput id="username" placeholder="Nutzername" formControlName="username"
+            <input matInput id="username" formControlName="username"
                    aria-describedby="username-error">
             <mat-icon matSuffix>person</mat-icon>
             <mat-error *ngIf="loginForm.controls['username'].hasError('required')">
@@ -20,7 +20,7 @@
         <div class="form-group">
           <mat-form-field class="full-width">
             <mat-label for="password">{{ 'login.page.n.2' | translate }}</mat-label>
-            <input matInput id="password" placeholder="Passwort" formControlName="password"
+            <input matInput id="password" formControlName="password"
                    [type]="hide ? 'password' : 'text'" aria-describedby="password-error">
             <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
                     [attr.aria-pressed]="hide">

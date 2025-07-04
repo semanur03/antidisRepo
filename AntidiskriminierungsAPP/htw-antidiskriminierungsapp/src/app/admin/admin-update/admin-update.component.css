@@ -1,0 +1,130 @@
+section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 4%;
+  margin-top: 5%;
+}
+
+mat-card {
+  width: 100%;
+  max-width: 500px;
+  padding: 24px;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  background-color: #ffffff !important;
+  color: #000 !important;
+  box-shadow: none;
+  font-family: HTWBerlinBold, sans-serif;
+}
+
+mat-card-title {
+  text-align: center;
+  font-size: 24px;
+  margin-bottom: 16px;
+  font-family: HTWBerlinBold, sans-serif;
+}
+
+/* Remove default dark box & fix input style */
+mat-form-field {
+  width: 100%;
+  background: transparent !important;
+}
+
+.mat-form-field-wrapper {
+  padding: 0 !important;
+  background: transparent !important;
+}
+
+.mat-form-field-flex {
+  background: transparent !important;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  padding: 0 8px;
+}
+
+input.mat-input-element {
+  background: #ffffff !important;
+  color: #000 !important;
+  font-family: HTWBerlinBold, sans-serif;
+}
+
+/* Label, button, and icon font consistency */
+mat-card-title,
+button,
+label,
+input,
+.mat-form-field label {
+  font-family: HTWBerlinBold, sans-serif;
+}
+
+/* Fix for mat-icon-button inside input */
+mat-icon-button {
+  margin-right: -12px;
+}
+
+mat-card-actions {
+  display: flex;
+  justify-content: center;
+  padding-top: 16px;
+}
+
+button[type="submit"] {
+  background-color: #76B900;
+  color: white;
+  width: 100%;
+  border-radius: 6px;
+  padding: 12px 0;
+  font-family: HTWBerlinBold, sans-serif;
+  border: none;
+  font-size: 16px;
+}
+
+button[type="submit"]:hover {
+  background-color: #75b900af;
+}
+
+button[disabled] {
+  opacity: 0.6;
+  cursor: not-allowed;
+  pointer-events: none; /* Optional: jegliche Pointer-Events deaktivieren */
+}
+
+input:focus,
+button:focus,
+mat-icon-button:focus {
+  outline: 3px solid #005fcc;
+  outline-offset: 2px;
+}
+
+/* Responsive tweaks */
+@media (min-width: 800px) {
+  mat-card {
+    max-width: 600px;
+  }
+
+  button[type="submit"] {
+    width: 50%;
+  }
+}
+
+.mat-error {
+  color: red; /* z.B. kräftiges Rot */
+  font-weight: bold; /* Optional: fett */
+}
+
+.error-message {
+  color: red;
+  margin: 12px 0;
+  font-weight: bold;
+  text-align: center;
+  font-family: HTWBerlinBold, sans-serif;
+}
+
+.success-message {
+  color: green;
+  margin: 12px 0;
+  font-weight: bold;
+  text-align: center;
+  font-family: HTWBerlinBold, sans-serif;
+}

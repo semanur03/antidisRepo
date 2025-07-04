@@ -16,6 +16,7 @@ import { LoginComponent } from './login/login.component';
 import { AuthguardGuard } from './shared/authguard.guard';
 import { LoginForwarderComponent } from './login-forwarder/login-forwarder.component';
 import { AdminHomeComponent } from './admin/admin-home/admin-home.component';
+import { AdminUpdateComponent } from './admin/admin-update/admin-update.component';
 
 const routes: Routes = [
   { path: "", component: HomeComponent, pathMatch: 'full' },
@@ -33,13 +34,16 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'login-forwarder', component: LoginForwarderComponent },
   { path: 'admin-home', component: AdminHomeComponent, 
-    canActivate: [AuthguardGuard], // später aktivieren!
+    canActivate: [AuthguardGuard],
     //children: [
       //{ path: '', component:  },
     //unterseiten hier angeben
     // ... weitere
   //]
   },
+  { path: 'admin-update', component: AdminUpdateComponent, 
+    canActivate: [AuthguardGuard]},
+    
 ];
 
 @NgModule({

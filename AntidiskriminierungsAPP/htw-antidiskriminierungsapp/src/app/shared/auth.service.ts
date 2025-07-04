@@ -11,7 +11,7 @@ import { environment } from 'src/environments/environment';
 
 export class AuthService {
   baseUrl = environment.apiUrl;
-  admin: Admin = {username: '', password: '', email: ''};
+  admin: Admin = {id: 0, username: '', password: '', email: ''};
   adminChange: Subject<Admin> = new Subject<Admin>();
   loggedIn = false;
   loggedInChange: Subject<boolean> = new Subject<boolean>();
@@ -50,8 +50,10 @@ export class AuthService {
   loginAdmin(username: string, password: string ): Observable<any>{
     return this.http.post(this.baseUrl + '/adm/login/', { username: username, password: password }, {observe: 'response'});
   }
-  // noch die Option observe: 'response' hinzugefügt wurde, um die gesamte Response zu erhalten und nicht nur den body als json
-  // können dadurch den Status der Response auswerten
+
+  updateAdmin(id: number, updates: any): Observable<any> {
+    return this.http.put(this.baseUrl + '/adm/' + id, updates);
+  }
 
   isLoggedin(): boolean {
     return this.loggedIn;
