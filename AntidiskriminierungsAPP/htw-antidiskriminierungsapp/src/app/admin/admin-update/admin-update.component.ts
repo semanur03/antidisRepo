@@ -45,6 +45,10 @@ export class AdminUpdateComponent implements OnInit{
       next: (res) => {
         this.translate.get('admin-update.page.sucess.update').subscribe(msg => {
           this.successMessage = msg; 
+
+          setTimeout(() => {
+            this.router.navigate(['/admin-home']);
+          }, 1500);
         });
         this.authService.adminChange.next(res.user);
         this.authService.admin = res.user;
@@ -52,7 +56,6 @@ export class AdminUpdateComponent implements OnInit{
       error: (err) => {
         console.error(err);
 
-      // Beispiel für verschiedene Fehlermeldungen, kannst du erweitern:
         if (err.error?.error === 'username_exists') {
           this.translate.get('admin-update.page.error.username_exists').subscribe(msg => this.errorMessage = msg);
         } else if (err.error?.error === 'email_exists') {
