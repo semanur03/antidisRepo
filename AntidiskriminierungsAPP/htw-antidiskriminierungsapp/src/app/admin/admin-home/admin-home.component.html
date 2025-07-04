@@ -12,12 +12,21 @@
 
         <div class="buttons">
           <div>
+            <button class="btn btn-primary" type="button" [routerLink]="['/admin-contacts']">
+              {{ 'admin-home.page.b.3' | translate }}
+            </button>
+          </div>
+          <div>
             <button class="btn btn-primary" type="button" [routerLink]="['/admin-update']">
               {{ 'admin-home.page.b.1' | translate }}
             </button>
           </div>
+          <div>
+            <button class="btn btn-primary" type="button" [routerLink]="['/admin-admins']">
+              {{ 'admin-home.page.b.2' | translate }}
+            </button>
+          </div>
         </div>
-
       </div>
     </div>
   </div>
