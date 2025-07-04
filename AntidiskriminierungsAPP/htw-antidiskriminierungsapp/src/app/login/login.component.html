@@ -2,8 +2,12 @@
   <section>
     <mat-card>
       <mat-card-header>
-        <mat-card-title>{{ 'login.page.title' | translate }}</mat-card-title>
+        <div class="header-content">
+            <i class="fa-solid fa-chevron-left back-icon" [routerLink]="['/admin-home']"></i>
+            <span class="header-title">{{ 'login.page.title' | translate }}</span>
+        </div>
       </mat-card-header>
+      <br>
       <mat-card-content>
         <div class="form-group">
           <mat-form-field class="full-width">

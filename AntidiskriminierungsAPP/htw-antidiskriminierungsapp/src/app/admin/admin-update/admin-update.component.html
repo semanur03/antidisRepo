@@ -1,9 +1,13 @@
 <form [formGroup]="updateForm" novalidate (ngSubmit)="onSubmit()" id="update-content" aria-labelledby="update-form-title">
   <section>
     <mat-card>
-      <mat-card-header>
-        <mat-card-title>{{ 'admin-update.page.title' | translate }}</mat-card-title>
-      </mat-card-header>
+    <mat-card-header>
+        <div class="header-content">
+            <i class="fa-solid fa-chevron-left back-icon" [routerLink]="['/admin-home']"></i>
+            <span class="header-title">{{ 'admin-update.page.title' | translate }}</span>
+        </div>
+    </mat-card-header>
+    <br>
       <mat-card-content>
         <!-- Benutzername -->
         <div class="form-group">
