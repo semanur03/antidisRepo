@@ -1,1 +1,53 @@
-<p>admin-management works!</p>
+<body>
+    <div class="container">
+        <div class="col-12">
+            <div class="header row">
+                <i class="col-1 fa-solid fa-chevron-left" [routerLink]="['/admin-home']"></i>
+                <h1 class="col-9">{{ 'admin-management.page.title' | translate }}</h1>
+                <div class="col-1"></div>
+            </div>
+            <div>
+                <h2>{{ 'admin-managemt.page.title.2' | translate }}</h2>
+                <h3>{{ 'admin-management.page.h.1' | translate }}</h3>
+
+                <table class="table table-striped table-hover">
+                    <thead>
+                    <tr>
+                        <th>{{ 'admin-managemt.page.table.th1' | translate }}</th>
+                        <th>{{ 'admin-managemt.page.table.th2' | translate }}</th>
+                        <th>{{ 'admin-managemt.page.table.th3' | translate }}</th>
+                        <th>{{ 'admin-managemt.page.table.th4' | translate }}</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr *ngFor="let admin of admins; let i = index; trackBy: trackByAdmin">
+                        <td>{{ i + 1 }}</td>
+                        <td>{{ admin.username }}</td>
+                        <td>{{ admin.email }}</td>
+                        <td>
+                        <i class="bi bi-trash btn btn-sm btn-danger" (click)="openDeleteModal(admin)" title="Löschen"></i>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <!-- Modal zum Löschen bestätigen -->
+                <ng-template #deleteModal let-modal>
+                    <div class="modal-header">
+                    <h4 class="modal-title">{{ 'admin-managemt.page.delete_modal.confirm' | translate }}</h4>
+                    </div>
+                    <div class="modal-body">
+                    <p>{{ 'admin-managemt.page.delete_modal.q.confirm.1' | translate }} <strong>{{ selectedAdmin?.username }}</strong> {{ 'admin-managemt.page.delete_modal.q.confirm.2' | translate }}</p>
+                    </div>
+                    <div class="modal-footer">
+                    <button class="btn btn-secondary" (click)="modal.dismiss()">{{ 'admin-managemt.page.delete_modal.btn_cancel' | translate }}</button>
+                    <button class="btn btn-danger" (click)="deleteAdmin(selectedAdmin?.id); modal.close()">{{ 'admin-managemt.page.delete_modal.btn_confirm' | translate }}</button>
+                    </div>
+                </ng-template>
+                </div>
+        </div>
+    </div>
+    <br>
+    <br>
+    <br>
+</body>
