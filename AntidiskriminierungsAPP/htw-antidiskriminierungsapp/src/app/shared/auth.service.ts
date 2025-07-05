@@ -55,6 +55,10 @@ export class AuthService {
     return this.http.put(this.baseUrl + '/adm/' + id, updates);
   }
 
+  deleteAdmin(id: number): Observable<any> {
+    return this.http.delete(this.baseUrl + '/adm/' + id, { observe: 'response' });
+  }
+
   isLoggedin(): boolean {
     return this.loggedIn;
   }
