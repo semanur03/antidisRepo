@@ -1,7 +1,6 @@
-// Datei bindet wir das Backend an
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, Subject } from 'rxjs'; // nutzen Subject für das Einlogg Icon
+import { Observable, Subject } from 'rxjs';
 import { Admin } from './admin';
 import { environment } from 'src/environments/environment';
 
@@ -42,7 +41,6 @@ export class AuthService {
     return this.http.get<Admin>(this.baseUrl + '/adm/email/' + email);
   }
 
-  // Registrierung
   registerAdmin(user:Admin): Observable<any> {
     return this.http.post(this.baseUrl + '/adm/register', user);
   }
@@ -74,7 +72,7 @@ export class AuthService {
   logout(): void {
     this.loggedIn = false;
     this.loggedInChange.next(this.loggedIn);
-    this.admin = {username: '', password: '', email: ''};
+    this.admin = {id: 0, username: '', password: '', email: ''};
     this.adminChange.next(this.admin);
   }
 }

@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../shared/auth.service';
-import { Admin } from '../shared/admin';
 
 @Component({
     selector: 'app-footer',
