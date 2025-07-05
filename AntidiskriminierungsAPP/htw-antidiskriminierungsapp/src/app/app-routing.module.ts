@@ -17,6 +17,7 @@ import { AuthguardGuard } from './shared/authguard.guard';
 import { LoginForwarderComponent } from './login-forwarder/login-forwarder.component';
 import { AdminHomeComponent } from './admin/admin-home/admin-home.component';
 import { AdminUpdateComponent } from './admin/admin-update/admin-update.component';
+import { AdminManagementComponent } from './admin/admin-management/admin-management.component';
 
 const routes: Routes = [
   { path: "", component: HomeComponent, pathMatch: 'full' },
@@ -34,14 +35,10 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'login-forwarder', component: LoginForwarderComponent },
   { path: 'admin-home', component: AdminHomeComponent, 
-    canActivate: [AuthguardGuard],
-    //children: [
-      //{ path: '', component:  },
-    //unterseiten hier angeben
-    // ... weitere
-  //]
-  },
+    canActivate: [AuthguardGuard]},
   { path: 'admin-update', component: AdminUpdateComponent, 
+    canActivate: [AuthguardGuard]},
+  { path: 'admin-management', component: AdminManagementComponent,
     canActivate: [AuthguardGuard]},
     
 ];
