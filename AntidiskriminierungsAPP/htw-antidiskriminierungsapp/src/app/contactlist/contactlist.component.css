@@ -4,6 +4,9 @@
 
 .card-title {
     color: #76B900;
+    font-size: 1.25rem;
+    font-weight: 500;
+    margin-bottom: 0.25rem;
 }
 
 .name-contact {
