@@ -58,8 +58,16 @@ export class AdminManagementComponent implements OnInit {
   }
 
   isNewAdminValid(): boolean {
-    return !!this.newAdmin.username && !!this.newAdmin.email && !!this.newAdmin.password;
+    const emailValid = this.isEmailValid(this.newAdmin.email);
+    const passwordValid = this.newAdmin.password.length >= 8;
+    return !!this.newAdmin.username && emailValid && passwordValid;
   }
+
+  isEmailValid(email: string): boolean {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  }
+
 
   openAddModal(): void {
     this.newAdmin = { id: 0, username: '', email: '', password: '' };
@@ -68,8 +76,8 @@ export class AdminManagementComponent implements OnInit {
   }
 
   saveNewAdmin(): void {
-    if (!this.newAdmin.username || !this.newAdmin.email || !this.newAdmin.password) {
-      this.errorMessage = 'Alle Felder müssen ausgefüllt sein!';
+    if (!this.isNewAdminValid()) {
+      this.errorMessage = 'Bitte überprüfe deine Eingaben!';
       return;
     }
 

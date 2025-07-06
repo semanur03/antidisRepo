@@ -61,16 +61,23 @@
                 <div class="modal-body">
                     <div class="mb-3">
                     <label for="username">Username:</label>
-                    <input id="username" type="text" class="form-control" [(ngModel)]="newAdmin.username" />
+                    <input id="username" type="text" class="form-control" [(ngModel)]="newAdmin.username" name="username" required/>
                     </div>
                     <div class="mb-3">
                     <label for="email">E-Mail:</label>
-                    <input id="email" type="email" class="form-control" [(ngModel)]="newAdmin.email" />
+                    <input id="email" type="email" class="form-control" [(ngModel)]="newAdmin.email" name="email" required email />
+                        <small class="text-danger" *ngIf="newAdmin.email && !isEmailValid(newAdmin.email)">
+                            Bitte eine gültige E-Mail-Adresse eingeben.
+                        </small>
                     </div>
                     <div class="mb-3">
                     <label for="password">Passwort:</label>
-                    <input id="password" type="password" class="form-control" [(ngModel)]="newAdmin.password" />
+                    <input id="password" type="password" class="form-control" [(ngModel)]="newAdmin.password" name="password" required minlength="8"/>
+                        <small class="text-danger" *ngIf="newAdmin.password && newAdmin.password.length < 8">
+                            Das Passwort muss mindestens 8 Zeichen lang sein.
+                        </small>
                     </div>
+
                 </div>
                 <div class="modal-footer">
                     <div *ngIf="errorMessage" class="alert alert-danger w-100 mb-2">
