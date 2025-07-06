@@ -3,17 +3,17 @@
         <div class="col-12">
             <div class="header row">
                 <i class="col-1 fa-solid fa-chevron-left" [routerLink]="['/admin-home']"></i>
-                <h1 class="col-9">{{ 'admin-management.page.title' | translate }}</h1>
+                <h1 class="col-9">{{ 'contact-management.page.title' | translate }}</h1>
             </div>
             <br>
             <div>
-                <h2>{{ 'admin-management.page.title.2' | translate }}</h2>
-                <h3>{{ 'admin-management.page.h.1' | translate }}</h3>
+                <h2>{{ 'contact-management.page.title.2' | translate }}</h2>
+                <h3>{{ 'contact-management.page.h.1' | translate }}</h3>
             </div>
 
             <div class="buttons">
           <div>
-            <button class="btn btn-primary" type="button" [routerLink]="['/admin-sprache']">
+            <button class="btn btn-primary" type="button" [routerLink]="['/contact-sprache']">
               Sprache
             </button>
           </div>
@@ -23,19 +23,120 @@
             </button>
           </div>
           <div>
-            <button class="btn btn-primary" type="button" [routerLink]="['/admin-mitgliedergruppe']">
+            <button class="btn btn-primary" type="button" [routerLink]="['/contact-mitgliedergruppe']">
               Mitgliedergruppe
             </button>
           </div>
           <div>
-            <button class="btn btn-primary" type="button" [routerLink]="['/admin-organisationseinheit']">
+            <button class="btn btn-primary" type="button" [routerLink]="['contact-organisationseinheit']">
               Organisationseinheit
             </button>
           </div>
         </div>
+        <br>
+        <!-- Add New Button -->
+        <div class="contact-add-container">
+          <span class="contact-add-label">{{ 'contact-management.page.h.2' | translate }}</span>
+          <button class="btn btn-sm contact-add-contact" (click)="openAddModal()">
+              <i class="bi bi-person-plus"></i>
+          </button>
         </div>
-    </div>
-    <br>
-    <br>
-    <br>
+
+        <div class="container table-responsive">
+          <!-- Mobile Cards -->
+          <div class="card d-md-none" style="width: 20rem; margin: 3%" *ngFor="let contact of contacts; trackBy: trackByContact">
+            <div class="card-body">
+              <div class="name-contact">
+                <p class="card-title">{{ contact.titel || '' }} {{ contact.vorname }} {{ contact.nachname }}</p>
+              </div>
+              <p class="card-text">{{ 'contact-management.phone' | translate }}: {{ contact.telefon || '' }}</p>
+              <p class="card-text">{{ 'contact-management.email' | translate }}: {{ contact.email }}</p>
+
+              <!-- Buttons -->
+              <button class="btn btn-warning me-2" (click)="openEditModal(contact)">
+                <i class="fa-solid fa-pen-to-square"></i>
+              </button>
+              <button class="btn btn-danger" (click)="openDeleteModal(contact)">
+                <i class="fa-solid fa-trash"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- Desktop Cards -->
+          <div class="card d-none d-md-block" style="width: 50rem; margin: 3%" *ngFor="let contact of contacts; trackBy: trackByContact">
+            <div class="card-body">
+              <div class="name-contact">
+                <h5 class="card-title">{{ contact.titel || '' }} {{ contact.vorname }} {{ contact.nachname }}</h5>
+              </div>
+              <p class="card-text">{{ 'contact-management.phone' | translate }}: {{ contact.telefon || '' }}</p>
+              <p class="card-text">{{ 'contact-management.email' | translate }}: {{ contact.email }}</p>
+
+              <!-- Buttons -->
+              <button class="btn btn-warning me-2" (click)="openEditModal(contact)">
+                <i class="fa-solid fa-pen-to-square"></i>
+              </button>
+              <button class="btn btn-danger" (click)="openDeleteModal(contact)">
+                <i class="fa-solid fa-trash"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- Modal: Hinzufügen -->
+          <ng-template #addModal>
+            <div class="modal-header">
+              <h4 class="modal-title">{{ 'contacts-management.modal.add.title' | translate }}</h4>
+            </div>
+            <div class="modal-body">
+              <input [(ngModel)]="newContact.titel" placeholder="{{ 'contactlist.title' | translate }}" class="form-control mb-2">
+              <input [(ngModel)]="newContact.vorname" placeholder="{{ 'contactlist.firstname' | translate }}" class="form-control mb-2">
+              <input [(ngModel)]="newContact.nachname" placeholder="{{ 'contactlist.lastname' | translate }}" class="form-control mb-2">
+              <input [(ngModel)]="newContact.telefon" placeholder="{{ 'contactlist.phone' | translate }}" class="form-control mb-2">
+              <input [(ngModel)]="newContact.email" placeholder="Email" class="form-control mb-2">
+
+              <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+            </div>
+            <div class="modal-footer">
+              <button class="btn btn-primary" (click)="saveNewContact()">{{ 'button.save' | translate }}</button>
+              <button class="btn btn-secondary" (click)="modalService.dismissAll()">{{ 'button.cancel' | translate }}</button>
+            </div>
+          </ng-template>
+
+          <!-- Modal: Bearbeiten -->
+          <ng-template #editModal>
+            <div class="modal-header">
+              <h4 class="modal-title">{{ 'contacts-management.modal.edit.title' | translate }}</h4>
+            </div>
+            <div class="modal-body">
+              <input [(ngModel)]="selectedContact!.titel" placeholder="{{ 'contactlist.title' | translate }}" class="form-control mb-2">
+              <input [(ngModel)]="selectedContact!.vorname" placeholder="{{ 'contactlist.firstname' | translate }}" class="form-control mb-2">
+              <input [(ngModel)]="selectedContact!.nachname" placeholder="{{ 'contactlist.lastname' | translate }}" class="form-control mb-2">
+              <input [(ngModel)]="selectedContact!.telefon" placeholder="{{ 'contactlist.phone' | translate }}" class="form-control mb-2">
+              <input [(ngModel)]="selectedContact!.email" placeholder="Email" class="form-control mb-2">
+            </div>
+            <div class="modal-footer">
+              <button class="btn btn-primary" (click)="saveUpdatedContact()">{{ 'button.save' | translate }}</button>
+              <button class="btn btn-secondary" (click)="modalService.dismissAll()">{{ 'button.cancel' | translate }}</button>
+            </div>
+          </ng-template>
+
+          <!-- Modal: Löschen -->
+          <ng-template #deleteModal>
+            <div class="modal-header">
+              <h4 class="modal-title">{{ 'contacts-management.modal.delete.title' | translate }}</h4>
+            </div>
+            <div class="modal-body">
+              {{ 'contacts-management.modal.delete.confirm' | translate }}
+              <strong>{{ selectedContact?.vorname }} {{ selectedContact?.nachname }}</strong>
+            </div>
+            <div class="modal-footer">
+              <button class="btn btn-danger" (click)="deleteContact(selectedContact?.id)">{{ 'button.delete' | translate }}</button>
+              <button class="btn btn-secondary" (click)="modalService.dismissAll()">{{ 'button.cancel' | translate }}</button>
+            </div>
+          </ng-template>
+        </div>
+      </div>
+  </div>
+  <br>
+  <br>
+  <br>
 </body>
