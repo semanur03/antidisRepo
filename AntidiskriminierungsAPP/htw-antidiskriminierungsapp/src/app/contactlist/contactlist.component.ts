@@ -28,38 +28,31 @@ export class ContactlistComponent implements OnInit {
   }
 
   filter(): ContactsView[] {
-    let filteredContacts = this.allcontacts;
+  let filteredContacts = this.allcontacts;
 
-    const mitgliedergruppe = this.filterService.getMitgliedergruppe();
-    const gremium = this.filterService.getGremium();
-    const gremium1 = this.filterService.getGremium1();
-    const gremium2 = this.filterService.getGremium2();
-    const organisationseinheit = this.filterService.getOrganisationseinheit();
-    const sprache = this.filterService.getSprache();
+  const mitgliedergruppe = this.filterService.getMitgliedergruppe();
+  const gremium = this.filterService.getGremium();
+  const organisationseinheit = this.filterService.getOrganisationseinheit();
+  const sprache = this.filterService.getSprache();
 
-    if (mitgliedergruppe || gremium || gremium1 || gremium2 || organisationseinheit || sprache) {
-      filteredContacts = filteredContacts.filter(contact =>
-        // Mitgleidergruppe-Filter (nur wenn gesetzt)
-        (!mitgliedergruppe || contact.mitgliedergruppe === mitgliedergruppe) &&
-        // Gremium-Filter: mind. eins der drei gremium-Felder muss passen, wenn einer gesetzt ist
-        (
-          (gremium !== "" && (contact.gremium === gremium || contact.gremium1 === gremium || contact.gremium2 === gremium)) ||
-          (gremium1 !== "" && (contact.gremium === gremium1 || contact.gremium1 === gremium1 || contact.gremium2 === gremium1)) ||
-          (gremium2 !== "" && (contact.gremium === gremium2 || contact.gremium1 === gremium2 || contact.gremium2 === gremium2)) ||
-          // Falls kein Gremium-Filter gesetzt ist, immer true
-          (gremium === "" && gremium1 === "" && gremium2 === "")
-        ) &&
-        // Organisationsfilter (nur wenn gesetzt)
-        (!organisationseinheit || contact.organisationseinheit === organisationseinheit) &&
-        // Sprachfilter (nur wenn gesetzt)
-        (!sprache || contact.sprache === sprache)
+  if (mitgliedergruppe || gremium || organisationseinheit || sprache) {
+    filteredContacts = filteredContacts.filter(contact => {
+      const mitgliedergruppeMatch = !mitgliedergruppe || contact.mitgliedergruppe === mitgliedergruppe;
+      const gremiumMatch = !gremium || (
+        contact.gremium === gremium ||
+        contact.gremium1 === gremium ||
+        contact.gremium2 === gremium
       );
-    }
-    if (filteredContacts.length < this.allcontacts.length) {
-      this.showFilterMsg();
-    }
-    return filteredContacts;
+      const organisationseinheitMatch = !organisationseinheit || (contact.organisationseinheit && contact.organisationseinheit.includes(organisationseinheit));
+      const spracheMatch = !sprache || (contact.sprache && contact.sprache.includes(sprache));
+      return mitgliedergruppeMatch && gremiumMatch && organisationseinheitMatch && spracheMatch;
+    });
   }
+  if (filteredContacts.length < this.allcontacts.length) {
+    this.showFilterMsg();
+  }
+  return filteredContacts;
+}
 
   contactPerson(emailToBeShared: string, titelToBeShared: string, vornameToBeShared: string, nachnameToBeShared: string) {
     this.emailService.setContactPersonEmail(emailToBeShared);
