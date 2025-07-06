@@ -1,1 +1,41 @@
-<p>contact-management works!</p>
+<body>
+    <div class="container">
+        <div class="col-12">
+            <div class="header row">
+                <i class="col-1 fa-solid fa-chevron-left" [routerLink]="['/admin-home']"></i>
+                <h1 class="col-9">{{ 'admin-management.page.title' | translate }}</h1>
+            </div>
+            <br>
+            <div>
+                <h2>{{ 'admin-management.page.title.2' | translate }}</h2>
+                <h3>{{ 'admin-management.page.h.1' | translate }}</h3>
+            </div>
+
+            <div class="buttons">
+          <div>
+            <button class="btn btn-primary" type="button" [routerLink]="['/admin-sprache']">
+              Sprache
+            </button>
+          </div>
+          <div>
+            <button class="btn btn-primary" type="button" [routerLink]="['/contact-gremium']">
+              Gremium
+            </button>
+          </div>
+          <div>
+            <button class="btn btn-primary" type="button" [routerLink]="['/admin-mitgliedergruppe']">
+              Mitgliedergruppe
+            </button>
+          </div>
+          <div>
+            <button class="btn btn-primary" type="button" [routerLink]="['/admin-organisationseinheit']">
+              Organisationseinheit
+            </button>
+          </div>
+        </div>
+        </div>
+    </div>
+    <br>
+    <br>
+    <br>
+</body>
