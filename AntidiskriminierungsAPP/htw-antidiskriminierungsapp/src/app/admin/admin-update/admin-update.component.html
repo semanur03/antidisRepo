@@ -23,8 +23,14 @@
             <mat-label for="email">{{ 'admin-update.page.n.2' | translate }}</mat-label>
             <input matInput id="email" formControlName="email" type="email">
             <mat-icon matSuffix>email</mat-icon>
-            <mat-error *ngIf="updateForm.controls['email'].hasError('email')">
-              Ungültige E-Mail-Adresse.
+            <!-- Fehler für required -->
+            <mat-error *ngIf="updateForm.controls['email'].hasError('required')">
+              {{ 'admin-update.page.error.email_required' | translate }}
+            </mat-error>
+
+            <!-- Fehler für ungültige E-Mail -->
+            <mat-error *ngIf="updateForm.controls['email'].hasError('email') && !updateForm.controls['email'].hasError('required')">
+              {{ 'admin-update.page.error.invalid_email' | translate }}
             </mat-error>
           </mat-form-field>
         </div>
@@ -41,7 +47,7 @@
               <mat-icon>{{hideCurrent ? 'visibility_off' : 'visibility'}}</mat-icon>
             </button>
             <mat-error *ngIf="updateForm.controls['currentPassword'].hasError('required')">
-              Aktuelles Passwort ist erforderlich.
+              {{ 'admin-update.page.error.current_password_required' | translate }}
             </mat-error>
           </mat-form-field>
         </div>
@@ -57,6 +63,9 @@
                     [attr.aria-pressed]="!hideNew">
               <mat-icon>{{hideNew ? 'visibility_off' : 'visibility'}}</mat-icon>
             </button>
+            <mat-error *ngIf="updateForm.controls['newPassword'].hasError('minlength')">
+              {{ 'admin-update.page.error.password_min_length' | translate }}
+            </mat-error>
           </mat-form-field>
         </div>
       </mat-card-content>

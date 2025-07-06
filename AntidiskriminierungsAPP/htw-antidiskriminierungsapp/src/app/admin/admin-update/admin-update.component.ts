@@ -21,9 +21,9 @@ export class AdminUpdateComponent implements OnInit{
   ) {
     this.updateForm = this.fb.group({
       username: [this.authService.admin.username, []],
-      email: [this.authService.admin.email, [Validators.email]],
+      email: [this.authService.admin.email, [Validators.required, Validators.email]],
       currentPassword: ['', [Validators.required]],
-      newPassword: ['']
+      newPassword: ['', [Validators.minLength(8)]]
     });
   }
 
