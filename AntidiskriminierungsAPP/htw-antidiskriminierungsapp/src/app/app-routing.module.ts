@@ -18,6 +18,7 @@ import { LoginForwarderComponent } from './login-forwarder/login-forwarder.compo
 import { AdminHomeComponent } from './admin/admin-home/admin-home.component';
 import { AdminUpdateComponent } from './admin/admin-update/admin-update.component';
 import { AdminManagementComponent } from './admin/admin-management/admin-management.component';
+import { ContactManagementComponent } from './admin/contact-management/contact-management.component';
 
 const routes: Routes = [
   { path: "", component: HomeComponent, pathMatch: 'full' },
@@ -40,7 +41,8 @@ const routes: Routes = [
     canActivate: [AuthguardGuard]},
   { path: 'admin-management', component: AdminManagementComponent,
     canActivate: [AuthguardGuard]},
-    
+  { path: 'contact-management', component: ContactManagementComponent,
+    canActivate: [AuthguardGuard]},
 ];
 
 @NgModule({
