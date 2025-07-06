@@ -1,8 +1,9 @@
 import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
 import { BackendService } from 'src/app/shared/backend.service';
-import { Contacts } from 'src/app/shared/contacts';
+import { Contacts, ContactsView } from 'src/app/shared/contacts';
 import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateService } from '@ngx-translate/core';
+import { ContactsService } from 'src/app/shared/contacts.service';
 
 
 @Component({
@@ -14,6 +15,8 @@ import { TranslateService } from '@ngx-translate/core';
 export class ContactManagementComponent implements OnInit {
   contacts: Contacts[] = [];
   selectedContact?: Contacts;
+
+  allcontacts: ContactsView[] = [];
 
   newContact: Contacts = {
     id: 0,
@@ -30,16 +33,13 @@ export class ContactManagementComponent implements OnInit {
   @ViewChild('addModal') addModal!: TemplateRef<any>;
   @ViewChild('editModal') editModal!: TemplateRef<any>;
 
-  constructor(private backendService: BackendService, public modalService: NgbModal, config: NgbModalConfig, private translate: TranslateService) {
+  constructor(private backendService: BackendService, private service: ContactsService, public modalService: NgbModal, config: NgbModalConfig, private translate: TranslateService) {
     config.backdrop = 'static';  // Klick außerhalb schließt Modal NICHT
     config.keyboard = false; // ESC-Taste schließt Modal NICHT
   }
 
-  loadContacts(): void {
-    this.backendService.getAllPerson().subscribe({
-      next: (data) => this.contacts = data,
-      error: (err) => console.error('Fehler beim Laden der Kontakte', err)
-    });
+   loadContacts(): void {
+    this.service.getAllContacts().then(data => this.allcontacts = data);
   }
 
   openDeleteModal(contact: Contacts): void {
@@ -105,7 +105,7 @@ export class ContactManagementComponent implements OnInit {
     return !!(this.newContact.vorname && this.newContact.nachname && this.newContact.email);
   }
 
-  trackByContact(index: number, contact: Contacts): number {
+  trackByContact(index: number, contact: ContactsView): number {
     return contact.id;
   }
 
