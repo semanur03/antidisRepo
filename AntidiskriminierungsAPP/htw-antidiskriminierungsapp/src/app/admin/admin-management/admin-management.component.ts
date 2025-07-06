@@ -12,8 +12,15 @@ import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 export class AdminManagementComponent implements OnInit {
   admins: Admin[] = [];
   selectedAdmin?: Admin;
+  newAdmin: Admin = {
+    id: 0,
+    username: '',
+    email: '',
+    password: ''
+  };
 
   @ViewChild('deleteModal') deleteModal!: TemplateRef<any>;
+  @ViewChild('addModal') addModal!: TemplateRef<any>; 
 
   constructor(private authService: AuthService, private modalService: NgbModal, config: NgbModalConfig ) {
   config.backdrop = 'static';  // Klick außerhalb schließt Modal NICHT
@@ -45,6 +52,26 @@ export class AdminManagementComponent implements OnInit {
         console.log('Admin gelöscht:', id);
       },
       error: (err) => console.error('Fehler beim Löschen', err)
+    });
+  }
+
+  openAddModal(): void {
+    this.newAdmin = { id: 0, username: '', email: '', password: '' };
+    this.modalService.open(this.addModal);
+  }
+
+  saveNewAdmin(): void {
+    if (!this.newAdmin.username || !this.newAdmin.email || !this.newAdmin.password) {
+      console.warn('Alle Felder müssen ausgefüllt sein!');
+      return;
+    }
+
+    this.authService.registerAdmin(this.newAdmin).subscribe({
+      next: (res) => {
+        console.log('Admin erfolgreich hinzugefügt', res);
+        this.loadAdmins();
+      },
+      error: (err) => console.error('Fehler beim Hinzufügen', err),
     });
   }
 
