@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
 import { AuthService } from 'src/app/shared/auth.service';
 import { Admin } from 'src/app/shared/admin';
 import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-admin-management',
@@ -24,7 +25,7 @@ export class AdminManagementComponent implements OnInit {
   @ViewChild('deleteModal') deleteModal!: TemplateRef<any>;
   @ViewChild('addModal') addModal!: TemplateRef<any>; 
 
-  constructor(private authService: AuthService, private modalService: NgbModal, config: NgbModalConfig ) {
+  constructor(private authService: AuthService, private modalService: NgbModal, config: NgbModalConfig, private translate: TranslateService ) {
   config.backdrop = 'static';  // Klick außerhalb schließt Modal NICHT
   config.keyboard = false; // ESC-Taste schließt Modal NICHT
   }
@@ -77,7 +78,9 @@ export class AdminManagementComponent implements OnInit {
 
   saveNewAdmin(): void {
     if (!this.isNewAdminValid()) {
-      this.errorMessage = 'Bitte überprüfe deine Eingaben!';
+      this.translate.get('admin-management.page.add_modal.error.check_entries').subscribe(msg => {
+        this.errorMessage = msg;
+      });
       return;
     }
 
@@ -96,7 +99,9 @@ export class AdminManagementComponent implements OnInit {
         if (err.error?.error) {
           this.errorMessage = err.error.error;
         } else {
-          this.errorMessage = 'Ein unbekannter Fehler ist aufgetreten.';
+          this.translate.get('admin-management.page.add_modal.error.unknown').subscribe(msg => {
+            this.errorMessage = msg;
+          });
         }
       },
     });
