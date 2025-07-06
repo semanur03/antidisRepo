@@ -39,6 +39,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 export function httpTranslateLoaderFactory(http: HttpClient) {
   return new TranslationLoader(http);
 }
@@ -87,7 +88,8 @@ export function httpTranslateLoaderFactory(http: HttpClient) {
         }),
         MatTableModule,
         MatPaginatorModule,
-        MatSortModule], 
+        MatSortModule,
+        NgMultiSelectDropDownModule.forRoot(),], 
         providers: [provideHttpClient(withInterceptorsFromDi())],
         bootstrap: [AppComponent], })
 export class AppModule { }
