@@ -19,6 +19,8 @@ export class AdminManagementComponent implements OnInit {
     password: ''
   };
 
+  errorMessage: string | null = null;
+
   @ViewChild('deleteModal') deleteModal!: TemplateRef<any>;
   @ViewChild('addModal') addModal!: TemplateRef<any>; 
 
@@ -55,23 +57,40 @@ export class AdminManagementComponent implements OnInit {
     });
   }
 
+  isNewAdminValid(): boolean {
+    return !!this.newAdmin.username && !!this.newAdmin.email && !!this.newAdmin.password;
+  }
+
   openAddModal(): void {
     this.newAdmin = { id: 0, username: '', email: '', password: '' };
+    this.errorMessage = null;
     this.modalService.open(this.addModal);
   }
 
   saveNewAdmin(): void {
     if (!this.newAdmin.username || !this.newAdmin.email || !this.newAdmin.password) {
-      console.warn('Alle Felder müssen ausgefüllt sein!');
+      this.errorMessage = 'Alle Felder müssen ausgefüllt sein!';
       return;
     }
+
+    this.errorMessage = null;
 
     this.authService.registerAdmin(this.newAdmin).subscribe({
       next: (res) => {
         console.log('Admin erfolgreich hinzugefügt', res);
         this.loadAdmins();
+        this.modalService.dismissAll(); //Modal wird nur geschlossen wenn kein error
+        this.newAdmin = { id: 0, username: '', email: '', password: '' };
       },
-      error: (err) => console.error('Fehler beim Hinzufügen', err),
+      error: (err) => {
+        console.error('Fehler beim Hinzufügen', err);
+
+        if (err.error?.error) {
+          this.errorMessage = err.error.error;
+        } else {
+          this.errorMessage = 'Ein unbekannter Fehler ist aufgetreten.';
+        }
+      },
     });
   }
 

@@ -39,7 +39,7 @@
                     </tbody>
                 </table>
 
-                <!-- Modal zum Löschen bestätigen -->
+                <!-- Modal: Löschen bestätigen -->
                 <ng-template #deleteModal let-modal>
                     <div class="modal-header">
                     <h4 class="modal-title">{{ 'admin-managemt.page.delete_modal.confirm' | translate }}</h4>
@@ -73,15 +73,21 @@
                     </div>
                 </div>
                 <div class="modal-footer">
+                    <div *ngIf="errorMessage" class="alert alert-danger w-100 mb-2">
+                        {{ errorMessage }}
+                    </div>
                     <button class="btn btn-secondary" (click)="modal.dismiss()">
                     {{ 'admin-managemt.page.delete_modal.btn_cancel' | translate }}
                     </button>
-                    <button class="btn btn-success" (click)="saveNewAdmin(); modal.close()">
-                    {{ 'admin-management.page.add_modal.btn_confirm' | translate }}
+                    <button 
+                        class="btn btn-success" 
+                        [disabled]="!isNewAdminValid()"
+                        (click)="saveNewAdmin()" >
+                        {{ 'admin-management.page.add_modal.btn_confirm' | translate }}
                     </button>
                 </div>
                 </ng-template>
-                </div>
+            </div>
         </div>
     </div>
     <br>
