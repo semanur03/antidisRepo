@@ -22,6 +22,8 @@ export class ContactManagementComponent implements OnInit {
 
   sprachen: Sprache[] = []; // Neue Eigenschaft für Sprachen
   selectedSpracheIds: number[] = [];
+  selectedEditSpracheIds: number[] = [];
+
 
   newContact: Contacts = {
     id: 0,
@@ -130,19 +132,63 @@ export class ContactManagementComponent implements OnInit {
 
   openEditModal(contact: Contacts): void {
     this.selectedContact = { ...contact };
-    this.modalService.open(this.editModal);
+    this.backendService.getAllPersonSpracheByPersonId(contact.id).subscribe({
+      next: (personSprachen) => {
+        this.selectedEditSpracheIds = personSprachen.map(ps => ps.sprache_id);
+        this.modalService.open(this.editModal);
+      },
+      error: (err) => console.error('Fehler beim Laden der Sprachzuordnungen', err)
+    });
+  }
+
+  isEditSpracheSelected(spracheId: number): boolean {
+    return this.selectedEditSpracheIds.includes(spracheId);
+  }
+
+  toggleEditSpracheSelection(spracheId: number): void {
+    const index = this.selectedEditSpracheIds.indexOf(spracheId);
+    if (index === -1) {
+      this.selectedEditSpracheIds.push(spracheId);
+    } else {
+      this.selectedEditSpracheIds.splice(index, 1);
+    }
   }
 
   saveUpdatedContact(): void {
     if (!this.selectedContact?.id) return;
 
     this.backendService.updatePerson(this.selectedContact.id, this.selectedContact).subscribe({
-      next: (res) => {
-        console.log('Kontakt aktualisiert:', res);
-        this.loadContacts();
-        this.modalService.dismissAll();
+      next: () => {
+        console.log('Kontakt aktualisiert.');
+
+        // Zuerst alle alten Sprachzuordnungen löschen
+        this.backendService.getAllPersonSpracheByPersonId(this.selectedContact!.id!).subscribe({
+          next: (oldSprachen) => {
+            const deleteRequests = oldSprachen.map(ps =>
+              this.backendService.deletePersonSprache(ps.person_id, ps.sprache_id).toPromise()
+            );
+
+            Promise.all(deleteRequests).then(() => {
+              // Neue Sprachzuordnungen speichern
+              const addRequests = this.selectedEditSpracheIds.map(spracheId => {
+                const personSprache: PersonSprache = {
+                  person_id: this.selectedContact!.id!,
+                  sprache_id: spracheId
+                };
+                return this.backendService.createPersonSprache(personSprache).toPromise();
+              });
+
+              Promise.all(addRequests).then(() => {
+                this.loadContacts();
+                this.modalService.dismissAll();
+                this.selectedEditSpracheIds = [];
+              });
+            });
+          },
+          error: (err) => console.error('Fehler beim Laden der alten Sprachzuordnungen', err)
+        });
       },
-      error: (err) => console.error('Fehler beim Aktualisieren', err)
+      error: (err) => console.error('Fehler beim Aktualisieren der Person', err)
     });
   }
 

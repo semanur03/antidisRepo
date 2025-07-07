@@ -140,6 +140,20 @@
               <input [(ngModel)]="selectedContact!.telefon" placeholder="{{ 'contactlist.phone' | translate }}" class="form-control mb-2">
               <input [(ngModel)]="selectedContact!.email" placeholder="Email" class="form-control mb-2">
             </div>
+            <!-- Sprach-Checkboxen -->
+            <div class="mb-3">
+              <label class="form-label">{{ 'contactlist.language' | translate }}</label>
+              <div *ngFor="let sprache of sprachen" class="form-check">
+                <input class="form-check-input"
+                      type="checkbox"
+                      [id]="'edit_sprache_' + sprache.id"
+                      [checked]="isEditSpracheSelected(sprache.id)"
+                      (change)="toggleEditSpracheSelection(sprache.id)">
+                <label class="form-check-label" [for]="'edit_sprache_' + sprache.id">
+                  {{ sprache.sprache }}
+                </label>
+              </div>
+            </div>
             <div class="modal-footer">
               <button class="btn btn-primary" (click)="saveUpdatedContact()">{{ 'button.save' | translate }}</button>
               <button class="btn btn-secondary" (click)="modalService.dismissAll()">{{ 'button.cancel' | translate }}</button>
