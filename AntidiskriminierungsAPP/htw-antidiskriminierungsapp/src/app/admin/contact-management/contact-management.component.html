@@ -106,7 +106,7 @@
               <input [(ngModel)]="newContact.nachname" placeholder="{{ 'contactlist.lastname' | translate }}" class="form-control mb-2">
               <input [(ngModel)]="newContact.telefon" placeholder="{{ 'contactlist.phone' | translate }}" class="form-control mb-2">
               <input [(ngModel)]="newContact.email" placeholder="Email" class="form-control mb-2">
-              <!-- Dropdown für Sprachen -->
+              <!-- Checkbox für Sprachen -->
               <div class="mb-3">
                 <label class="form-label">{{ 'contactlist.language' | translate }}</label>
                 <div *ngFor="let sprache of sprachen" class="form-check">
@@ -120,6 +120,21 @@
                   </label>
                 </div>
               </div>
+              <!-- Checkbox für Gremien -->
+              <div class="mb-3">
+              <label class="form-label">{{ 'contactlist.committee' | translate }}</label>
+              <div *ngFor="let gremium of gremien" class="form-check">
+                <input class="form-check-input" 
+                      type="checkbox" 
+                      [id]="'gremium_' + gremium.id"
+                      [checked]="isGremiumSelected(gremium.id)"
+                      (change)="toggleGremiumSelection(gremium.id)">
+                <label class="form-check-label" [for]="'gremium_' + gremium.id">
+                  {{ gremium.gremium | translate}}
+                </label>
+              </div>
+            </div>
+
               <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
             </div>
             <div class="modal-footer">
@@ -154,6 +169,21 @@
                 </label>
               </div>
             </div>
+            <!-- Gremium-Checkboxen -->
+            <div class="mb-3">
+              <label class="form-label">{{ 'contactlist.committee' | translate }}</label>
+              <div *ngFor="let gremium of gremien" class="form-check">
+                <input class="form-check-input"
+                      type="checkbox"
+                      [id]="'edit_gremium_' + gremium.id"
+                      [checked]="isEditGremiumSelected(gremium.id)"
+                      (change)="toggleEditGremiumSelection(gremium.id)">
+                <label class="form-check-label" [for]="'edit_gremium_' + gremium.id">
+                  {{ gremium.gremium }}
+                </label>
+              </div>
+            </div>
+
             <div class="modal-footer">
               <button class="btn btn-primary" (click)="saveUpdatedContact()">{{ 'button.save' | translate }}</button>
               <button class="btn btn-secondary" (click)="modalService.dismissAll()">{{ 'button.cancel' | translate }}</button>
