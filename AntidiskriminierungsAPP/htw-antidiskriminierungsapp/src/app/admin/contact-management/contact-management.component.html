@@ -169,8 +169,20 @@
                   </label>
                 </div>
               </div>
-
-
+              <!-- Checkbox für Organisationseinheiten -->
+              <div class="mb-3">
+                <label class="form-label">*{{ 'contactlist.language' | translate }}</label>
+                <div *ngFor="let organisationseinheit of organisationseinheiten" class="form-check">
+                  <input class="form-check-input" 
+                        type="checkbox" 
+                        [id]="'organisationseinheit_' + organisationseinheit.id"
+                        [checked]="isOrganisationseinheitSelected(organisationseinheit.id)"
+                        (change)="toggleOrganisationseinheitSelection(organisationseinheit.id)">
+                  <label class="form-check-label" [for]="'organisationseinheit_' + organisationseinheit.id">
+                    {{ (organisationseinheit.organisationseinheit || '') | translate }}
+                  </label>
+                </div>
+              </div>
               <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
             </div>
             <div class="modal-footer">
@@ -260,7 +272,20 @@
                   </label>
                 </div>
               </div>
-
+               <!-- Organisationseinheit-Checkboxen -->
+              <div class="mb-3">
+                <label class="form-label">*{{ 'contactlist.language' | translate }}</label>
+                <div *ngFor="let organisationseinheit of organisationseinheiten" class="form-check">
+                  <input class="form-check-input"
+                        type="checkbox"
+                        [id]="'edit_organisationseinheit_' + organisationseinheit.id"
+                        [checked]="isEditOrganisationseinheitSelected(organisationseinheit.id)"
+                        (change)="toggleEditOrganisationseinheitSelection(organisationseinheit.id)">
+                  <label class="form-check-label" [for]="'edit_organisationseinheit_' + organisationseinheit.id">
+                    {{ (organisationseinheit.organisationseinheit || '') | translate }}
+                  </label>
+                </div>
+              </div>
             </div>
             <div class="modal-footer">
               <div *ngIf="errorMessage" class="alert alert-danger w-100 mb-2">
