@@ -153,6 +153,20 @@
                 </label>
               </div>
             </div>
+              <!-- Checkbox für Mitgliedergruppen -->
+              <div class="mb-3">
+                <label class="form-label">*{{ 'contactlist.membergroup' | translate }}</label>
+                <div *ngFor="let mitgliedergruppe of mitgliedergruppen" class="form-check">
+                  <input class="form-check-input" 
+                        type="checkbox" 
+                        [id]="'mitgliedergruppe_' + mitgliedergruppe.id"
+                        [checked]="isMitgliedergruppeSelected(mitgliedergruppe.id)"
+                        (change)="toggleMitgliedergruppeSelection(mitgliedergruppe.id)">
+                  <label class="form-check-label" [for]="'mitgliedergruppe_' + mitgliedergruppe.id">
+                    {{ mitgliedergruppe.mitgliedergruppe | translate }}
+                  </label>
+                </div>
+              </div>
 
               <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
             </div>
@@ -224,6 +238,20 @@
                     (change)="toggleEditGremiumSelection(gremium.id)">
                   <label class="form-check-label" [for]="'edit_gremium_' + gremium.id">
                     {{ gremium.gremium | translate }}
+                  </label>
+                </div>
+              </div>
+               <!-- Mitgliedergruppe-Checkboxen -->
+              <div class="mb-3">
+                <label class="form-label">*{{ 'contactlist.membergroup' | translate }}</label>
+                <div *ngFor="let mitgliedergruppe of mitgliedergruppen" class="form-check">
+                  <input class="form-check-input"
+                        type="checkbox"
+                        [id]="'edit_mitgliedergruppe_' + mitgliedergruppe.id"
+                        [checked]="isEditMitgliedergruppeSelected(mitgliedergruppe.id)"
+                        (change)="toggleEditMitgliedergruppeSelection(mitgliedergruppe.id)">
+                  <label class="form-check-label" [for]="'edit_mitgliedergruppe_' + mitgliedergruppe.id">
+                    {{ mitgliedergruppe.mitgliedergruppe | translate }}
                   </label>
                 </div>
               </div>
