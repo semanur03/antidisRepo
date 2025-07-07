@@ -113,7 +113,8 @@ export class ContactManagementComponent implements OnInit {
   isNewContactValid(): boolean {
     const emailValid = this.isEmailValid(this.newContact.email);
     const hasGremium = this.selectedGremiumIds.length > 0;
-    return !!(this.newContact.vorname && this.newContact.nachname && emailValid && hasGremium);
+    const hasSprache = this.selectedSpracheIds.length > 0;
+    return !!(this.newContact.vorname && this.newContact.nachname && emailValid && hasGremium && hasSprache);
   }
 
   isEmailValidSafe(email?: string): boolean {
@@ -208,7 +209,8 @@ export class ContactManagementComponent implements OnInit {
     if (!this.selectedContact) return false;
     const emailValid = this.isEmailValid(this.selectedContact.email ?? '');
     const hasGremium = this.selectedEditGremiumIds.length > 0;
-    return !!(this.selectedContact.vorname && this.selectedContact.nachname && emailValid && hasGremium);
+    const hasSprache = this.selectedEditSpracheIds.length > 0; 
+    return !!(this.selectedContact.vorname && this.selectedContact.nachname && emailValid && hasGremium && hasSprache);
   }
 
   isEditSpracheSelected(spracheId: number): boolean {

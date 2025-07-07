@@ -73,7 +73,7 @@
           <div class="card d-none d-md-block" style="width: 50rem; margin: 3%" *ngFor="let contact of allcontacts; trackBy: trackByContact">
             <div class="card-body">
               <div class="name-contact">
-                <h5 class="card-title">{{ contact.titel || '' }} {{ contact.vorname }} {{ contact.nachname }}</h5>
+                <p class="card-title">{{ contact.titel || '' }} {{ contact.vorname }} {{ contact.nachname }}</p>
               </div>
               <p class="card-subtitle mb-2 text-muted">{{ contact.sprache || '' }}</p>
               <p class="card-text">{{ 'contactlist.phone' | translate }}: {{ contact.telefon || '' }}</p>
@@ -126,7 +126,7 @@
               </div>
               <!-- Checkbox für Sprachen -->
               <div class="mb-3">
-                <label class="form-label">{{ 'contactlist.language' | translate }}</label>
+                <label class="form-label">*{{ 'contactlist.language' | translate }}</label>
                 <div *ngFor="let sprache of sprachen" class="form-check">
                   <input class="form-check-input" 
                         type="checkbox" 
@@ -200,7 +200,7 @@
               </div>
                <!-- Sprach-Checkboxen -->
               <div class="mb-3">
-                <label class="form-label">{{ 'contactlist.language' | translate }}</label>
+                <label class="form-label">*{{ 'contactlist.language' | translate }}</label>
                 <div *ngFor="let sprache of sprachen" class="form-check">
                   <input class="form-check-input"
                         type="checkbox"
