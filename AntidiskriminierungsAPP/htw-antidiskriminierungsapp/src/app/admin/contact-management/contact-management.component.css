@@ -5,6 +5,12 @@
     height: 100%;
 }
 
+@media (min-width: 800px) {
+  .container {
+    padding: 4%;  /* ab 800px: gleichmäßiges Padding links/rechts */
+  }
+}
+
 .header {
     display: flex;
     align-items: center;
