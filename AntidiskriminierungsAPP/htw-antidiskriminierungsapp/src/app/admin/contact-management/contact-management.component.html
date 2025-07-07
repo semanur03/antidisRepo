@@ -49,6 +49,7 @@
               <div class="name-contact">
                 <p class="card-title">{{ contact.titel || '' }} {{ contact.vorname }} {{ contact.nachname }}</p>
               </div>
+              <p class="card-subtitle mb-2 text-muted">{{ contact.sprache || '' }}</p>
               <p class="card-text">{{ 'contactlist.phone' | translate }}: {{ contact.telefon || '' }}</p>
               <p class="card-text">{{ 'contactlist.email' | translate }}: {{ contact.email }}</p>
             <p class="card-text">{{ 'contactlist.membergroup' | translate }}: {{ (contact.mitgliedergruppe || '') | translate }}</p>
@@ -74,6 +75,7 @@
               <div class="name-contact">
                 <h5 class="card-title">{{ contact.titel || '' }} {{ contact.vorname }} {{ contact.nachname }}</h5>
               </div>
+              <p class="card-subtitle mb-2 text-muted">{{ contact.sprache || '' }}</p>
               <p class="card-text">{{ 'contactlist.phone' | translate }}: {{ contact.telefon || '' }}</p>
               <p class="card-text">{{ 'contactlist.email' | translate }}: {{ contact.email }}</p>
             <p class="card-text">{{ 'contactlist.membergroup' | translate }}: {{ (contact.mitgliedergruppe || '') | translate }}</p>
@@ -106,13 +108,17 @@
               <input [(ngModel)]="newContact.email" placeholder="Email" class="form-control mb-2">
               <!-- Dropdown für Sprachen -->
               <div class="mb-3">
-                <label for="spracheSelect" class="form-label">{{ 'contactlist.language' | translate }}</label>
-                <select id="spracheSelect" class="form-select" [(ngModel)]="selectedSpracheId" name="sprache">
-                  <option [ngValue]="null" disabled selected>{{ 'contactlist.select.language' | translate }}</option>
-                  <option *ngFor="let sprache of sprachen" [value]="sprache.id">
+                <label class="form-label">{{ 'contactlist.language' | translate }}</label>
+                <div *ngFor="let sprache of sprachen" class="form-check">
+                  <input class="form-check-input" 
+                        type="checkbox" 
+                        [id]="'sprache_' + sprache.id"
+                        [checked]="isSpracheSelected(sprache.id)"
+                        (change)="toggleSpracheSelection(sprache.id)">
+                  <label class="form-check-label" [for]="'sprache_' + sprache.id">
                     {{ sprache.sprache }}
-                  </option>
-                </select>
+                  </label>
+                </div>
               </div>
               <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
             </div>

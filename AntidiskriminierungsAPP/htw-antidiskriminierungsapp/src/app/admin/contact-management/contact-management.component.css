@@ -120,3 +120,23 @@ a {
 .btn-warning:hover {
     background-color: orange;
 }
+
+/* Für bessere Darstellung des Mehrfachauswahl-Dropdowns */
+select[multiple] {
+  min-height: 120px;
+  padding: 5px 0;
+}
+
+select[multiple] option {
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+select[multiple] option:hover {
+  background-color: #f8f9fa;
+}
+
+select[multiple] option:checked {
+  background-color: #76B900;
+  color: white;
+}

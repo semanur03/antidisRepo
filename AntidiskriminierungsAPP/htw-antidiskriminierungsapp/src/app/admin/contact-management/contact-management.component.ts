@@ -21,7 +21,7 @@ export class ContactManagementComponent implements OnInit {
   allcontacts: ContactsView[] = [];
 
   sprachen: Sprache[] = []; // Neue Eigenschaft für Sprachen
-  selectedSpracheId: number | null = null; // Ausgewählte Sprache ID
+  selectedSpracheIds: number[] = [];
 
   newContact: Contacts = {
     id: 0,
@@ -58,7 +58,6 @@ export class ContactManagementComponent implements OnInit {
       next: () => {
         this.contacts = this.contacts.filter(c => c.id !== id);
         console.log('Kontakt gelöscht:', id);
-        this.modalService.dismissAll();
       },
       error: (err) => console.error('Fehler beim Löschen', err)
     });
@@ -66,46 +65,68 @@ export class ContactManagementComponent implements OnInit {
 
   openAddModal(): void {
     this.newContact = { id: 0, vorname: '', nachname: '', email: '', telefon: '' };
+    this.selectedSpracheIds = []; // Auswahl zurücksetzen
     this.errorMessage = null;
     this.modalService.open(this.addModal);
   }
 
-  saveNewContact(): void {
-  if (!this.isNewContactValid()) {
-    this.translate.get('contacts-management.page.add_modal.error.check_entries').subscribe(msg => {
-      this.errorMessage = msg;
-    });
-    return;
+  isSpracheSelected(spracheId: number): boolean {
+    return this.selectedSpracheIds.includes(spracheId);
   }
 
-  // Zuerst den Kontakt erstellen
-  this.backendService.createPerson(this.newContact).subscribe({
-    next: (res) => {
-      console.log('Kontakt erfolgreich hinzugefügt', res);
-      
-      // Wenn eine Sprache ausgewählt wurde, die PersonSprache-Verbindung erstellen
-      if (this.selectedSpracheId) {
-        const personSprache: PersonSprache = {
-          person_id: res.id,
-          sprache_id: this.selectedSpracheId
-        };
+  toggleSpracheSelection(spracheId: number): void {
+    const index = this.selectedSpracheIds.indexOf(spracheId);
+    if (index === -1) {
+      this.selectedSpracheIds.push(spracheId);
+    } else {
+      this.selectedSpracheIds.splice(index, 1);
+    }
+  }
+
+
+  saveNewContact(): void {
+    if (!this.isNewContactValid()) {
+      this.translate.get('contacts-management.page.add_modal.error.check_entries').subscribe(msg => {
+        this.errorMessage = msg;
+      });
+      return;
+    }
+
+    this.backendService.createPerson(this.newContact).subscribe({
+      next: (res) => {
+        console.log('Kontakt erfolgreich hinzugefügt', res);
         
-        this.backendService.createPersonSprache(personSprache).subscribe({
-          next: () => {
-            console.log('Sprache erfolgreich zugeordnet');
-            this.loadContacts();
+        if (this.selectedSpracheIds && this.selectedSpracheIds.length > 0) {
+          const spracheRequests = this.selectedSpracheIds.map(spracheId => {
+            const personSprache: PersonSprache = {
+              person_id: res.id,
+              sprache_id: spracheId
+            };
+            return this.backendService.createPersonSprache(personSprache).toPromise();
+          });
+
+          // Warten auf alle Sprachzuordnungen
+          Promise.all(spracheRequests).then(() => {
+            this.service.getAllContacts().then(updatedContacts => {
+              this.allcontacts = updatedContacts;
+              this.modalService.dismissAll();
+              this.selectedSpracheIds = [];
+            });
+          });
+        } else {
+          this.service.getAllContacts().then(updatedContacts => {
+            this.allcontacts = updatedContacts;
             this.modalService.dismissAll();
-          },
-          error: (err) => console.error('Fehler beim Zuordnen der Sprache', err)
-        });
-      } else {
-        this.loadContacts();
-        this.modalService.dismissAll();
+            this.selectedSpracheIds = [];
+          });
+        }
+      },
+      error: (err) => {
+        console.error('Fehler beim Hinzufügen', err);
+        this.selectedSpracheIds = [];
       }
-    },
-    error: (err) => console.error('Fehler beim Hinzufügen', err)
-  });
-}
+    });
+  }
 
   openEditModal(contact: Contacts): void {
     this.selectedContact = { ...contact };
@@ -145,6 +166,7 @@ export class ContactManagementComponent implements OnInit {
   ngOnInit(): void {
     this.loadContacts();
     this.loadSprachen();
+    this.selectedSpracheIds = [];
   }
 
 }

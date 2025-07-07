@@ -27,9 +27,9 @@
     <div class="card d-none d-md-block" style="width: 50rem; margin: 3%" *ngFor=" let contact of filteredContacts">
         <div class="card-body">
             <div class="name-contact">
-                <h5 class="card-title">{{ contact.titel || '' }} {{ contact.vorname }} {{ contact.nachname }}</h5>
+                <p class="card-title">{{ contact.titel || '' }} {{ contact.vorname }} {{ contact.nachname }}</p>
             </div>
-            <h6 class="card-subtitle mb-2 text-muted">{{ contact.sprache || '' }}</h6>
+            <p class="card-subtitle mb-2 text-muted">{{ contact.sprache || '' }}</p>
             <p class="card-text">{{ 'contactlist.phone' | translate }}: {{ contact.telefon || '' }}</p>
             <p class="card-text">{{ 'contactlist.email' | translate }}: {{ contact.email }}</p>
             <p class="card-text">{{ 'contactlist.membergroup' | translate }}: {{ (contact.mitgliedergruppe || '') | translate }}</p>
