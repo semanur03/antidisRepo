@@ -99,10 +99,14 @@ export class ContactManagementComponent implements OnInit {
 
   toggleGremiumSelection(gremiumId: number): void {
     const index = this.selectedGremiumIds.indexOf(gremiumId);
-    if (index === -1) {
-      this.selectedGremiumIds.push(gremiumId);
-    } else {
+    if (index > -1) {
       this.selectedGremiumIds.splice(index, 1);
+    } else {
+      if(this.selectedGremiumIds.length < 3){
+        this.selectedGremiumIds.push(gremiumId);
+      } else {
+        alert('Es können maximal 3 Gremien ausgewählt werden.')
+      }
     }
   }
 
@@ -224,10 +228,14 @@ export class ContactManagementComponent implements OnInit {
 
   toggleEditGremiumSelection(gremiumId: number): void {
     const index = this.selectedEditGremiumIds.indexOf(gremiumId);
-    if (index === -1) {
-      this.selectedEditGremiumIds.push(gremiumId);
-    } else {
+    if (index > -1) {
       this.selectedEditGremiumIds.splice(index, 1);
+    } else {
+      if (this.selectedEditGremiumIds.length < 3) {
+        this.selectedEditGremiumIds.push(gremiumId);
+      } else {
+        alert('Es können maximal 3 Gremien ausgewählt werden.');
+      }
     }
   }
 
