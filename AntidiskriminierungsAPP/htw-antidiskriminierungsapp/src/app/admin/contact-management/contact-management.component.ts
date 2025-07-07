@@ -4,6 +4,8 @@ import { Contacts, ContactsView } from 'src/app/shared/contacts';
 import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 import { TranslateService } from '@ngx-translate/core';
 import { ContactsService } from 'src/app/shared/contacts.service';
+import { Sprache } from 'src/app/shared/sprache';
+import { PersonSprache } from 'src/app/shared/personSprache';
 
 
 @Component({
@@ -17,6 +19,9 @@ export class ContactManagementComponent implements OnInit {
   selectedContact?: Contacts;
 
   allcontacts: ContactsView[] = [];
+
+  sprachen: Sprache[] = []; // Neue Eigenschaft für Sprachen
+  selectedSpracheId: number | null = null; // Ausgewählte Sprache ID
 
   newContact: Contacts = {
     id: 0,
@@ -66,22 +71,41 @@ export class ContactManagementComponent implements OnInit {
   }
 
   saveNewContact(): void {
-    if (!this.isNewContactValid()) {
-      this.translate.get('contacts-management.page.add_modal.error.check_entries').subscribe(msg => {
-        this.errorMessage = msg;
-      });
-      return;
-    }
+  if (!this.isNewContactValid()) {
+    this.translate.get('contacts-management.page.add_modal.error.check_entries').subscribe(msg => {
+      this.errorMessage = msg;
+    });
+    return;
+  }
 
-    this.backendService.createPerson(this.newContact).subscribe({
-      next: (res) => {
-        console.log('Kontakt erfolgreich hinzugefügt', res);
+  // Zuerst den Kontakt erstellen
+  this.backendService.createPerson(this.newContact).subscribe({
+    next: (res) => {
+      console.log('Kontakt erfolgreich hinzugefügt', res);
+      
+      // Wenn eine Sprache ausgewählt wurde, die PersonSprache-Verbindung erstellen
+      if (this.selectedSpracheId) {
+        const personSprache: PersonSprache = {
+          person_id: res.id,
+          sprache_id: this.selectedSpracheId
+        };
+        
+        this.backendService.createPersonSprache(personSprache).subscribe({
+          next: () => {
+            console.log('Sprache erfolgreich zugeordnet');
+            this.loadContacts();
+            this.modalService.dismissAll();
+          },
+          error: (err) => console.error('Fehler beim Zuordnen der Sprache', err)
+        });
+      } else {
         this.loadContacts();
         this.modalService.dismissAll();
-      },
-      error: (err) => console.error('Fehler beim Hinzufügen', err)
-    });
-  }
+      }
+    },
+    error: (err) => console.error('Fehler beim Hinzufügen', err)
+  });
+}
 
   openEditModal(contact: Contacts): void {
     this.selectedContact = { ...contact };
@@ -109,8 +133,18 @@ export class ContactManagementComponent implements OnInit {
     return contact.id;
   }
 
+  loadSprachen(): void {
+    this.backendService.getAllSprache().subscribe({
+      next: (data) => {
+        this.sprachen = data;
+      },
+      error: (err) => console.error('Fehler beim Laden der Sprachen', err)
+    });
+  }
+
   ngOnInit(): void {
     this.loadContacts();
+    this.loadSprachen();
   }
 
 }

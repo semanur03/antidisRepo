@@ -40,6 +40,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+import { NgSelectModule } from '@ng-select/ng-select';
 export function httpTranslateLoaderFactory(http: HttpClient) {
   return new TranslationLoader(http);
 }
@@ -89,6 +90,7 @@ export function httpTranslateLoaderFactory(http: HttpClient) {
         MatTableModule,
         MatPaginatorModule,
         MatSortModule,
+        NgSelectModule,
         NgMultiSelectDropDownModule.forRoot(),], 
         providers: [provideHttpClient(withInterceptorsFromDi())],
         bootstrap: [AppComponent], })
