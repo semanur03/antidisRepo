@@ -35,7 +35,7 @@ export class ContactManagementComponent implements OnInit {
 
   mitgliedergruppen: Mitgliedergruppe[] = []; // Neue Eigenschaft für Sprachen
   selectedMitgliedergruppeIds: number[] = [];
-  selectedEditMitgliedergruppeIds: number[] = [];
+  selectedEditMitgliedergruppeId: number | null = null;
 
   newContact: Contacts = {
     id: 0,
@@ -134,7 +134,7 @@ export class ContactManagementComponent implements OnInit {
     const emailValid = this.isEmailValid(this.newContact.email);
     const hasGremium = this.selectedGremiumIds.length > 0;
     const hasSprache = this.selectedSpracheIds.length > 0;
-    const hasMitgliedergruppe = this.selectedEditMitgliedergruppeIds.length > 0;
+    const hasMitgliedergruppe = this.selectedEditMitgliedergruppeId != 0;
     return !!(this.newContact.vorname && this.newContact.nachname && emailValid && hasGremium && hasSprache && hasMitgliedergruppe);
   }
 
@@ -234,8 +234,8 @@ export class ContactManagementComponent implements OnInit {
       next: ({ sprachen, gremien, mitgliedergruppen}) => {
         this.selectedEditSpracheIds = sprachen.map(ps => ps.sprache_id);
         this.selectedEditGremiumIds = gremien.map(pg => pg.gremium_id);
-        this.selectedEditMitgliedergruppeIds = mitgliedergruppen.map(pm => pm.mitgliedergruppe_id);
-        console.log('Geladene Edit-Mitgliedergruppen:', this.selectedEditMitgliedergruppeIds);
+        this.selectedEditMitgliedergruppeId = mitgliedergruppen.length > 0 ? mitgliedergruppen[0].mitgliedergruppe_id : null;
+        console.log('Geladene Edit-Mitgliedergruppen:', this.selectedEditMitgliedergruppeId);
 
         this.modalService.open(this.editModal);
       },
@@ -248,7 +248,7 @@ export class ContactManagementComponent implements OnInit {
     const emailValid = this.isEmailValid(this.selectedContact.email ?? '');
     const hasGremium = this.selectedEditGremiumIds.length > 0;
     const hasSprache = this.selectedEditSpracheIds.length > 0; 
-    const hasMitgliedergruppe = this.selectedEditMitgliedergruppeIds.length > 0; 
+    const hasMitgliedergruppe = this.selectedEditMitgliedergruppeId != 0; 
     return !!(this.selectedContact.vorname && this.selectedContact.nachname && emailValid && hasGremium && hasSprache && hasMitgliedergruppe);
   }
 
@@ -266,18 +266,13 @@ export class ContactManagementComponent implements OnInit {
   }
   
   isEditMitgliedergruppeSelected(mitgliedergruppeId: number): boolean {
-    return this.selectedEditMitgliedergruppeIds.includes(mitgliedergruppeId);
+    return this.selectedEditMitgliedergruppeId === mitgliedergruppeId;
   }
 
-  toggleEditMitgliedergruppeSelection(mitgliedergruppeId: number): void {
-    const index = this.selectedEditMitgliedergruppeIds.indexOf(mitgliedergruppeId);
-    if (index === -1) {
-      this.selectedEditMitgliedergruppeIds.push(mitgliedergruppeId);
-    } else {
-      this.selectedEditMitgliedergruppeIds.splice(index, 1);
-    }
-     console.log('Aktuelle Edit-Mitgliedergruppen:', this.selectedEditMitgliedergruppeIds);
+  selectEditMitgliedergruppe(mitgliedergruppeId: number): void {
+    this.selectedEditMitgliedergruppeId = mitgliedergruppeId;
   }
+
 
   isEditGremiumSelected(gremiumId: number): boolean {
     return this.selectedEditGremiumIds.includes(gremiumId);
@@ -308,7 +303,7 @@ export class ContactManagementComponent implements OnInit {
       
     console.log('Sprache-IDs:', this.selectedEditSpracheIds);
     console.log('Gremium-IDs:', this.selectedEditGremiumIds);
-    console.log('Mitgliedergruppe-IDs:', this.selectedEditMitgliedergruppeIds);
+    console.log('Mitgliedergruppe-IDs:', this.selectedEditMitgliedergruppeId);
 
     this.backendService.updatePerson(this.selectedContact.id, this.selectedContact).subscribe({
       next: () => {
@@ -351,16 +346,16 @@ export class ContactManagementComponent implements OnInit {
                 };
                 return this.backendService.createPersonGremium(personGremium).toPromise();
               });
-              console.log('Selected Edit Mitgliedergruppe IDs:', this.selectedEditMitgliedergruppeIds);
+              console.log('Selected Edit Mitgliedergruppe IDs:', this.selectedEditMitgliedergruppeId);
 
               // Neue Mitgliedergruppenzuordnungen anlegen
-              const addMitgliedergruppen = this.selectedEditMitgliedergruppeIds.map(mitgliedergruppenId => {
-              const personMitgliedergruppe: PersonMitgliedergruppe = {
-                  person_id: this.selectedContact!.id!,
-                  mitgliedergruppe_id: mitgliedergruppenId
-                };
-                return this.backendService.createPersonMitgliedergruppe(personMitgliedergruppe).toPromise();
-              });
+              const addMitgliedergruppen = this.selectedEditMitgliedergruppeId != null
+                ? [this.backendService.createPersonMitgliedergruppe({
+                    person_id: this.selectedContact!.id!,
+                    mitgliedergruppe_id: this.selectedEditMitgliedergruppeId
+                  }).toPromise()]
+                : [];
+
 
 
               Promise.all([...addSprachen, ...addGremien, ...addMitgliedergruppen, ]).then(() => {
@@ -368,7 +363,7 @@ export class ContactManagementComponent implements OnInit {
                 this.modalService.dismissAll();
                 this.selectedEditSpracheIds = [];
                 this.selectedEditGremiumIds = [];
-                this.selectedEditMitgliedergruppeIds = [];
+                this.selectedEditMitgliedergruppeId = 0;
               });
             }).catch(err => console.error('Fehler beim Löschen alter Zuordnungen', err));
           },
