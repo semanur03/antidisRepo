@@ -36,7 +36,7 @@ Mitgliedergruppe.getAll = (result) => {
     SELECT 
         * 
     FROM 
-        gremium
+        mitgliedergruppe
     `;
 
     sql.all(query, [], (err, res) => {
