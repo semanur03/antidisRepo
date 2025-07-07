@@ -58,8 +58,8 @@ export class ContactManagementComponent implements OnInit {
     if (!id) return;
     this.backendService.deletePerson(id).subscribe({
       next: () => {
-        this.contacts = this.contacts.filter(c => c.id !== id);
-        console.log('Kontakt gelöscht:', id);
+        this.allcontacts = this.allcontacts.filter(c => c.id !== id);
+        this.modalService.dismissAll();
       },
       error: (err) => console.error('Fehler beim Löschen', err)
     });
