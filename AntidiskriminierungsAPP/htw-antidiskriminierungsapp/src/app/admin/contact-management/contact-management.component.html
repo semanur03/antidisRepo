@@ -101,11 +101,29 @@
               <h4 class="modal-title">{{ 'contacts-management.modal.add.title' | translate }}</h4>
             </div>
             <div class="modal-body">
-              <input [(ngModel)]="newContact.titel" placeholder="{{ 'contactlist.title' | translate }}" class="form-control mb-2">
-              <input [(ngModel)]="newContact.vorname" placeholder="{{ 'contactlist.firstname' | translate }}" class="form-control mb-2">
-              <input [(ngModel)]="newContact.nachname" placeholder="{{ 'contactlist.lastname' | translate }}" class="form-control mb-2">
-              <input [(ngModel)]="newContact.telefon" placeholder="{{ 'contactlist.phone' | translate }}" class="form-control mb-2">
-              <input [(ngModel)]="newContact.email" placeholder="Email" class="form-control mb-2">
+              <div class="mb-3">
+                <label for="titel">{{ 'contactlist.title' | translate }}:</label>
+                <input id="titel" type="text" class="form-control" [(ngModel)]="newContact.titel"/>
+              </div>
+              <div class="mb-3">
+                <label for="vorname">*{{ 'contactlist.firstname' | translate }}:</label>
+                <input id="vorname" type="text" class="form-control" [(ngModel)]="newContact.vorname" name="vorname" required/>
+              </div>
+              <div class="mb-3">
+                <label for="nachname">*{{ 'contactlist.lastname' | translate }}:</label>
+                <input id="nachmane" type="text" class="form-control" [(ngModel)]="newContact.nachname" name="nachname" required/>
+              </div>
+              <div class="mb-3">
+                <label for="telefon">{{ 'contactlist.phone' | translate }}:</label>
+                <input id="telefon" type="text" class="form-control" [(ngModel)]="newContact.telefon"/>
+              </div>
+              <div class="mb-3">
+                <label for="email">*Email:</label>
+                <input id="email" type="text" class="form-control" [(ngModel)]="newContact.email" name="email" required email />
+                  <small class="text-danger" *ngIf="newContact.email && !isEmailValid(newContact.email)">
+                      {{ 'contact-management.page.add_modal.w.3' | translate }}
+                  </small>
+              </div>
               <!-- Checkbox für Sprachen -->
               <div class="mb-3">
                 <label class="form-label">{{ 'contactlist.language' | translate }}</label>
@@ -138,7 +156,7 @@
               <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
             </div>
             <div class="modal-footer">
-              <button class="btn btn-primary" (click)="saveNewContact()">{{ 'button.save' | translate }}</button>
+              <button class="btn btn-success" [disabled]="!isNewContactValid()" (click)="saveNewContact()">{{ 'button.save' | translate }}</button>
               <button class="btn btn-secondary" (click)="modalService.dismissAll()">{{ 'button.cancel' | translate }}</button>
             </div>
           </ng-template>
@@ -149,11 +167,36 @@
               <h4 class="modal-title">{{ 'contacts-management.modal.edit.title' | translate }}</h4>
             </div>
             <div class="modal-body">
-              <input [(ngModel)]="selectedContact!.titel" placeholder="{{ 'contactlist.title' | translate }}" class="form-control mb-2">
-              <input [(ngModel)]="selectedContact!.vorname" placeholder="{{ 'contactlist.firstname' | translate }}" class="form-control mb-2">
-              <input [(ngModel)]="selectedContact!.nachname" placeholder="{{ 'contactlist.lastname' | translate }}" class="form-control mb-2">
-              <input [(ngModel)]="selectedContact!.telefon" placeholder="{{ 'contactlist.phone' | translate }}" class="form-control mb-2">
-              <input [(ngModel)]="selectedContact!.email" placeholder="Email" class="form-control mb-2">
+              <div class="mb-3">
+                <label for="titel">{{ 'contactlist.title' | translate }}:</label>
+                <input id="titel" type="text" class="form-control" [(ngModel)]="selectedContact!.titel"/>
+              </div>
+              <div class="mb-3">
+                <label for="vorname">{{ 'contactlist.firstname' | translate }}:</label>
+                <input id="vorname" type="text" class="form-control" [(ngModel)]="selectedContact!.vorname" name="vorname" required/>
+                <small class="text-danger" *ngIf="!selectedContact!.vorname || selectedContact!.vorname.trim() === ''">
+                    {{ 'contact-management.page.edit_modal.w.1' | translate }}
+                </small>
+              </div>
+              <div class="mb-3">
+                <label for="nachname">{{ 'contactlist.lastname' | translate }}:</label>
+                <input id="nachmane" type="text" class="form-control" [(ngModel)]="selectedContact!.nachname" name="nachname" required/>
+                  <small class="text-danger" *ngIf="!selectedContact!.nachname || selectedContact!.nachname.trim() === ''">
+                    {{ 'contact-management.page.edit_modal.w.2' | translate }}
+                </small>
+              </div>
+              <div class="mb-3">
+                <label for="telefon">{{ 'contactlist.phone' | translate }}:</label>
+                <input id="telefon" type="text" class="form-control" [(ngModel)]="selectedContact!.telefon"/>
+              </div>
+              <div class="mb-3">
+                <label for="email">Email:</label>
+                <input id="email" type="text" class="form-control" [(ngModel)]="selectedContact!.email" name="email" required email />
+                  <small class="text-danger" *ngIf="selectedContact?.email && !isEmailValidSafe(selectedContact?.email)">
+                    {{ 'contact-management.page.edit_modal.w.3' | translate }}
+                  </small>
+
+              </div>
                <!-- Sprach-Checkboxen -->
               <div class="mb-3">
                 <label class="form-label">{{ 'contactlist.language' | translate }}</label>
@@ -185,7 +228,10 @@
 
             </div>
             <div class="modal-footer">
-              <button class="btn btn-primary" (click)="saveUpdatedContact()">{{ 'button.save' | translate }}</button>
+              <div *ngIf="errorMessage" class="alert alert-danger w-100 mb-2">
+                {{ errorMessage }}
+              </div>
+              <button class="btn btn-success" [disabled]="!isEditContactValid()" (click)="saveUpdatedContact()">{{ 'button.save' | translate }}</button>
               <button class="btn btn-secondary" (click)="modalService.dismissAll()">{{ 'button.cancel' | translate }}</button>
             </div>
           </ng-template>

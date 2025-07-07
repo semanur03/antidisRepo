@@ -106,6 +106,20 @@ export class ContactManagementComponent implements OnInit {
     }
   }
 
+  isNewContactValid(): boolean {
+    const emailValid = this.isEmailValid(this.newContact.email);
+    return !!(this.newContact.vorname && this.newContact.nachname && emailValid);
+  }
+
+  isEmailValidSafe(email?: string): boolean {
+    if (!email) return false;
+    return this.isEmailValid(email);
+  }
+
+  isEmailValid(email: string): boolean {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  }
 
   saveNewContact(): void {
     if (!this.isNewContactValid()) {
@@ -185,6 +199,11 @@ export class ContactManagementComponent implements OnInit {
     });
   }
 
+  isEditContactValid(): boolean {
+    if (!this.selectedContact) return false;
+    const emailValid = this.isEmailValid(this.selectedContact.email ?? '');
+    return !!(this.selectedContact.vorname && this.selectedContact.nachname && emailValid);
+  }
 
   isEditSpracheSelected(spracheId: number): boolean {
     return this.selectedEditSpracheIds.includes(spracheId);
@@ -214,6 +233,11 @@ export class ContactManagementComponent implements OnInit {
 
   saveUpdatedContact(): void {
   if (!this.selectedContact?.id) return;
+
+  if (!this.isEditContactValid()) {
+    console.warn('Kontakt ist nicht gültig. Speichern abgebrochen.');
+    return;
+  }
 
   this.backendService.updatePerson(this.selectedContact.id, this.selectedContact).subscribe({
     next: () => {
@@ -266,11 +290,6 @@ export class ContactManagementComponent implements OnInit {
     error: (err) => console.error('Fehler beim Aktualisieren der Person', err)
   });
 }
-
-
-  isNewContactValid(): boolean {
-    return !!(this.newContact.vorname && this.newContact.nachname && this.newContact.email);
-  }
 
   trackByContact(index: number, contact: ContactsView): number {
     return contact.id;
