@@ -33,9 +33,6 @@ export class ContactManagementComponent implements OnInit {
   selectedGremiumIds: number[] = [];
   selectedEditGremiumIds: number[] = [];
 
-  mitgliedergruppen: Mitgliedergruppe[] = [];
-  selectedMitgliedergruppeId: number | null = null;
-  selectedEditMitgliedergruppeId: number | null = null;
 
   newContact: Contacts = {
     id: 0,
@@ -114,21 +111,13 @@ export class ContactManagementComponent implements OnInit {
       }
     }
   }
-
-  selectMitgliedergruppe(id: number) {
-    this.selectedMitgliedergruppeId = id;
-  }
-
-  isMitgliedergruppeSelected(id: number): boolean {
-    return this.selectedMitgliedergruppeId === id;
-  }
+ 
 
   isNewContactValid(): boolean {
     const emailValid = this.isEmailValid(this.newContact.email);
     const hasGremium = this.selectedGremiumIds.length > 0;
     const hasSprache = this.selectedSpracheIds.length > 0;
-    const hasMitgliedergruppe = this.selectedMitgliedergruppeId !== null;
-    return !!(this.newContact.vorname && this.newContact.nachname && emailValid && hasGremium && hasSprache && hasMitgliedergruppe);
+    return !!(this.newContact.vorname && this.newContact.nachname && emailValid && hasGremium && hasSprache );
   }
 
   isEmailValidSafe(email?: string): boolean {
@@ -184,17 +173,10 @@ export class ContactManagementComponent implements OnInit {
               return this.backendService.createPersonGremium(personGremium).toPromise();
             })
           : [];
-        
-        // Mitgliedergruppe speichern (nur eine)
-        const mitgliedergruppeRequest = this.selectedMitgliedergruppeId
-          ? this.backendService.createPersonMitgliedergruppe({
-              person_id: res.id,
-              mitgliedergruppe_id: this.selectedMitgliedergruppeId
-            }).toPromise()
-          : null;
+
 
         // Alle Zuordnungen speichern, dann abschließen
-        Promise.all([...spracheRequests, ...gremiumRequests, ...(mitgliedergruppeRequest ? [mitgliedergruppeRequest] : []) ])
+        Promise.all([...spracheRequests, ...gremiumRequests, ])
           .then(() => finalize())
           .catch(err => {
             console.error('Fehler beim Speichern der Zuordnungen', err);
@@ -205,7 +187,6 @@ export class ContactManagementComponent implements OnInit {
         console.error('Fehler beim Hinzufügen', err);
         this.selectedSpracheIds = [];
         this.selectedGremiumIds = [];
-        this.selectedMitgliedergruppeId = 0;
       }
     });
   }
@@ -214,18 +195,13 @@ export class ContactManagementComponent implements OnInit {
   openEditModal(contact: Contacts): void {
     this.selectedContact = { ...contact };
 
-    // Sprach- und Gremium-Zuordnungen parallel laden
     forkJoin({
       sprachen: this.backendService.getAllPersonSpracheByPersonId(contact.id),
       gremien: this.backendService.getAllPersonGremiumByPersonId(contact.id),
-      mitgliedergruppen: this.backendService.getAllPersonMitgliedergruppeByPersonId(contact.id)
     }).subscribe({
-      next: ({ sprachen, gremien, mitgliedergruppen }) => {
+      next: ({ sprachen, gremien}) => {
         this.selectedEditSpracheIds = sprachen.map(ps => ps.sprache_id);
         this.selectedEditGremiumIds = gremien.map(pg => pg.gremium_id);
-        this.selectedEditMitgliedergruppeId = mitgliedergruppen.length > 0 
-          ? mitgliedergruppen[0].mitgliedergruppe_id 
-          : null;
         this.modalService.open(this.editModal);
       },
       error: (err) => console.error('Fehler beim Laden der Zuordnungen', err)
@@ -237,8 +213,7 @@ export class ContactManagementComponent implements OnInit {
     const emailValid = this.isEmailValid(this.selectedContact.email ?? '');
     const hasGremium = this.selectedEditGremiumIds.length > 0;
     const hasSprache = this.selectedEditSpracheIds.length > 0; 
-    const hasMitgliedergruppe = this.selectedEditMitgliedergruppeId !== null;
-    return !!(this.selectedContact.vorname && this.selectedContact.nachname && emailValid && hasGremium && hasSprache && hasMitgliedergruppe);
+    return !!(this.selectedContact.vorname && this.selectedContact.nachname && emailValid && hasGremium && hasSprache);
   }
 
   isEditSpracheSelected(spracheId: number): boolean {
@@ -271,86 +246,66 @@ export class ContactManagementComponent implements OnInit {
     }
   }
 
-  selectEditMitgliedergruppe(id: number) {
-    this.selectedEditMitgliedergruppeId = id;
-  }
-
-  isEditMitgliedergruppeSelected(id: number): boolean {
-    return this.selectedEditMitgliedergruppeId === id;
-  }
-
   saveUpdatedContact(): void {
-  if (!this.selectedContact?.id) return;
+    if (!this.selectedContact?.id) return;
 
-  if (!this.isEditContactValid()) {
-    console.warn('Kontakt ist nicht gültig. Speichern abgebrochen.');
-    return;
-  }
+    if (!this.isEditContactValid()) {
+      console.warn('Kontakt ist nicht gültig');
+      this.errorMessage = 'Bitte alle Pflichtfelder ausfüllen';
+      return;
+    }
 
-  this.backendService.updatePerson(this.selectedContact.id, this.selectedContact).subscribe({
-    next: () => {
-      console.log('Kontakt aktualisiert.');
+    this.backendService.updatePerson(this.selectedContact.id, this.selectedContact).subscribe({
+      next: () => {
+        console.log('Kontakt aktualisiert.');
+        // Zuerst alte Sprach- und Gremium-Zuordnungen parallel laden
+        forkJoin({
+          oldSprachen: this.backendService.getAllPersonSpracheByPersonId(this.selectedContact!.id!),
+          oldGremien: this.backendService.getAllPersonGremiumByPersonId(this.selectedContact!.id!),
+        }).subscribe({
+          next: ({ oldSprachen, oldGremien,}) => {
+            // Alte Sprachzuordnungen löschen
+            const deleteSprachen = oldSprachen.map(ps =>
+              this.backendService.deletePersonSprache(ps.person_id, ps.sprache_id).toPromise()
+            );
+            // Alte Gremiumzuordnungen löschen
+            const deleteGremien = oldGremien.map(pg =>
+              this.backendService.deletePersonGremium(pg.person_id, pg.gremium_id).toPromise()
+            );
 
-      // Zuerst alte Sprach- und Gremium-Zuordnungen parallel laden
-      forkJoin({
-        oldSprachen: this.backendService.getAllPersonSpracheByPersonId(this.selectedContact!.id!),
-        oldGremien: this.backendService.getAllPersonGremiumByPersonId(this.selectedContact!.id!),
-        oldMitgliedergruppe: this.backendService.getAllPersonMitgliedergruppeByPersonId(this.selectedContact!.id!),
-      }).subscribe({
-        next: ({ oldSprachen, oldGremien, oldMitgliedergruppe }) => {
-          // Alte Sprachzuordnungen löschen
-          const deleteSprachen = oldSprachen.map(ps =>
-            this.backendService.deletePersonSprache(ps.person_id, ps.sprache_id).toPromise()
-          );
-          // Alte Gremiumzuordnungen löschen
-          const deleteGremien = oldGremien.map(pg =>
-            this.backendService.deletePersonGremium(pg.person_id, pg.gremium_id).toPromise()
-          );
-          // Alte MItgliedergruppenzuordnungen löschen
-          const deleteMitgliedergruppe = oldMitgliedergruppe.map(pm =>
-            this.backendService.deletePersonMitgliedergruppe(pm.person_id, pm.mitgliedergruppe_id).toPromise()
-          );
-
-          Promise.all([...deleteSprachen, ...deleteGremien, ...deleteMitgliedergruppe]).then(() => {
-            // Neue Sprachzuordnungen anlegen
-            const addSprachen = this.selectedEditSpracheIds.map(spracheId => {
-            const personSprache: PersonSprache = {
-                person_id: this.selectedContact!.id!,
-                sprache_id: spracheId
-              };
-              return this.backendService.createPersonSprache(personSprache).toPromise();
-            });
-            // Neue Gremiumzuordnungen anlegen
-            const addGremien = this.selectedEditGremiumIds.map(gremiumId => {
-              const personGremium: PersonGremium = {
-                person_id: this.selectedContact!.id!,
-                gremium_id: gremiumId
-              };
-              return this.backendService.createPersonGremium(personGremium).toPromise();
-            });
-            // Neue MItgliedergruppenzuordnungen anlegen
-            const addMitgliedergruppe = this.selectedEditMitgliedergruppeId !== null 
-              ? this.backendService.createPersonMitgliedergruppe({
+            Promise.all([...deleteSprachen, ...deleteGremien, ]).then(() => {
+              // Neue Sprachzuordnungen anlegen
+              const addSprachen = this.selectedEditSpracheIds.map(spracheId => {
+              const personSprache: PersonSprache = {
                   person_id: this.selectedContact!.id!,
-                  mitgliedergruppe_id: this.selectedEditMitgliedergruppeId
-                }).toPromise()
-              : null;
+                  sprache_id: spracheId
+                };
+                return this.backendService.createPersonSprache(personSprache).toPromise();
+              });
+              // Neue Gremiumzuordnungen anlegen
+              const addGremien = this.selectedEditGremiumIds.map(gremiumId => {
+                const personGremium: PersonGremium = {
+                  person_id: this.selectedContact!.id!,
+                  gremium_id: gremiumId
+                };
+                return this.backendService.createPersonGremium(personGremium).toPromise();
+              });
 
-            Promise.all([...addSprachen, ...addGremien, ...(addMitgliedergruppe ? [addMitgliedergruppe] : [])]).then(() => {
-              this.loadContacts();
-              this.modalService.dismissAll();
-              this.selectedEditSpracheIds = [];
-              this.selectedEditGremiumIds = [];
-              this.selectedEditMitgliedergruppeId = null;
-            });
-          }).catch(err => console.error('Fehler beim Löschen alter Zuordnungen', err));
-        },
-        error: (err) => console.error('Fehler beim Laden alter Zuordnungen', err)
-      });
-    },
-    error: (err) => console.error('Fehler beim Aktualisieren der Person', err)
-  });
-}
+
+              Promise.all([...addSprachen, ...addGremien, ]).then(() => {
+                this.loadContacts();
+                this.modalService.dismissAll();
+                this.selectedEditSpracheIds = [];
+                this.selectedEditGremiumIds = [];
+              });
+            }).catch(err => console.error('Fehler beim Löschen alter Zuordnungen', err));
+          },
+          error: (err) => console.error('Fehler beim Laden alter Zuordnungen', err)
+        });
+      },
+      error: (err) => console.error('Fehler beim Aktualisieren der Person', err)
+    });
+  }
 
   trackByContact(index: number, contact: ContactsView): number {
     return contact.id;
@@ -372,24 +327,12 @@ export class ContactManagementComponent implements OnInit {
     });
   }
 
-  loadMitgliedergruppen(): void {
-    this.backendService.getAllMitgliedergruppe().subscribe({
-      next: (data) => {
-        console.log('Geladene Mitgliedergruppen:', data);
-        this.mitgliedergruppen = data;
-      },
-      error: (err) => console.error('Fehler beim Laden der Mitgliedergruppen', err)
-    });
-  }
-
   ngOnInit(): void {
     this.loadContacts();
     this.loadSprachen();
     this.loadGremien();
-    this.loadMitgliedergruppen();
     this.selectedSpracheIds = [];
     this.selectedGremiumIds = [];
-    this.selectedMitgliedergruppeId = null;
   }
 
 }
