@@ -112,7 +112,8 @@ export class ContactManagementComponent implements OnInit {
 
   isNewContactValid(): boolean {
     const emailValid = this.isEmailValid(this.newContact.email);
-    return !!(this.newContact.vorname && this.newContact.nachname && emailValid);
+    const hasGremium = this.selectedGremiumIds.length > 0;
+    return !!(this.newContact.vorname && this.newContact.nachname && emailValid && hasGremium);
   }
 
   isEmailValidSafe(email?: string): boolean {
@@ -206,7 +207,8 @@ export class ContactManagementComponent implements OnInit {
   isEditContactValid(): boolean {
     if (!this.selectedContact) return false;
     const emailValid = this.isEmailValid(this.selectedContact.email ?? '');
-    return !!(this.selectedContact.vorname && this.selectedContact.nachname && emailValid);
+    const hasGremium = this.selectedEditGremiumIds.length > 0;
+    return !!(this.selectedContact.vorname && this.selectedContact.nachname && emailValid && hasGremium);
   }
 
   isEditSpracheSelected(spracheId: number): boolean {
