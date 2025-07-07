@@ -12,7 +12,7 @@ exports.create = (req, res) => {
     //Create a new Entry
     const personMitgliedergruppe = new PersonMitgliedergruppe({
         person_id: req.body.person_id,
-        mitgliedergruppe_id: req.body.mitgliedergruppe_id_id,
+        mitgliedergruppe_id: req.body.mitgliedergruppe_id,
     });
 
     PersonMitgliedergruppe.create(personMitgliedergruppe, (err, data) => {
