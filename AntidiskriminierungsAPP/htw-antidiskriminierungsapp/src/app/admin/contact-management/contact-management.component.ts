@@ -34,7 +34,7 @@ export class ContactManagementComponent implements OnInit {
   selectedEditGremiumIds: number[] = [];
 
   mitgliedergruppen: Mitgliedergruppe[] = []; // Neue Eigenschaft für Sprachen
-  selectedMitgliedergruppeIds: number[] = [];
+  selectedMitgliedergruppeId: number | null = null;
   selectedEditMitgliedergruppeId: number | null = null;
 
   newContact: Contacts = {
@@ -81,7 +81,8 @@ export class ContactManagementComponent implements OnInit {
   openAddModal(): void {
     this.newContact = { id: 0, vorname: '', nachname: '', email: '', telefon: '' };
     this.selectedSpracheIds = []; // Auswahl zurücksetzen
-    this.selectedMitgliedergruppeIds = []; // Auswahl zurücksetzen
+    this.selectedGremiumIds = [];
+    this.selectedMitgliedergruppeId = null; // Auswahl zurücksetzen
     this.errorMessage = null;
     this.modalService.open(this.addModal);
   }
@@ -100,16 +101,11 @@ export class ContactManagementComponent implements OnInit {
   }
   
   isMitgliedergruppeSelected(mitgliedergruppeId: number): boolean {
-    return this.selectedMitgliedergruppeIds.includes(mitgliedergruppeId);
+    return this.selectedMitgliedergruppeId === mitgliedergruppeId;
   }
 
-  toggleMitgliedergruppeSelection(mitgliedergruppeId: number): void {
-    const index = this.selectedMitgliedergruppeIds.indexOf(mitgliedergruppeId);
-    if (index === -1) {
-      this.selectedMitgliedergruppeIds.push(mitgliedergruppeId);
-    } else {
-      this.selectedMitgliedergruppeIds.splice(index, 1);
-    }
+  selectMitgliedergruppe(mitgliedergruppeId: number): void {
+    this.selectedMitgliedergruppeId = mitgliedergruppeId;
   }
 
   isGremiumSelected(gremiumId: number): boolean {
@@ -129,12 +125,11 @@ export class ContactManagementComponent implements OnInit {
     }
   }
  
-
   isNewContactValid(): boolean {
     const emailValid = this.isEmailValid(this.newContact.email);
     const hasGremium = this.selectedGremiumIds.length > 0;
     const hasSprache = this.selectedSpracheIds.length > 0;
-    const hasMitgliedergruppe = this.selectedEditMitgliedergruppeId != 0;
+    const hasMitgliedergruppe = this.selectedMitgliedergruppeId !== null && this.selectedMitgliedergruppeId !== 0;
     return !!(this.newContact.vorname && this.newContact.nachname && emailValid && hasGremium && hasSprache && hasMitgliedergruppe);
   }
 
@@ -167,7 +162,7 @@ export class ContactManagementComponent implements OnInit {
             this.modalService.dismissAll();
             this.selectedSpracheIds = [];
             this.selectedGremiumIds = [];
-            this.selectedMitgliedergruppeIds = [];
+            this.selectedMitgliedergruppeId = null;
           });
         };
 
@@ -194,16 +189,12 @@ export class ContactManagementComponent implements OnInit {
           : [];
 
         // Mitgliedergruppe speichern (falls ausgewählt)
-        const mitgliedergruppeRequests = (this.selectedMitgliedergruppeIds && this.selectedMitgliedergruppeIds.length > 0)
-          ? this.selectedMitgliedergruppeIds.map(mitgliedergruppeId => {
-              const personMitgliedergruppe: PersonMitgliedergruppe = {
-                person_id: res.id,
-                mitgliedergruppe_id: mitgliedergruppeId
-              };
-              return this.backendService.createPersonMitgliedergruppe(personMitgliedergruppe).toPromise();
-            })
+        const mitgliedergruppeRequests = this.selectedMitgliedergruppeId != null
+          ? [this.backendService.createPersonMitgliedergruppe({
+              person_id: res.id,
+              mitgliedergruppe_id: this.selectedMitgliedergruppeId
+            }).toPromise()]
           : [];
-
 
         // Alle Zuordnungen speichern, dann abschließen
         Promise.all([...spracheRequests, ...gremiumRequests, ...mitgliedergruppeRequests,])
@@ -217,7 +208,7 @@ export class ContactManagementComponent implements OnInit {
         console.error('Fehler beim Hinzufügen', err);
         this.selectedSpracheIds = [];
         this.selectedGremiumIds = [];
-        this.selectedMitgliedergruppeIds = [];
+        this.selectedMitgliedergruppeId = 0;
       }
     });
   }
@@ -248,7 +239,7 @@ export class ContactManagementComponent implements OnInit {
     const emailValid = this.isEmailValid(this.selectedContact.email ?? '');
     const hasGremium = this.selectedEditGremiumIds.length > 0;
     const hasSprache = this.selectedEditSpracheIds.length > 0; 
-    const hasMitgliedergruppe = this.selectedEditMitgliedergruppeId != 0; 
+    const hasMitgliedergruppe = this.selectedEditMitgliedergruppeId !== null; 
     return !!(this.selectedContact.vorname && this.selectedContact.nachname && emailValid && hasGremium && hasSprache && hasMitgliedergruppe);
   }
 
@@ -411,7 +402,7 @@ export class ContactManagementComponent implements OnInit {
     this.loadMitgliedergruppen
     this.selectedSpracheIds = [];
     this.selectedGremiumIds = [];
-    this.selectedMitgliedergruppeIds = [];
+    this.selectedMitgliedergruppeId = null;
   }
 
 }
