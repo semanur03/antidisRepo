@@ -97,11 +97,21 @@ export class AdminManagementComponent implements OnInit {
         console.error('Fehler beim Hinzufügen', err);
 
         if (err.error?.error) {
-          this.errorMessage = err.error.error;
+          const backendError = err.error.error.toLowerCase();
+
+          if (backendError.includes('username already exists')) {
+            this.translate.get('admin-management.page.add_modal.error.username_exists')
+              .subscribe(msg => this.errorMessage = msg);
+          } else if (backendError.includes('email already exists')) {
+            this.translate.get('admin-management.page.add_modal.error.email_exists')
+              .subscribe(msg => this.errorMessage = msg);
+          } else {
+            this.translate.get('admin-management.page.add_modal.error.unknown')
+              .subscribe(msg => this.errorMessage = msg);
+          }
         } else {
-          this.translate.get('admin-management.page.add_modal.error.unknown').subscribe(msg => {
-            this.errorMessage = msg;
-          });
+          this.translate.get('admin-management.page.add_modal.error.unknown')
+            .subscribe(msg => this.errorMessage = msg);
         }
       },
     });
