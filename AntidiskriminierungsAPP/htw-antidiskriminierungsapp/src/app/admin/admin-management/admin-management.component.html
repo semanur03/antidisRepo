@@ -33,7 +33,18 @@
                         <td>{{ admin.username }}</td>
                         <td>{{ admin.email }}</td>
                         <td>
-                        <i class="bi bi-trash btn btn-sm btn-danger" (click)="openDeleteModal(admin)" title="Löschen"></i>
+                            <i 
+                                class="bi bi-trash btn btn-sm"
+                                [ngClass]="{
+                                'btn-danger': admin.id !== loggedInAdminId,
+                                'btn-secondary disabled-icon': admin.id === loggedInAdminId
+                                }"
+                                [title]="admin.id !== loggedInAdminId 
+                                        ? 'Löschen' 
+                                        : ('admin-management.page.table.cannot_delete_self' | translate)"
+                                [style.pointerEvents]="admin.id === loggedInAdminId ? 'none' : 'auto'"
+                                (click)="admin.id !== loggedInAdminId && openDeleteModal(admin)">
+                            </i>
                         </td>
                     </tr>
                     </tbody>

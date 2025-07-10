@@ -19,6 +19,7 @@ export class AdminManagementComponent implements OnInit {
     email: '',
     password: ''
   };
+  loggedInAdminId?: number;
 
   errorMessage: string | null = null;
 
@@ -42,9 +43,14 @@ export class AdminManagementComponent implements OnInit {
   }
 
   openDeleteModal(admin: Admin): void {
+    if (admin.id === this.loggedInAdminId) {
+      console.warn('Du kannst dich nicht selbst löschen.');
+      return;
+    }
     this.selectedAdmin = admin;
-    this.modalService.open(this.deleteModal, {ariaLabelledBy: 'modal-basic-title'});
+    this.modalService.open(this.deleteModal, { ariaLabelledBy: 'modal-basic-title' });
   }
+
 
   deleteAdmin(id?: number): void {
     if (!id) return;
@@ -118,6 +124,7 @@ export class AdminManagementComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.loggedInAdminId = this.authService.admin?.id;
     this.loadAdmins();
   }
 }
