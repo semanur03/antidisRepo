@@ -145,10 +145,14 @@ export class ContactManagementComponent implements OnInit {
 
   toggleOrganisationseinheitSelection(organisationseinheitId: number): void {
     const index = this.selectedOrganisationseinheitIds.indexOf(organisationseinheitId);
-    if (index === -1) {
-      this.selectedOrganisationseinheitIds.push(organisationseinheitId);
-    } else {
+    if (index > -1) {
       this.selectedOrganisationseinheitIds.splice(index, 1);
+    } else {
+      if(this.selectedOrganisationseinheitIds.length < 2){
+        this.selectedOrganisationseinheitIds.push(organisationseinheitId);
+      } else {
+        alert('Es können maximal 2 Organisationseinheiten ausgewählt werden.')
+      }
     }
   }
  
@@ -331,10 +335,14 @@ export class ContactManagementComponent implements OnInit {
 
   toggleEditOrganisationseinheitSelection(organisationseinheitId: number): void {
     const index = this.selectedEditOrganisationseinheitIds.indexOf(organisationseinheitId);
-    if (index === -1) {
-      this.selectedEditOrganisationseinheitIds.push(organisationseinheitId);
-    } else {
+    if (index > -1) {
       this.selectedEditOrganisationseinheitIds.splice(index, 1);
+    } else {
+      if (this.selectedEditOrganisationseinheitIds.length < 2) {
+        this.selectedEditOrganisationseinheitIds.push(organisationseinheitId);
+      } else {
+        alert('Es können maximal 2 Organisationseinheiten ausgewählt werden.');
+      }
     }
   }
 

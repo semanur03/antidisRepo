@@ -173,6 +173,7 @@
                         type="checkbox" 
                         [id]="'organisationseinheit_' + organisationseinheit.id"
                         [checked]="isOrganisationseinheitSelected(organisationseinheit.id)"
+                        [disabled]="!selectedOrganisationseinheitIds.includes(organisationseinheit.id) && selectedOrganisationseinheitIds.length >= 2"
                         (change)="toggleOrganisationseinheitSelection(organisationseinheit.id)">
                   <label class="form-check-label" [for]="'organisationseinheit_' + organisationseinheit.id">
                     {{ (organisationseinheit.organisationseinheit || '') | translate }}
@@ -276,6 +277,7 @@
                         type="checkbox"
                         [id]="'edit_organisationseinheit_' + organisationseinheit.id"
                         [checked]="isEditOrganisationseinheitSelected(organisationseinheit.id)"
+                        [disabled]="!selectedEditOrganisationseinheitIds.includes(organisationseinheit.id) && selectedEditOrganisationseinheitIds.length >= 2"
                         (change)="toggleEditOrganisationseinheitSelection(organisationseinheit.id)">
                   <label class="form-check-label" [for]="'edit_organisationseinheit_' + organisationseinheit.id">
                     {{ (organisationseinheit.organisationseinheit || '') | translate }}
