@@ -27,6 +27,42 @@ export class AdminUpdateComponent implements OnInit{
     });
   }
 
+  isPasswordValid(password: string): boolean {
+    const pattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z\d]).{8,}$/;
+    return pattern.test(password);
+  }
+
+  isEmailValid(email: string): boolean {
+    const emailRegex = /^[^\s@]+@([a-zA-Z0-9-]+\.)*htw-berlin\.de$/i;
+    return emailRegex.test(email);
+  }
+
+  isUpdateFormValid(): boolean {
+    const email = this.updateForm.get('email')?.value || '';
+    const newPassword = this.updateForm.get('newPassword')?.value || '';
+    const username = this.updateForm.get('username')?.value || '';
+
+    const emailValid = this.isEmailValid(email);
+
+    // Passwort nur prüfen, wenn eines eingegeben wurde
+    const passwordValid = newPassword ? this.isPasswordValid(newPassword) : true;
+
+    // username nicht leer, email gültig und Passwort valid (wenn eingegeben)
+    return !!username && emailValid && passwordValid;
+  }
+
+  get passwordChecks() {
+    const password = this.updateForm.get('newPassword')?.value || '';
+
+    return {
+      length: password.length >= 8,
+      uppercase: /[A-Z]/.test(password),
+      lowercase: /[a-z]/.test(password),
+      number: /\d/.test(password),
+      specialChar: /[^A-Za-z0-9]/.test(password)
+    };
+  }
+
   onSubmit() {
     this.errorMessage = null;
     this.successMessage = null;

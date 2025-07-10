@@ -63,10 +63,26 @@
                     [attr.aria-pressed]="!hideNew">
               <mat-icon>{{hideNew ? 'visibility_off' : 'visibility'}}</mat-icon>
             </button>
-            <mat-error *ngIf="updateForm.controls['newPassword'].hasError('minlength')">
-              {{ 'admin-update.page.error.password_min_length' | translate }}
-            </mat-error>
           </mat-form-field>
+            <small *ngIf="updateForm.get('newPassword')?.value">
+              <ul class="list-unstyled mt-2">
+                <li [ngClass]="{'text-success': passwordChecks.length, 'text-danger': !passwordChecks.length}">
+                  {{ 'admin-management.page.add_modal.w.2' | translate }}
+                </li>
+                <li [ngClass]="{'text-success': passwordChecks.uppercase, 'text-danger': !passwordChecks.uppercase}">
+                  {{ 'admin-management.page.add_modal.w.3' | translate }}
+                </li>
+                <li [ngClass]="{'text-success': passwordChecks.lowercase, 'text-danger': !passwordChecks.lowercase}">
+                  {{ 'admin-management.page.add_modal.w.4' | translate }}
+                </li>
+                <li [ngClass]="{'text-success': passwordChecks.number, 'text-danger': !passwordChecks.number}">
+                  {{ 'admin-management.page.add_modal.w.5' | translate }}
+                </li>
+                <li [ngClass]="{'text-success': passwordChecks.specialChar, 'text-danger': !passwordChecks.specialChar}">
+                  {{ 'admin-management.page.add_modal.w.6' | translate }}
+                </li>
+              </ul>
+            </small>
         </div>
       </mat-card-content>
       <!-- Fehler/Erfolg -->

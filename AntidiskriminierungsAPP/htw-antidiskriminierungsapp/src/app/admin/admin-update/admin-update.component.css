@@ -122,8 +122,8 @@ mat-icon-button:focus {
 }
 
 .mat-error {
-  color: red; /* z.B. kräftiges Rot */
-  font-weight: bold; /* Optional: fett */
+  color: red; 
+  font-weight: bold;
 }
 
 .error-message {
@@ -144,4 +144,18 @@ mat-icon-button:focus {
 
 i {
     cursor: pointer;
+}
+
+#update-content .text-success {
+  color: #76B900;
+}
+
+#update-content .text-danger {
+  color: red;
+}
+
+#update-content ul li::before {
+  content: '✔ ';
+  color: inherit; 
+  font-weight: bold;
 }

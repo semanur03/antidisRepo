@@ -84,8 +84,24 @@
                     <div class="mb-3">
                     <label for="password">{{ 'admin-management.page.add_modal.n.3' | translate }}:</label>
                     <input id="password" type="password" class="form-control" [(ngModel)]="newAdmin.password" name="password" required minlength="8"/>
-                        <small class="text-danger" *ngIf="newAdmin.password && newAdmin.password.length < 8">
-                            {{ 'admin-management.page.add_modal.w.2' | translate }}
+                        <small>
+                            <ul class="list-unstyled mt-2">
+                                <li [ngClass]="{'text-success': passwordChecks.length, 'text-danger': !passwordChecks.length}">
+                                {{ 'admin-management.page.add_modal.w.2' | translate }}
+                                </li>
+                                <li [ngClass]="{'text-success': passwordChecks.uppercase, 'text-danger': !passwordChecks.uppercase}">
+                                {{ 'admin-management.page.add_modal.w.3' | translate }}
+                                </li>
+                                <li [ngClass]="{'text-success': passwordChecks.lowercase, 'text-danger': !passwordChecks.lowercase}">
+                                {{ 'admin-management.page.add_modal.w.4' | translate }}
+                                </li>
+                                <li [ngClass]="{'text-success': passwordChecks.number, 'text-danger': !passwordChecks.number}">
+                                {{ 'admin-management.page.add_modal.w.5' | translate }}
+                                </li>
+                                <li [ngClass]="{'text-success': passwordChecks.specialChar, 'text-danger': !passwordChecks.specialChar}">
+                                {{ 'admin-management.page.add_modal.w.6' | translate }}
+                                </li>
+                            </ul>
                         </small>
                     </div>
 

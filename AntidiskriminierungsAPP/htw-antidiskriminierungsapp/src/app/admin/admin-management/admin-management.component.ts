@@ -66,15 +66,32 @@ export class AdminManagementComponent implements OnInit {
 
   isNewAdminValid(): boolean {
     const emailValid = this.isEmailValid(this.newAdmin.email);
-    const passwordValid = this.newAdmin.password.length >= 8;
+    const passwordValid = this.isPasswordValid(this.newAdmin.password);
     return !!this.newAdmin.username && emailValid && passwordValid;
   }
 
   isEmailValid(email: string): boolean {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const emailRegex = /^[^\s@]+@([a-zA-Z0-9-]+\.)*htw-berlin\.de$/i;
     return emailRegex.test(email);
   }
 
+  isPasswordValid(password: string): boolean {
+    // Mindestens 8 Zeichen, 1 Groß-, 1 Kleinbuchstabe, 1 Zahl, 1 Sonderzeichen
+    const pattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^A-Za-z\d]).{8,}$/;
+    return pattern.test(password);
+  }
+
+  get passwordChecks() {
+    const password = this.newAdmin.password || '';
+
+    return {
+      length: password.length >= 8,
+      uppercase: /[A-Z]/.test(password),
+      lowercase: /[a-z]/.test(password),
+      number: /\d/.test(password),
+      specialChar: /[^A-Za-z0-9]/.test(password)
+    };
+  }
 
   openAddModal(): void {
     this.newAdmin = { id: 0, username: '', email: '', password: '' };

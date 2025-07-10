@@ -87,3 +87,18 @@ i {
 .btn-success:hover {
   background-color: #75b900af;
 }
+
+/* Nur für das Modal */
+.modal-body .text-success {
+  color: #76B900; 
+}
+
+.modal-body .text-danger {
+  color: red;
+}
+
+.modal-body ul li::before {
+  content: '✔ ';
+  color: inherit;
+  font-weight: bold;
+}
