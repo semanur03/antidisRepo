@@ -15,6 +15,7 @@
             <p class="card-text">{{ 'contactlist.committee' | translate }}: {{ (contact.gremium || '') | translate }}
                 <span *ngIf="contact.gremium1">, {{ (contact.gremium1 || '') | translate }} </span>
                 <span *ngIf="contact.gremium2">, {{ (contact.gremium2 || '') | translate }} </span>
+                <span *ngIf="contact.gremium3">, {{ (contact.gremium3 || '') | translate }} </span>
             </p>
             <p class="card-text">{{ 'contact-management.page.organizational.unit' | translate }}: {{ (contact.organisationseinheit || '') | translate }}
                 <span *ngIf="contact.organisationseinheit1">, {{ (contact.organisationseinheit1 || '') | translate }} </span>
@@ -38,6 +39,7 @@
             <p class="card-text">{{ 'contactlist.committee' | translate }}: {{ (contact.gremium || '') | translate }}
                 <span *ngIf="contact.gremium1">, {{ (contact.gremium1 || '') | translate }} </span>
                 <span *ngIf="contact.gremium2">, {{ (contact.gremium2 || '') | translate }} </span>
+                <span *ngIf="contact.gremium3">, {{ (contact.gremium3 || '') | translate }} </span>
             </p>
             <p class="card-text">{{ 'contact-management.page.organizational.unit' | translate }}: {{ (contact.organisationseinheit || '') | translate }}
                 <span *ngIf="contact.organisationseinheit1">, {{ (contact.organisationseinheit1 || '') | translate }} </span>

@@ -123,10 +123,10 @@ export class ContactManagementComponent implements OnInit {
     if (index > -1) {
       this.selectedGremiumIds.splice(index, 1);
     } else {
-      if(this.selectedGremiumIds.length < 3){
+      if(this.selectedGremiumIds.length < 4){
         this.selectedGremiumIds.push(gremiumId);
       } else {
-        alert('Es können maximal 3 Gremien ausgewählt werden.')
+        alert('Es können maximal 4 Gremien ausgewählt werden.')
       }
     }
   }
@@ -313,10 +313,10 @@ export class ContactManagementComponent implements OnInit {
     if (index > -1) {
       this.selectedEditGremiumIds.splice(index, 1);
     } else {
-      if (this.selectedEditGremiumIds.length < 3) {
+      if (this.selectedEditGremiumIds.length < 4) {
         this.selectedEditGremiumIds.push(gremiumId);
       } else {
-        alert('Es können maximal 3 Gremien ausgewählt werden.');
+        alert('Es können maximal 4 Gremien ausgewählt werden.');
       }
     }
   }

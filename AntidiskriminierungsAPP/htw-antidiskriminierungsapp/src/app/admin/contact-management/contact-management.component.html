@@ -44,6 +44,7 @@
             <p class="card-text">{{ 'contact-management.page.committee' | translate }}: {{ (contact.gremium || '') | translate }}
                 <span *ngIf="contact.gremium1">, {{ (contact.gremium1 || '') | translate }} </span>
                 <span *ngIf="contact.gremium2">, {{ (contact.gremium2 || '') | translate }} </span>
+                <span *ngIf="contact.gremium3">, {{ (contact.gremium3 || '') | translate }} </span>
             </p>
             <p class="card-text">{{ 'contact-management.page.organizational.unit' | translate }}: {{ (contact.organisationseinheit || '') | translate }}
                 <span *ngIf="contact.organisationseinheit1">, {{ (contact.organisationseinheit1 || '') | translate }} </span>
@@ -71,6 +72,7 @@
             <p class="card-text">{{ 'contact-management.page.committee' | translate }}: {{ (contact.gremium || '') | translate }}
                 <span *ngIf="contact.gremium1">, {{ (contact.gremium1 || '') | translate }} </span>
                 <span *ngIf="contact.gremium2">, {{ (contact.gremium2 || '') | translate }} </span>
+                <span *ngIf="contact.gremium3">, {{ (contact.gremium3 || '') | translate }} </span>
             </p>
             <p class="card-text">{{ 'contact-management.page.organizational.unit' | translate }}: {{ (contact.organisationseinheit || '') | translate }}
                 <span *ngIf="contact.organisationseinheit1">, {{ (contact.organisationseinheit1 || '') | translate }} </span>
@@ -142,7 +144,7 @@
                       type="checkbox" 
                       [id]="'gremium_' + gremium.id"
                       [checked]="isGremiumSelected(gremium.id)"
-                      [disabled]="!selectedGremiumIds.includes(gremium.id) && selectedGremiumIds.length >= 3"
+                      [disabled]="!selectedGremiumIds.includes(gremium.id) && selectedGremiumIds.length >= 4"
                       (change)="toggleGremiumSelection(gremium.id)">
                 <label class="form-check-label" [for]="'gremium_' + gremium.id">
                   {{ gremium.gremium | translate}}
@@ -246,7 +248,7 @@
                     type="checkbox"
                     [id]="'edit_gremium_' + gremium.id"
                     [checked]="isEditGremiumSelected(gremium.id)"
-                    [disabled]="!selectedEditGremiumIds.includes(gremium.id) && selectedEditGremiumIds.length >= 3"
+                    [disabled]="!selectedEditGremiumIds.includes(gremium.id) && selectedEditGremiumIds.length >= 4"
                     (change)="toggleEditGremiumSelection(gremium.id)">
                   <label class="form-check-label" [for]="'edit_gremium_' + gremium.id">
                     {{ gremium.gremium | translate }}

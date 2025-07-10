@@ -13,6 +13,7 @@ export interface ContactsView extends Contacts {
     gremium?: string;
     gremium1?: string;
     gremium2?: string;
+    gremium3?: string;
     organisationseinheit?: string;
     organisationseinheit1?: string;
 }
