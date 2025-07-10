@@ -16,7 +16,9 @@
                 <span *ngIf="contact.gremium1">, {{ (contact.gremium1 || '') | translate }} </span>
                 <span *ngIf="contact.gremium2">, {{ (contact.gremium2 || '') | translate }} </span>
             </p>
-            <p class="card-text">{{ 'contactlist.organizational.unit' | translate }}: {{ (contact.organisationseinheit || '') | translate }}</p>
+            <p class="card-text">{{ 'contact-management.page.organizational.unit' | translate }}: {{ (contact.organisationseinheit || '') | translate }}
+                <span *ngIf="contact.organisationseinheit1">, {{ (contact.organisationseinheit1 || '') | translate }} </span>
+            </p>
             <button class="btn btn-primary" (click)="contactPerson(contact.email, contact.titel || '', contact.vorname, contact.nachname)">
                 <i class="fa-solid fa-envelope" (click)="contactPerson(contact.email, contact.titel || '', contact.vorname, contact.nachname)"></i>
                 {{ 'contactlist.button.get.in.contact' | translate }}
@@ -37,7 +39,9 @@
                 <span *ngIf="contact.gremium1">, {{ (contact.gremium1 || '') | translate }} </span>
                 <span *ngIf="contact.gremium2">, {{ (contact.gremium2 || '') | translate }} </span>
             </p>
-            <p class="card-text">{{ 'contactlist.organizational.unit' | translate }}: {{ (contact.organisationseinheit || '') | translate }}</p>
+            <p class="card-text">{{ 'contact-management.page.organizational.unit' | translate }}: {{ (contact.organisationseinheit || '') | translate }}
+                <span *ngIf="contact.organisationseinheit1">, {{ (contact.organisationseinheit1 || '') | translate }} </span>
+            </p>
             <button class="btn btn-primary desktop" (click)="contactPerson(contact.email, contact.titel || '', contact.vorname, contact.nachname)">
                 <i class="fa-solid fa-envelope" (click)="contactPerson(contact.email, contact.titel || '', contact.vorname, contact.nachname)"></i>
                 {{ 'contactlist.button.get.in.contact' | translate }}
