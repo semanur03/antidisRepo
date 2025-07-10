@@ -10,33 +10,18 @@
                 <h2>{{ 'contact-management.page.title.2' | translate }}</h2>
                 <h3>{{ 'contact-management.page.h.1' | translate }}</h3>
             </div>
+            <br>
 
-            <div class="buttons">
-          <div>
-            <button class="btn btn-primary" type="button" [routerLink]="['/contact-sprache']">
-              Sprache
-            </button>
-          </div>
-          <div>
-            <button class="btn btn-primary" type="button" [routerLink]="['/contact-gremium']">
-              Gremium
-            </button>
-          </div>
-          <div>
-            <button class="btn btn-primary" type="button" [routerLink]="['/contact-mitgliedergruppe']">
-              Mitgliedergruppe
-            </button>
-          </div>
-          <div>
-            <button class="btn btn-primary" type="button" [routerLink]="['contact-organisationseinheit']">
-              Organisationseinheit
-            </button>
-          </div>
+           <div class="language-add-container">
+          <span class="language-add-label">{{ 'contact-management.page.h.2' | translate }}</span>
+          <button class="btn btn-sm language-add-contact" (click)="openLanguageModal()">
+              <i class="bi bi-plus-square"></i>
+          </button>
         </div>
         <br>
         <!-- Add New Button -->
         <div class="contact-add-container">
-          <span class="contact-add-label">{{ 'contact-management.page.h.2' | translate }}</span>
+          <span class="contact-add-label">{{ 'contact-management.page.h.3' | translate }}</span>
           <button class="btn btn-sm contact-add-contact" (click)="openAddModal()">
               <i class="bi bi-person-plus"></i>
           </button>
@@ -310,6 +295,66 @@
               <button class="btn btn-secondary" (click)="modalService.dismissAll()">{{ 'button.cancel' | translate }}</button>
             </div>
           </ng-template>
+
+          <!-- Modal: Sprache -->
+<ng-template #languageModal>
+  <div class="modal-header">
+    <h4 class="modal-title">
+      {{ 'contacts-management.modal.add.language' | translate }}
+    </h4>
+    <p>{{ 'contacts-management.page.modal.add.language.h.1' | translate }}</p>
+  </div>
+
+  <div class="modal-body">
+    <!-- Bestehende Sprachen -->
+    <div class="mb-3">
+      <label>
+        {{ 'contact-management.page.existing.languages' | translate }}:
+      </label>
+      <ul>
+        <li *ngFor="let sprache of sprachen">
+          {{ sprache.sprache }}
+        </li>
+      </ul>
+    </div>
+
+    <!-- Neue Sprache hinzufügen -->
+    <div class="mb-3">
+      <label for="newSprache">
+        {{ 'contact-management.page.add.language_modal.language' | translate }}:
+      </label>
+      <input
+        id="newSprache"
+        type="text"
+        class="form-control"
+        [(ngModel)]="newSprache.sprache"
+        placeholder="Neue Sprache eingeben"
+      />
+    </div>
+
+    <div *ngIf="errorMessage" class="alert alert-danger">
+      {{ errorMessage }}
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <button
+      class="btn btn-success"
+      [disabled]="!isNewLanguageValid()"
+      (click)="createSprache()"
+    >
+      {{ 'button.save' | translate }}
+    </button>
+    <button
+      class="btn btn-secondary"
+      (click)="modalService.dismissAll()"
+    >
+      {{ 'button.cancel' | translate }}
+    </button>
+  </div>
+</ng-template>
+
+
         </div>
       </div>
   </div>

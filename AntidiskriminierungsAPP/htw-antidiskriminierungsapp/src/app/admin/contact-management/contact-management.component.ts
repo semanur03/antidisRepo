@@ -51,11 +51,17 @@ export class ContactManagementComponent implements OnInit {
     email: '',
   };
 
+  newSprache: Sprache = { 
+    id: 0, 
+    sprache: '' 
+  };
+
   errorMessage: string | null = null;
 
   @ViewChild('deleteModal') deleteModal!: TemplateRef<any>;
   @ViewChild('addModal') addModal!: TemplateRef<any>;
   @ViewChild('editModal') editModal!: TemplateRef<any>;
+  @ViewChild('languageModal') languageModal!: TemplateRef<any>;
 
   constructor(private backendService: BackendService, private service: ContactsService, public modalService: NgbModal, config: NgbModalConfig, private translate: TranslateService) {
     config.backdrop = 'static';  // Klick außerhalb schließt Modal NICHT
@@ -454,6 +460,55 @@ export class ContactManagementComponent implements OnInit {
         this.organisationseinheiten = data;
       },
       error: (err) => console.error('Fehler beim Laden der Organisationseinheiten', err)
+    });
+  }
+
+  openLanguageModal(): void {
+    this.modalService.open(this.languageModal, {
+      backdrop: 'static',
+      size: 'md',
+    });
+  }
+
+  // Prüft, ob die Eingabe gültig und noch nicht vorhanden ist
+  isNewLanguageValid(): boolean {
+    const name = this.newSprache?.sprache?.trim().toLowerCase();
+    return !!name && !this.sprachen.some(
+      (s) => s.sprache.trim().toLowerCase() === name
+    );
+  }
+
+  // Neue Sprache speichern
+  createSprache(): void {
+    const name = this.newSprache?.sprache?.trim();
+
+    if (!name) {
+      this.errorMessage = 'Bitte einen gültigen Sprachnamen eingeben.';
+      return;
+    }
+
+    const exists = this.sprachen.some(
+      (s) => s.sprache.trim().toLowerCase() === name.toLowerCase()
+    );
+
+    if (exists) {
+      this.errorMessage = 'Diese Sprache existiert bereits.';
+      return;
+    }
+
+    const spracheToCreate = { id: 0, sprache: name };
+
+    this.backendService.createSprache(spracheToCreate).subscribe({
+      next: (res) => {
+        this.sprachen.push(res); // Oder this.loadSprachen();
+        this.newSprache = { id: 0, sprache: '' };
+        this.errorMessage = null;
+        this.modalService.dismissAll();
+      },
+      error: (err) => {
+        this.errorMessage = 'Fehler beim Speichern der Sprache.';
+        console.error(err);
+      }
     });
   }
 

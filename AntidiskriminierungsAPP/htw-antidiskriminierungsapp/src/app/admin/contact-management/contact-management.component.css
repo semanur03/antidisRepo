@@ -74,6 +74,27 @@ a {
     color: #76B900;
 }
 
+.language-add-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem; 
+}
+
+.language-add-label {
+  font-weight: bold;
+  margin-right: 0.5rem;
+}
+
+.language-add-contact {
+  background-color: #76B900;
+  color: white;
+  border: none;
+}
+
+.language-add-contact:hover {
+  background-color: #75b900af;
+}
+
 .contact-add-container {
   display: flex;
   align-items: center;
