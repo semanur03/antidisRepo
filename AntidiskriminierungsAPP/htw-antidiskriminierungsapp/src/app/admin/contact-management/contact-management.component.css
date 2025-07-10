@@ -85,14 +85,25 @@ a {
   margin-right: 0.5rem;
 }
 
-.language-add-contact {
+.language-add-language {
   background-color: #76B900;
   color: white;
   border: none;
 }
 
-.language-add-contact:hover {
+.language-add-language:hover {
   background-color: #75b900af;
+}
+
+.language-delete-language {
+  background-color: rgb(255, 103, 103);
+  color: white;
+  border: none;
+  margin-left: 5px;
+}
+
+.language-delete-language:hover {
+  background-color: red;
 }
 
 .contact-add-container {

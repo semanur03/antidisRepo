@@ -55,6 +55,7 @@ export class ContactManagementComponent implements OnInit {
     id: 0, 
     sprache: '' 
   };
+  selectedLanguageIdToDelete: number | null = null;
 
   errorMessage: string | null = null;
 
@@ -62,6 +63,7 @@ export class ContactManagementComponent implements OnInit {
   @ViewChild('addModal') addModal!: TemplateRef<any>;
   @ViewChild('editModal') editModal!: TemplateRef<any>;
   @ViewChild('languageModal') languageModal!: TemplateRef<any>;
+  @ViewChild('languageDeleteModal') languageDeleteModal: any;
 
   constructor(private backendService: BackendService, private service: ContactsService, public modalService: NgbModal, config: NgbModalConfig, private translate: TranslateService) {
     config.backdrop = 'static';  // Klick außerhalb schließt Modal NICHT
@@ -508,6 +510,27 @@ export class ContactManagementComponent implements OnInit {
       error: (err) => {
         this.errorMessage = 'Fehler beim Speichern der Sprache.';
         console.error(err);
+      }
+    });
+  }
+
+  openLanguageDeleteModal(): void {
+    this.selectedLanguageIdToDelete = null;
+    this.modalService.open(this.languageDeleteModal);
+  }
+
+  deleteSprache(): void {
+    if (this.selectedLanguageIdToDelete == null) return;
+
+    this.backendService.deleteSprache(this.selectedLanguageIdToDelete).subscribe({
+      next: () => {
+        // Sprache aus der Liste entfernen
+        this.sprachen = this.sprachen.filter(s => s.id !== this.selectedLanguageIdToDelete);
+        this.selectedLanguageIdToDelete = null;
+        this.modalService.dismissAll();
+      },
+      error: (err) => {
+        console.error('Fehler beim Löschen der Sprache', err);
       }
     });
   }

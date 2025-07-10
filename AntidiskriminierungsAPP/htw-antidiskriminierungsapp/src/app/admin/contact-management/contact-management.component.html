@@ -3,7 +3,7 @@
         <div class="col-12">
             <div class="header row">
                 <i class="col-1 fa-solid fa-chevron-left" [routerLink]="['/admin-home']"></i>
-                <h1 class="col-9">{{ 'contact-management.page.title' | translate }}</h1>
+                <h1 class="col-9">{{ 'contact-management.page.page-title' | translate }}</h1>
             </div>
             <br>
             <div>
@@ -14,8 +14,11 @@
 
            <div class="language-add-container">
           <span class="language-add-label">{{ 'contact-management.page.h.2' | translate }}</span>
-          <button class="btn btn-sm language-add-contact" (click)="openLanguageModal()">
+          <button class="btn btn-sm language-add-language" (click)="openLanguageModal()">
               <i class="bi bi-plus-square"></i>
+          </button>
+          <button class="btn btn-sm language-delete-language" (click)="openLanguageDeleteModal()">
+              <i class="bi bi-dash-square"></i>
           </button>
         </div>
         <br>
@@ -35,14 +38,14 @@
                 <p class="card-title">{{ contact.titel || '' }} {{ contact.vorname }} {{ contact.nachname }}</p>
               </div>
               <p class="card-subtitle mb-2 text-muted">{{ contact.sprache || '' }}</p>
-              <p class="card-text">{{ 'contactlist.phone' | translate }}: {{ contact.telefon || '' }}</p>
-              <p class="card-text">{{ 'contactlist.email' | translate }}: {{ contact.email }}</p>
-            <p class="card-text">{{ 'contactlist.membergroup' | translate }}: {{ (contact.mitgliedergruppe || '') | translate }}</p>
-            <p class="card-text">{{ 'contactlist.committee' | translate }}: {{ (contact.gremium || '') | translate }}
+              <p class="card-text">{{ 'contact-management.page.phone' | translate }}: {{ contact.telefon || '' }}</p>
+              <p class="card-text">{{ 'contact-management.page.email' | translate }}: {{ contact.email }}</p>
+            <p class="card-text">{{ 'contact-management.page.membergroup' | translate }}: {{ (contact.mitgliedergruppe || '') | translate }}</p>
+            <p class="card-text">{{ 'contact-management.page.committee' | translate }}: {{ (contact.gremium || '') | translate }}
                 <span *ngIf="contact.gremium1">, {{ (contact.gremium1 || '') | translate }} </span>
                 <span *ngIf="contact.gremium2">, {{ (contact.gremium2 || '') | translate }} </span>
             </p>
-            <p class="card-text">{{ 'contactlist.organizational.unit' | translate }}: {{ (contact.organisationseinheit || '') | translate }}</p>
+            <p class="card-text">{{ 'contact-management.page.organizational.unit' | translate }}: {{ (contact.organisationseinheit || '') | translate }}</p>
 
               <!-- Buttons -->
               <button class="btn btn-warning me-2" (click)="openEditModal(contact)">
@@ -61,14 +64,14 @@
                 <p class="card-title">{{ contact.titel || '' }} {{ contact.vorname }} {{ contact.nachname }}</p>
               </div>
               <p class="card-subtitle mb-2 text-muted">{{ contact.sprache || '' }}</p>
-              <p class="card-text">{{ 'contactlist.phone' | translate }}: {{ contact.telefon || '' }}</p>
-              <p class="card-text">{{ 'contactlist.email' | translate }}: {{ contact.email }}</p>
-            <p class="card-text">{{ 'contactlist.membergroup' | translate }}: {{ (contact.mitgliedergruppe || '') | translate }}</p>
-            <p class="card-text">{{ 'contactlist.committee' | translate }}: {{ (contact.gremium || '') | translate }}
+              <p class="card-text">{{ 'contact-management.page.phone' | translate }}: {{ contact.telefon || '' }}</p>
+              <p class="card-text">{{ 'contact-management.page.email' | translate }}: {{ contact.email }}</p>
+            <p class="card-text">{{ 'contact-management.page.membergroup' | translate }}: {{ (contact.mitgliedergruppe || '') | translate }}</p>
+            <p class="card-text">{{ 'contact-management.page.committee' | translate }}: {{ (contact.gremium || '') | translate }}
                 <span *ngIf="contact.gremium1">, {{ (contact.gremium1 || '') | translate }} </span>
                 <span *ngIf="contact.gremium2">, {{ (contact.gremium2 || '') | translate }} </span>
             </p>
-            <p class="card-text">{{ 'contactlist.organizational.unit' | translate }}: {{ (contact.organisationseinheit || '') | translate }}</p>
+            <p class="card-text">{{ 'contact-management.page.organizational.unit' | translate }}: {{ (contact.organisationseinheit || '') | translate }}</p>
 
               <!-- Buttons -->
               <button class="btn btn-warning me-2" (click)="openEditModal(contact)">
@@ -83,35 +86,41 @@
           <!-- Modal: Hinzufügen -->
           <ng-template #addModal>
             <div class="modal-header">
-              <h4 class="modal-title">{{ 'contacts-management.modal.add.title' | translate }}</h4>
+              <h4 class="modal-title">{{ 'contact-management.page.modal.add.title' | translate }}</h4>
             </div>
             <div class="modal-body">
               <div class="mb-3">
-                <label for="titel">{{ 'contactlist.title' | translate }}:</label>
+                <label for="titel">{{ 'contact-management.page.title' | translate }}:</label>
                 <input id="titel" type="text" class="form-control" [(ngModel)]="newContact.titel"/>
               </div>
               <div class="mb-3">
-                <label for="vorname">*{{ 'contactlist.firstname' | translate }}:</label>
+                <label for="vorname">*{{ 'contact-management.page.firstname' | translate }}:</label>
                 <input id="vorname" type="text" class="form-control" [(ngModel)]="newContact.vorname" name="vorname" required/>
+                <small class="text-danger" *ngIf="!newContact!.vorname || newContact!.vorname.trim() === ''">
+                    {{ 'contact-management.page.modal.w.1' | translate }}
+                </small>
               </div>
               <div class="mb-3">
-                <label for="nachname">*{{ 'contactlist.lastname' | translate }}:</label>
+                <label for="nachname">*{{ 'contact-management.page.lastname' | translate }}:</label>
                 <input id="nachmane" type="text" class="form-control" [(ngModel)]="newContact.nachname" name="nachname" required/>
+                <small class="text-danger" *ngIf="!newContact!.nachname || newContact!.nachname.trim() === ''">
+                    {{ 'contact-management.page.modal.w.2' | translate }}
+                </small>
               </div>
               <div class="mb-3">
-                <label for="telefon">{{ 'contactlist.phone' | translate }}:</label>
+                <label for="telefon">{{ 'contact-management.page.phone' | translate }}:</label>
                 <input id="telefon" type="text" class="form-control" [(ngModel)]="newContact.telefon"/>
               </div>
               <div class="mb-3">
-                <label for="email">*Email:</label>
+                <label for="email">*{{ 'contact-management.page.email' | translate}}:</label>
                 <input id="email" type="text" class="form-control" [(ngModel)]="newContact.email" name="email" required email />
                   <small class="text-danger" *ngIf="newContact.email && !isEmailValid(newContact.email)">
-                      {{ 'contact-management.page.add_modal.w.3' | translate }}
+                      {{ 'contact-management.page.modal.w.3' | translate }}
                   </small>
               </div>
               <!-- Checkbox für Sprachen -->
               <div class="mb-3">
-                <label class="form-label">*{{ 'contactlist.language' | translate }}</label>
+                <label class="form-label">*{{ 'contact-management.page.language' | translate }}</label>
                 <div *ngFor="let sprache of sprachen" class="form-check">
                   <input class="form-check-input" 
                         type="checkbox" 
@@ -125,7 +134,7 @@
               </div>
               <!-- Checkbox für Gremien -->
               <div class="mb-3">
-              <label class="form-label">*{{ 'contactlist.committee' | translate }}</label>
+              <label class="form-label">*{{ 'contact-management.page.committee' | translate }}</label>
               <div *ngFor="let gremium of gremien" class="form-check">
                 <input class="form-check-input" 
                       type="checkbox" 
@@ -140,7 +149,7 @@
             </div>
               <!-- Mitgliedergruppen Radio-Btn -->
               <div class="mb-3">
-                <label class="form-label">*{{ 'contactlist.membergroup' | translate }}</label>
+                <label class="form-label">*{{ 'contact-management.page.membergroup' | translate }}</label>
                 <div *ngFor="let mitgliedergruppe of mitgliedergruppen" class="form-check">
                   <input class="form-check-input"
                         type="radio"
@@ -156,7 +165,7 @@
               </div>
               <!-- Checkbox für Organisationseinheiten -->
               <div class="mb-3">
-                <label class="form-label">*{{ 'contactlist.language' | translate }}</label>
+                <label class="form-label">*{{ 'contact-management.page.organizational.unit' | translate }}</label>
                 <div *ngFor="let organisationseinheit of organisationseinheiten" class="form-check">
                   <input class="form-check-input" 
                         type="checkbox" 
@@ -171,50 +180,50 @@
               <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
             </div>
             <div class="modal-footer">
-              <button class="btn btn-success" [disabled]="!isNewContactValid()" (click)="saveNewContact()">{{ 'button.save' | translate }}</button>
-              <button class="btn btn-secondary" (click)="modalService.dismissAll()">{{ 'button.cancel' | translate }}</button>
+              <button class="btn btn-success" [disabled]="!isNewContactValid()" (click)="saveNewContact()">{{ 'contact-management.page.button.save' | translate }}</button>
+              <button class="btn btn-secondary" (click)="modalService.dismissAll()">{{ 'contact-management.page.button.cancel' | translate }}</button>
             </div>
           </ng-template>
 
           <!-- Modal: Bearbeiten -->
           <ng-template #editModal>
             <div class="modal-header">
-              <h4 class="modal-title">{{ 'contacts-management.modal.edit.title' | translate }}</h4>
+              <h4 class="modal-title">{{ 'contact-management.page.modal.edit.title' | translate }}</h4>
             </div>
             <div class="modal-body">
               <div class="mb-3">
-                <label for="titel">{{ 'contactlist.title' | translate }}:</label>
+                <label for="titel">{{ 'contact-management.page.title' | translate }}:</label>
                 <input id="titel" type="text" class="form-control" [(ngModel)]="selectedContact!.titel"/>
               </div>
               <div class="mb-3">
-                <label for="vorname">{{ 'contactlist.firstname' | translate }}:</label>
+                <label for="vorname">*{{ 'contact-management.page.firstname' | translate }}:</label>
                 <input id="vorname" type="text" class="form-control" [(ngModel)]="selectedContact!.vorname" name="vorname" required/>
                 <small class="text-danger" *ngIf="!selectedContact!.vorname || selectedContact!.vorname.trim() === ''">
-                    {{ 'contact-management.page.edit_modal.w.1' | translate }}
+                    {{ 'contact-management.page.modal.w.1' | translate }}
                 </small>
               </div>
               <div class="mb-3">
-                <label for="nachname">{{ 'contactlist.lastname' | translate }}:</label>
+                <label for="nachname">*{{ 'contact-management.page.lastname' | translate }}:</label>
                 <input id="nachmane" type="text" class="form-control" [(ngModel)]="selectedContact!.nachname" name="nachname" required/>
                   <small class="text-danger" *ngIf="!selectedContact!.nachname || selectedContact!.nachname.trim() === ''">
-                    {{ 'contact-management.page.edit_modal.w.2' | translate }}
+                    {{ 'contact-management.page.modal.w.2' | translate }}
                 </small>
               </div>
               <div class="mb-3">
-                <label for="telefon">{{ 'contactlist.phone' | translate }}:</label>
+                <label for="telefon">{{ 'contact-management.page.phone' | translate }}:</label>
                 <input id="telefon" type="text" class="form-control" [(ngModel)]="selectedContact!.telefon"/>
               </div>
               <div class="mb-3">
-                <label for="email">Email:</label>
+                <label for="email">*{{ 'contact-management.page.email' | translate }}:</label>
                 <input id="email" type="text" class="form-control" [(ngModel)]="selectedContact!.email" name="email" required email />
                   <small class="text-danger" *ngIf="selectedContact?.email && !isEmailValidSafe(selectedContact?.email)">
-                    {{ 'contact-management.page.edit_modal.w.3' | translate }}
+                    {{ 'contact-management.page.modal.w.3' | translate }}
                   </small>
 
               </div>
                <!-- Sprach-Checkboxen -->
               <div class="mb-3">
-                <label class="form-label">*{{ 'contactlist.language' | translate }}</label>
+                <label class="form-label">*{{ 'contact-management.page.language' | translate }}</label>
                 <div *ngFor="let sprache of sprachen" class="form-check">
                   <input class="form-check-input"
                         type="checkbox"
@@ -228,7 +237,7 @@
               </div>
               <!-- Gremium-Checkboxen -->
               <div class="mb-3">
-                <label class="form-label">*{{ 'contactlist.committee' | translate }}</label>
+                <label class="form-label">*{{ 'contact-management.page.committee' | translate }}</label>
                 <div *ngFor="let gremium of gremien" class="form-check">
                   <input class="form-check-input"
                     type="checkbox"
@@ -243,7 +252,7 @@
               </div>
                <!-- Mitgliedergruppe-Radio-Btn-->
               <div class="mb-3">
-                <label class="form-label">*{{ 'contactlist.membergroup' | translate }}</label>
+                <label class="form-label">*{{ 'contact-management.page.membergroup' | translate }}</label>
                 <div *ngFor="let mitgliedergruppe of mitgliedergruppen" class="form-check">
                   <input class="form-check-input"
                         type="radio"
@@ -259,7 +268,7 @@
               </div>
                <!-- Organisationseinheit-Checkboxen -->
               <div class="mb-3">
-                <label class="form-label">*{{ 'contactlist.language' | translate }}</label>
+                <label class="form-label">*{{ 'contact-management.page.organizational.unit' | translate }}</label>
                 <div *ngFor="let organisationseinheit of organisationseinheiten" class="form-check">
                   <input class="form-check-input"
                         type="checkbox"
@@ -276,85 +285,87 @@
               <div *ngIf="errorMessage" class="alert alert-danger w-100 mb-2">
                 {{ errorMessage }}
               </div>
-              <button class="btn btn-success" [disabled]="!isEditContactValid()" (click)="saveUpdatedContact()">{{ 'button.save' | translate }}</button>
-              <button class="btn btn-secondary" (click)="modalService.dismissAll()">{{ 'button.cancel' | translate }}</button>
+              <button class="btn btn-success" [disabled]="!isEditContactValid()" (click)="saveUpdatedContact()">{{ 'contact-management.page.button.save' | translate }}</button>
+              <button class="btn btn-secondary" (click)="modalService.dismissAll()">{{ 'contact-management.page.button.cancel' | translate }}</button>
             </div>
           </ng-template>
 
           <!-- Modal: Löschen -->
           <ng-template #deleteModal>
             <div class="modal-header">
-              <h4 class="modal-title">{{ 'contacts-management.modal.delete.title' | translate }}</h4>
+              <h4 class="modal-title">{{ 'contact-management.page.modal.delete.title' | translate }}</h4>
             </div>
             <div class="modal-body">
-              {{ 'contacts-management.modal.delete.confirm' | translate }}
+              {{ 'contact-management.page.modal.delete.confirm.1' | translate }}
               <strong>{{ selectedContact?.vorname }} {{ selectedContact?.nachname }}</strong>
+              {{ 'contact-management.page.modal.delete.confirm.2' | translate }}
             </div>
             <div class="modal-footer">
-              <button class="btn btn-danger" (click)="deleteContact(selectedContact?.id)">{{ 'button.delete' | translate }}</button>
-              <button class="btn btn-secondary" (click)="modalService.dismissAll()">{{ 'button.cancel' | translate }}</button>
+              <button class="btn btn-danger" (click)="deleteContact(selectedContact?.id)">{{ 'contact-management.page.button.delete' | translate }}</button>
+              <button class="btn btn-secondary" (click)="modalService.dismissAll()">{{ 'contact-management.page.button.cancel' | translate }}</button>
             </div>
           </ng-template>
 
-          <!-- Modal: Sprache -->
-<ng-template #languageModal>
-  <div class="modal-header">
-    <h4 class="modal-title">
-      {{ 'contacts-management.modal.add.language' | translate }}
-    </h4>
-    <p>{{ 'contacts-management.page.modal.add.language.h.1' | translate }}</p>
-  </div>
-
-  <div class="modal-body">
-    <!-- Bestehende Sprachen -->
-    <div class="mb-3">
-      <label>
-        {{ 'contact-management.page.existing.languages' | translate }}:
-      </label>
-      <ul>
-        <li *ngFor="let sprache of sprachen">
-          {{ sprache.sprache }}
-        </li>
-      </ul>
-    </div>
-
-    <!-- Neue Sprache hinzufügen -->
-    <div class="mb-3">
-      <label for="newSprache">
-        {{ 'contact-management.page.add.language_modal.language' | translate }}:
-      </label>
-      <input
-        id="newSprache"
-        type="text"
-        class="form-control"
-        [(ngModel)]="newSprache.sprache"
-        placeholder="Neue Sprache eingeben"
-      />
-    </div>
-
-    <div *ngIf="errorMessage" class="alert alert-danger">
-      {{ errorMessage }}
-    </div>
-  </div>
-
-  <div class="modal-footer">
-    <button
-      class="btn btn-success"
-      [disabled]="!isNewLanguageValid()"
-      (click)="createSprache()"
-    >
-      {{ 'button.save' | translate }}
-    </button>
-    <button
-      class="btn btn-secondary"
-      (click)="modalService.dismissAll()"
-    >
-      {{ 'button.cancel' | translate }}
-    </button>
-  </div>
-</ng-template>
-
-
+          <!-- Modal: Sprache Hinzufügen-->
+          <ng-template #languageModal>
+            <div class="modal-header">
+              <h4 class="modal-title">{{ 'contact-management.page.modal.add.language' | translate }}</h4>
+            </div>
+            <div class="modal-body">
+              <!-- Bestehende Sprachen -->
+              <div class="mb-3">
+                <label>{{ 'contact-management.page.existing.languages' | translate }}:</label>
+                <ul>
+                  <li *ngFor="let sprache of sprachen">
+                    {{ sprache.sprache }}
+                  </li>
+                </ul>
+              </div>
+              <!-- Neue Sprache hinzufügen -->
+              <div class="mb-3">
+                <label for="newSprache">{{ 'contact-management.page.add.language_modal.language' | translate }}:</label>
+                <input
+                  id="newSprache"
+                  type="text"
+                  class="form-control"
+                  [(ngModel)]="newSprache.sprache"
+                  placeholder="Neue Sprache eingeben"
+                />
+              </div>
+              <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+            </div>
+            <div class="modal-footer">
+              <button class="btn btn-success" [disabled]="!isNewLanguageValid()" (click)="createSprache()">{{ 'contact-management.page.button.save' | translate }}</button>
+              <button class="btn btn-secondary" (click)="modalService.dismissAll()">{{ 'contact-management.page.button.cancel' | translate }} </button>
+            </div>
+          </ng-template>
+          <!-- Modal: Sprache löschen -->
+          <ng-template #languageDeleteModal>
+            <div class="modal-header">
+              <h4 class="modal-title">{{ 'contact-management.page.modal.delete.language.title' | translate }}</h4>
+              <p>{{ 'contact-management.page.modal.delete.language.confirm' | translate }}</p>
+            </div>
+            <div class="modal-body">
+              <div *ngFor="let sprache of sprachen" class="form-check">
+                <input class="form-check-input"
+                      type="radio"
+                      name="deleteLanguage"
+                      [id]="'delete_language_' + sprache.id"
+                      [value]="sprache.id"
+                      [(ngModel)]="selectedLanguageIdToDelete">
+                <label class="form-check-label" [for]="'delete_language_' + sprache.id">
+                  {{ sprache.sprache }}
+                </label>
+              </div>
+              <div *ngIf="selectedLanguageIdToDelete === null" class="text-danger mt-2">
+                {{ 'contact-management.page.modal.delete.language.warning' | translate }}
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button class="btn btn-danger" [disabled]="selectedLanguageIdToDelete === null" (click)="deleteSprache()">{{ 'contact-management.page.button.delete' | translate }}</button>
+              <button class="btn btn-secondary" (click)="modalService.dismissAll()">{{ 'contact-management.page.button.cancel' | translate }}</button>
+            </div>
+          </ng-template>
         </div>
       </div>
   </div>
