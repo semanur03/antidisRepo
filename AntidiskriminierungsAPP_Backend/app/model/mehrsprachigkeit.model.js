@@ -55,6 +55,98 @@ Mehrsprachigkeit.getAll = (result) => {
     });
 };
 
+Mehrsprachigkeit.getAllGrouped = (result) => {
+    const query = `
+        SELECT id, deutsch, englisch 
+        FROM mehrsprachigkeit
+    `;
+
+    sql.all(query, [], (err, rows) => {
+        if (err) {
+        console.error("Error while retrieving:", err);
+        return result(err, null);
+        }
+
+        const groups = {
+        "Start / Home Page": [],
+        "Success Page": [],
+        "Error Page": [],
+        "Footer": [],
+        "Imprint": [],
+        "Privacy": [],
+        "Get In Contact": [],
+        "Kontaktliste / Contact List": [],
+        "Kontaktformular": [],
+        "Filter/Select": [],
+        "Meldeformular": [],
+        "FAQ": [],
+        "Mitgliedergruppe / Membergroup": [],
+        "Organisationseinheit / Organisational Unit": [],
+        "Gremium / Committee": [],
+        "Login": [],
+        "Admin-Bereich / Admin-Section": [],
+        "Kontakt Verwaltung / Contact Management": [],
+        "Text Verwaltung / Text Management": [],
+        };
+
+        rows.forEach(row => {
+        const key = row.id;
+
+        if (key.startsWith('home.page.')) {
+            groups["Start / Home Page"].push(row);
+        } else if (key.startsWith('success.page.')) {
+            groups["Success Page"].push(row);
+        } else if (key.startsWith('error.page.')) {
+            groups["Error Page"].push(row);
+        } else if (key.startsWith('footer.')) {
+            groups["Footer"].push(row);
+        } else if (key.startsWith('imprint.')) {
+            groups["Imprint"].push(row);
+        } else if (key.startsWith('privacy.')) {
+            groups["Privacy"].push(row);
+        } else if (key.startsWith('getincontact.')) {
+            groups["Get In Contact"].push(row);
+        } else if (key.startsWith('kontaktformular.')) {
+            groups["Kontaktformular"].push(row);
+        } else if (key.startsWith('contactlist.')) {
+            groups["Kontaktliste / Contact List"].push(row);
+        } else if (key.startsWith('filter.') || key.startsWith('select') || key.startsWith('find') || ['DEPUTY_MEMBER_ANTIDIS_COUNCIL', 'language', 'contact.filter.message'].includes(key)) {
+            groups["Filter/Select"].push(row);
+        } else if (key.startsWith('meldeformular.')) {
+            groups["Meldeformular"].push(row);
+        } else if (key.startsWith('faq.')) {
+            groups["FAQ"].push(row);
+        } else if (key.startsWith('login')) {
+            groups["Login"].push(row);
+        } else if (['EMPLOYEE_TECH', 'STUDENT', 'PROFESSOR', 'RESEARCH_ASSISTANT', 'LECTURER'].includes(key)) {
+            groups["Mitgliedergruppe / Membergroup"].push(row);
+        } else if (['FB 1', 'FB 2', 'FB 3', 'FB 4', 'FB 5', 'STUDENT_ADVISE', 'GENERAL_STUDENT_SERVICE', 'COMMUNICATION_DEPARTMENT', 'FACILITY_FOREIGN_LANG', 'INTERNATIONAL_OFFICE', 'UNIVERSITY_LIBRARY', 'UNIVERSITY_MANAGEMENT', 'UNIVERSITY_COMP_CENTER', 'HR', 'PROMOTION_WOMEN'].includes(key)) {
+            groups["Organisationseinheit / Organisational Unit"].push(row);
+        } else if (['WOMEN_AND_EQOP_OFFICER', 'MEMBER_TRUST_TEAM', 'DEPUTY_DISABLED_EMPLOYEES', 'ASTA', 'COUNCIL', 'OMBUDSPERSON', 'REP_DISABLED_STUDENTS', 'STAFF_COUNCIL', 'PERSON_OF_TRUST_DISABLED_EMP', 'S_COUNCIL', 'DEPUTY_1', 'DEPUTY_2', 'FT_WOMEN_AND_EQOP_REP'].includes(key)) {
+            groups["Gremium / Committee"].push(row);
+        } else if (key.startsWith('admin-')) {
+            groups["Admin-Bereich / Admin-Section"].push(row);
+        } else if (key.startsWith('contact-')) {
+            groups["Kontakt Verwaltung / Contact Management"].push(row);
+        } else if (key.startsWith('text-management')) {
+            groups["Text Verwaltung / Text Management"].push(row);
+        } else {
+            // Fallback:Falls was vergessen wurde
+            if (!groups["Sonstige"]) groups["Sonstige"] = [];
+            groups["Sonstige"].push(row);
+        }
+        });
+
+        // Umwandeln in Array für Frontend
+        const resultArray = Object.entries(groups).map(([category, translations]) => ({
+        category,
+        translations
+        }));
+
+        result(null, resultArray);
+    });
+    };
+
 Mehrsprachigkeit.findById = (mehrsprachigkeitId, result) => {
     const query = `
     SELECT 

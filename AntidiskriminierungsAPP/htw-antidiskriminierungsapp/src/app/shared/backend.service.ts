@@ -263,7 +263,11 @@ export class BackendService {
   }
 
   getAllMehrsprachigkeit(): Observable<Mehrsprachigkeit[]>{
-    return this.http.get<Mehrsprachigkeit[]>(this.baseUrl+ '/mehrsprachigkeit');
+    return this.http.get<Mehrsprachigkeit[]>(this.baseUrl + '/mehrsprachigkeit');
+  }
+
+  getAllMehrsprachigkeitGrouped(): Observable<Mehrsprachigkeit[]>{
+    return this.http.get<Mehrsprachigkeit[]>(this.baseUrl + '/mehrsprachigkeit/grouped');
   }
 
   getOneMehrsprachigkeit(id: string): Observable<Mehrsprachigkeit>{

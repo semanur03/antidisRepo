@@ -38,6 +38,17 @@ exports.findAll = (req, res) => {
     });
 };
 
+exports.findAllGrouped = (req, res) => {
+  Mehrsprachigkeit.getAllGrouped((err, data) => {
+    if (err) {
+      res.status(500).send({
+        message:
+          err.message || "Ein Fehler ist aufgetreten beim Abrufen der gruppierten Einträge."
+      });
+    } else res.send(data);
+  });
+};
+
 // Find a single Mehrsprachigkeit with a mehrsprachigkeit_id
 exports.findOne = (req, res) => {
     Mehrsprachigkeit.findById(req.params.mehrsprachigkeit_id, (err, data) => {

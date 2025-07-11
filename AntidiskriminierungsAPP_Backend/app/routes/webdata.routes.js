@@ -197,6 +197,9 @@ app.post("/mehrsprachigkeit", mehrsprachigkeit.create);
 //Get all Mehrsprachigkeit
 app.get("/mehrsprachigkeit", mehrsprachigkeit.findAll);
 
+//Get all Mehrsprachigkeit Grouped
+app.get("/mehrsprachigkeit/grouped", mehrsprachigkeit.findAllGrouped);
+
 //Get one single Mehrsprachigkeit with mehrsprachigkeit_id
 app.get("/mehrsprachigkeit/:mehrsprachigkeit_id", mehrsprachigkeit.findOne);
 
