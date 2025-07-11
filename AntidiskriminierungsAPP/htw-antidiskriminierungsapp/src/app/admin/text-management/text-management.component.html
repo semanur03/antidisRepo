@@ -1,0 +1,67 @@
+<body>
+    <div class="container">
+        <div class="col-12">
+            <div class="header row">
+                <i class="col-1 fa-solid fa-chevron-left" [routerLink]="['/admin-home']"></i>
+                <h1 class="col-9">{{ 'text-management.page.title' | translate }}</h1>
+                <div class="col-1"></div>
+            </div>
+            <br>
+            <div>
+                <h2>{{ 'text-management.page.title.2' | translate }}</h2>
+                <h3>{{ 'text-management.page.h.1' | translate }}</h3>
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover">
+                        <thead>
+                        <tr>
+                            <th class="col-medium">{{ 'text-management.page.table.th1' | translate }}</th>
+                            <th class="col-large">{{ 'text-management.page.table.th2' | translate }}</th>
+                            <th class="col-large">{{ 'text-management.page.table.th3' | translate }}</th>
+                            <th class="col-small">{{ 'text-management.page.table.th4' | translate }}</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let mehrsprachigkeit of mehrsprachigkeiten; let i = index; trackBy: trackByMehrsprachigkeit">
+                                <td>{{ i + 1 }}</td>
+                                <td>{{ mehrsprachigkeit.deutsch }}</td>
+                                <td>{{ mehrsprachigkeit.englisch }}</td>
+                                <td>
+                                    <i class="fa-solid fa-pen-to-square"
+                                        (click)="openEditModal(mehrsprachigkeit)">
+                                    </i>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- Modal: Bearbeiten -->
+                <ng-template #editModal let-modal>
+                <div class="modal-header">
+                    <h4 class="modal-title">{{ 'text-management.page.edit_modal.title' | translate }}</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                    <label for="deutsch">{{ 'text-management.page.edit_modal.deutsch' | translate }}:</label>
+                    <input id="deutsch" type="text" class="form-control" [(ngModel)]="selectedMehrsprachigkeit.deutsch"/>
+                    </div>
+                    <div class="mb-3">
+                    <label for="englisch">{{ 'text-management.page.edit_modal.englisch' | translate }}:</label>
+                    <input id="englisch" type="text" class="form-control" [(ngModel)]="selectedMehrsprachigkeit.englisch"/>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" (click)="modal.dismiss()">
+                    {{ 'text-management.page.edit_modal.btn_cancel' | translate }}
+                    </button>
+                    <button class="btn btn-success" (click)="saveEdit()">
+                    {{ 'text-management.page.edit_modal.btn_confirm' | translate }}
+                    </button>
+                </div>
+                </ng-template>
+            </div>
+        </div>
+    </div>
+    <br>
+    <br>
+    <br>
+</body>

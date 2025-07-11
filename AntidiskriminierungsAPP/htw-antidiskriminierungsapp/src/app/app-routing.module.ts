@@ -19,6 +19,7 @@ import { AdminHomeComponent } from './admin/admin-home/admin-home.component';
 import { AdminUpdateComponent } from './admin/admin-update/admin-update.component';
 import { AdminManagementComponent } from './admin/admin-management/admin-management.component';
 import { ContactManagementComponent } from './admin/contact-management/contact-management.component';
+import { TextManagementComponent } from './admin/text-management/text-management.component';
 
 const routes: Routes = [
   { path: "", component: HomeComponent, pathMatch: 'full' },
@@ -42,6 +43,8 @@ const routes: Routes = [
   { path: 'admin-management', component: AdminManagementComponent,
     canActivate: [AuthguardGuard]},
   { path: 'contact-management', component: ContactManagementComponent,
+    canActivate: [AuthguardGuard]},
+  { path: 'text-management', component: TextManagementComponent,
     canActivate: [AuthguardGuard]},
 ];
 

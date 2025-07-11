@@ -1,0 +1,110 @@
+.container {
+    width: 100%;
+    padding: 4% 4% 4% 10%;
+    margin: 0;
+    height: 100%;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    margin-top: 1rem;
+}
+
+h1 {
+    text-align: center;
+}
+
+.text {
+    margin-top: 15px;
+    margin-bottom: 25px;
+}
+
+i {
+    cursor: pointer;
+}
+
+@media (min-width: 800px) {
+    h1 {
+        font-size: xx-large;
+        text-align: center;
+    }
+}
+
+@media (min-width: 800px) {
+    h3 {
+        font-size: large;
+    }
+}
+
+
+label {
+    font-family: HTWBerlinBold, sans-serif;
+}
+
+i {
+    cursor: pointer;
+}
+
+.btn-danger {
+    background-color: rgb(255, 103, 103);
+    color: white;
+    border-radius: 4px;
+    border: none;
+}
+
+.btn-danger:hover {
+    background-color: red;
+}
+
+.admin-add-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem; 
+}
+
+.admin-add-label {
+  font-weight: bold;
+  margin-right: 0.5rem;
+}
+
+.btn-add-admin {
+  background-color: #76B900;
+  color: white;
+  border: none;
+}
+
+.btn-add-admin:hover {
+  background-color: #75b900af;
+}
+
+.btn-success{
+  background-color: #76B900;
+  color: white;
+  border: none;
+}
+
+.btn-success:hover {
+  background-color: #75b900af;
+}
+
+/* Nur für das Modal */
+.modal-body .text-success {
+  color: #76B900; 
+}
+
+.modal-body .text-danger {
+  color: red;
+}
+
+.col-small {
+  width: 2%;
+}
+
+.col-medium {
+  width: 20%;
+}
+
+.col-large {
+  width: 40%;
+}

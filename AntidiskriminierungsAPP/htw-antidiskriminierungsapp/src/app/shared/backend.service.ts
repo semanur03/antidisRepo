@@ -266,15 +266,15 @@ export class BackendService {
     return this.http.get<Mehrsprachigkeit[]>(this.baseUrl+ '/mehrsprachigkeit');
   }
 
-  getOneMehrsprachigkeit(id: number): Observable<Mehrsprachigkeit>{
+  getOneMehrsprachigkeit(id: string): Observable<Mehrsprachigkeit>{
     return this.http.get<Mehrsprachigkeit>(this.baseUrl + '/mehrsprachigkeit/' + id);
   }
 
-  updateMehrsprachigkeit(id: number, data: Mehrsprachigkeit): Observable<Mehrsprachigkeit>{
+  updateMehrsprachigkeit(id: string, data: Mehrsprachigkeit): Observable<Mehrsprachigkeit>{
     return this.http.put<Mehrsprachigkeit>(this.baseUrl + '/mehrsprachigkeit/' + id, data);
   }
 
-  deleteMehrsprachigkeit(id: number): Observable<any>{
+  deleteMehrsprachigkeit(id: string): Observable<any>{
     return this.http.delete<any>(this.baseUrl + '/mehrsprachigkeit/' + id, {observe: 'response'});
   }
 
