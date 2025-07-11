@@ -12,6 +12,7 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class TextManagementComponent implements OnInit{
   mehrsprachigkeiten: Mehrsprachigkeit[] = [];
+  mehrsprachigkeitenGrouped: any[] = [];
   selectedMehrsprachigkeit: Mehrsprachigkeit = {
     id: '',
     deutsch: '',
@@ -25,14 +26,14 @@ export class TextManagementComponent implements OnInit{
     config.keyboard = false;
   }
 
-  loadMehrsprachigkeiten(): void {
-    this.backendService.getAllMehrsprachigkeit().subscribe({
+  loadMehrsprachigkeitenGrouped(): void {
+    this.backendService.getAllMehrsprachigkeitGrouped().subscribe({
       next: (data) => {
-        this.mehrsprachigkeiten = data;
+        this.mehrsprachigkeitenGrouped = data;
       },
       error: (err) => {
-        console.error('Fehler beim Laden', err);
-      },
+        console.error('Fehler beim Laden der gruppierten Einträge', err);
+      }
     });
   }
 
@@ -49,15 +50,18 @@ export class TextManagementComponent implements OnInit{
     if (!this.selectedMehrsprachigkeit) return;
 
     this.backendService.updateMehrsprachigkeit(
-      this.selectedMehrsprachigkeit.id,   // ✅ ID
-      this.selectedMehrsprachigkeit       // ✅ Datenobjekt
+      this.selectedMehrsprachigkeit.id,
+      this.selectedMehrsprachigkeit
     ).subscribe({
       next: () => {
-        const index = this.mehrsprachigkeiten.findIndex(
-          (m) => m.id === this.selectedMehrsprachigkeit!.id
-        );
-        if (index !== -1) {
-          this.mehrsprachigkeiten[index] = { ...this.selectedMehrsprachigkeit! };
+        for (let group of this.mehrsprachigkeitenGrouped) {
+          const index = group.translations.findIndex(
+            (m: Mehrsprachigkeit) => m.id === this.selectedMehrsprachigkeit.id
+          );
+          if (index !== -1) {
+            group.translations[index] = { ...this.selectedMehrsprachigkeit };
+            break;
+          }
         }
         this.modalService.dismissAll();
       },
@@ -69,6 +73,6 @@ export class TextManagementComponent implements OnInit{
 
 
   ngOnInit(): void {
-    this.loadMehrsprachigkeiten();
+    this.loadMehrsprachigkeitenGrouped();
   }
 }
