@@ -10,6 +10,7 @@
             <div>
                 <h2>{{ 'text-management.page.title.2' | translate }}</h2>
                 <h3>{{ 'text-management.page.h.1' | translate }}</h3>
+                <p [innerHTML]="'text-management.page.h.2' | translate"></p>
                 <br>
                 <div *ngFor="let group of mehrsprachigkeitenGrouped" class="group">
                     <h3 id="modal-basic-title" class="modal-title">{{ group.category }}</h3>
@@ -45,11 +46,11 @@
                 </div>
                 <div class="modal-body">
                     <div class="mb-3">
-                    <label for="deutsch">{{ 'text-management.page.edit_modal.deutsch' | translate }}:</label>
+                    <label for="deutsch">{{ 'text-management.page.edit_modal.german' | translate }}:</label>
                     <input id="deutsch" type="text" class="form-control" [(ngModel)]="selectedMehrsprachigkeit.deutsch"/>
                     </div>
                     <div class="mb-3">
-                    <label for="englisch">{{ 'text-management.page.edit_modal.englisch' | translate }}:</label>
+                    <label for="englisch">{{ 'text-management.page.edit_modal.english' | translate }}:</label>
                     <input id="englisch" type="text" class="form-control" [(ngModel)]="selectedMehrsprachigkeit.englisch"/>
                     </div>
                 </div>
