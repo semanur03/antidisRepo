@@ -17,6 +17,12 @@
     margin-top: 1rem;
 }
 
+.bold {
+    font-family: HTWBerlinBold;
+    padding-top: 2%;
+    padding-bottom: 0%;
+}
+
 h1 {
     text-align: center;
 }

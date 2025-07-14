@@ -15,6 +15,12 @@ h1 {
     text-align: center;
 }
 
+.bold {
+    font-family: HTWBerlinBold;
+    padding-top: 2%;
+    padding-bottom: 0%;
+}
+
 .text {
     margin-top: 15px;
     margin-bottom: 25px;
