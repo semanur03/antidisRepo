@@ -9,7 +9,7 @@ const PORT = process.env.serverport;
 const https = require('https');
 
 
-/*const fs = require('fs');
+const fs = require('fs');
 const privkeyLink = fs.readlinkSync("/etc/letsencrypt/live/antidis.f4.htw-berlin.de/privkey.pem");
 console.log(privkeyLink);
 const fullchainLink = fs.readlinkSync("/etc/letsencrypt/live/antidis.f4.htw-berlin.de/fullchain.pem");
@@ -17,7 +17,7 @@ console.log(fullchainLink);
 const https_options = {
 	key: fs.readFileSync("/etc/letsencrypt/live/antidis.f4.htw-berlin.de/" + privkeyLink), 
 	cert: fs.readFileSync("/etc/letsencrypt/live/antidis.f4.htw-berlin.de/" + fullchainLink)
-};*/ //private key auskommentiert zum entwickeln
+};
 
 app.use(bodyParser.json());
 app.use(cors());
@@ -146,25 +146,11 @@ app.post('', (req, res) => {
     });
 });
 
-/*https.createServer(https_options, app).listen(PORT, (error) => {
+https.createServer(https_options, app).listen(PORT, (error) => {
     if (error) {
 	    console.log('server error', error);
     } else {
 	    console.log(`https-server listening on port ${PORT} ...`);
     } 
-});*/ 
-//--> auskommentiert, da wir kein key verwenden
-
-
-//ein listen eingebaut zum entwickeln   ---> am besten mit dem Befehl "node --watch index.js" starten
-app.listen(PORT, (error) => {
-    if (error) {
-
-        console.log(error);
-
-    } else {
-
-        console.log(`Server started and listening on port ${PORT} ... `);
-
-    }
 });
+
