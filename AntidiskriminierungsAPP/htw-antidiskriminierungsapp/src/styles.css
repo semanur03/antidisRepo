@@ -2,22 +2,22 @@
 
 @font-face {
     font-family: HTWBerlinRegular;
-    src: url(assets/fonts/HTW-font/HTWBerlinOffice-Regular.ttf);
+    src: url(/fonts/HTW-font/HTWBerlinOffice-Regular.ttf);
 }
 
 @font-face {
     font-family: HTWBerlinBold;
-    src: url(assets/fonts/HTW-font/HTWBerlinOffice-Bold.ttf);
+    src: url(/fonts/HTW-font/HTWBerlinOffice-Bold.ttf);
 }
 
 @font-face {
     font-family: HTWBerlinItalic;
-    src: url(assets/fonts/HTW-font/HTWBerlinOffice-Italic.ttf);
+    src: url(/fonts/HTW-font/HTWBerlinOffice-Italic.ttf);
 }
 
 @font-face {
     font-family: HTWBerlinBoldItalic;
-    src: url(assets/fonts/HTW-font/HTWBerlinOffice-BoldItalic.ttf);
+    src: url(/fonts/HTW-font/HTWBerlinOffice-BoldItalic.ttf);
 }
 
 html,

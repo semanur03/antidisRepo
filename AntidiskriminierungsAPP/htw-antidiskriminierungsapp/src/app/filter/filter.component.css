@@ -85,7 +85,7 @@ input[type="email"] {
 select {
     -webkit-appearance: none;
     appearance: none;
-    background-image: url("../../assets/images/down-arrow.webp");
+    background-image: url("/images/down-arrow.webp");
     background-size: 24px;
     background-repeat: no-repeat;
     background-position: calc(100% - 8px) center;
