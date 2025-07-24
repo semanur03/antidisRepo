@@ -146,7 +146,7 @@ app.post('', (req, res) => {
     });
 });
 
-https.createServer(https_options, app).listen(PORT, (error) => {
+https.createServer(https_options, app).listen(PORT, '0.0.0.0', (error) => {
     if (error) {
 	    console.log('server error', error);
     } else {
