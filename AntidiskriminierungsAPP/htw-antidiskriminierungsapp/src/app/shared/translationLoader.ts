@@ -1,3 +1,4 @@
+import { environment } from '../../environments/environment';
 import { TranslateLoader } from '@ngx-translate/core';
 import { Observable, map } from 'rxjs';
 import { Injectable } from '@angular/core';
@@ -9,7 +10,7 @@ export class TranslationLoader implements TranslateLoader {
   constructor(private http: HttpClient) {}
 
   getTranslation(lang: string): Observable<any> {
-    return this.http.get<MehrsprachigkeitEntry[]>(`http://localhost:3000/mehrsprachigkeit/sprache/${lang}`)
+    return this.http.get<MehrsprachigkeitEntry[]>(`${environment.apiUrl}/mehrsprachigkeit/sprache/${lang}`)
       .pipe(
         map((entries) => {
           const result: Record<string, string> = {};
