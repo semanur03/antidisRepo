@@ -171,7 +171,7 @@ export class ContactManagementComponent implements OnInit {
   }
 
   isEmailValid(email: string): boolean {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const emailRegex =  /^[^\s@]+@([a-zA-Z0-9-]+\.)*htw-berlin\.de$/i;
     return emailRegex.test(email);
   }
 
