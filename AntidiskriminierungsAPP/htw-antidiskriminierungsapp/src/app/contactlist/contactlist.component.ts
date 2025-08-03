@@ -41,9 +41,13 @@ export class ContactlistComponent implements OnInit {
       const gremiumMatch = !gremium || (
         contact.gremium === gremium ||
         contact.gremium1 === gremium ||
-        contact.gremium2 === gremium
+        contact.gremium2 === gremium ||
+        contact.gremium3 === gremium
       );
-      const organisationseinheitMatch = !organisationseinheit || (contact.organisationseinheit && contact.organisationseinheit.includes(organisationseinheit));
+      const organisationseinheitMatch = !organisationseinheit || (
+        contact.organisationseinheit === organisationseinheit ||
+        contact.organisationseinheit1 === organisationseinheit
+      );
       const spracheMatch = !sprache || (contact.sprache && contact.sprache.includes(sprache));
       return mitgliedergruppeMatch && gremiumMatch && organisationseinheitMatch && spracheMatch;
     });
