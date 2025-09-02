@@ -4,7 +4,7 @@
 
 export const environment = {
   production: true,
-  apiUrl: 'localhost:3000'
+  apiUrl: 'http://localhost:3000'
   //apiUrl: 'https://antidiskriminierungsapp-backend.onrender.com'
 };
 

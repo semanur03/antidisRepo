@@ -6,18 +6,20 @@ require('dotenv').config();
 
 const app = express();
 const PORT = process.env.serverport;
-const https = require('https');
 
-
-const fs = require('fs');
-const privkeyLink = fs.readlinkSync("/etc/letsencrypt/live/antidis.f4.htw-berlin.de/privkey.pem");
-console.log(privkeyLink);
-const fullchainLink = fs.readlinkSync("/etc/letsencrypt/live/antidis.f4.htw-berlin.de/fullchain.pem");
-console.log(fullchainLink);
-const https_options = {
-	key: fs.readFileSync("/etc/letsencrypt/live/antidis.f4.htw-berlin.de/" + privkeyLink), 
-	cert: fs.readFileSync("/etc/letsencrypt/live/antidis.f4.htw-berlin.de/" + fullchainLink)
-};
+if(process.env.NODE_ENV=='production') 
+{
+    const https = require('https');
+    const fs = require('fs');
+    const privkeyLink = fs.readlinkSync("/etc/letsencrypt/live/antidis.f4.htw-berlin.de/privkey.pem");
+    console.log(privkeyLink);
+    const fullchainLink = fs.readlinkSync("/etc/letsencrypt/live/antidis.f4.htw-berlin.de/fullchain.pem");
+    console.log(fullchainLink);
+    const https_options = {
+        key: fs.readFileSync("/etc/letsencrypt/live/antidis.f4.htw-berlin.de/" + privkeyLink), 
+        cert: fs.readFileSync("/etc/letsencrypt/live/antidis.f4.htw-berlin.de/" + fullchainLink)
+    };
+}
 
 app.use(bodyParser.json());
 app.use(cors());
@@ -32,7 +34,7 @@ app.get('', (req, res) => {
 	res.send({ message: "test"})
 })
 
-app.post('', (req, res) => {
+app.post('/api', (req, res) => {
 	// console.log('req.body', req.body);
     const mitgliedergruppe = req.body.mitgliedergruppe;
     const betroffenheit = req.body.betroffenheit;
@@ -146,11 +148,24 @@ app.post('', (req, res) => {
     });
 });
 
-https.createServer(https_options, app).listen(PORT, '0.0.0.0', (error) => {
+if(process.env.NODE_ENV=='production') 
+{
+    https.createServer(https_options, app).listen(PORT, '0.0.0.0', (error) => {
+        if (error) {
+            console.log('server error', error);
+        } else {
+            console.log(`https-server listening on port ${PORT} ...`);
+        } 
+    });
+}
+else  // development
+{
+    // Server lokal starten
+    app.listen(PORT, (error) => {
     if (error) {
-	    console.log('server error', error);
+        console.log(error);
     } else {
-	    console.log(`https-server listening on port ${PORT} ...`);
-    } 
-});
-
+        console.log(`Server started and listening on port ${PORT} ...`);
+    }
+})
+} 
