@@ -21,6 +21,16 @@ if(process.env.NODE_ENV=='production')
     };
 }
 
+const transporter = nodemailer.createTransport({
+    host: process.env.host,
+    port: process.env.port,
+    auth: {
+        user: process.env.user,
+        pass: process.env.pass
+    }
+});
+module.exports.transporter = transporter;
+
 app.use(bodyParser.json());
 app.use(cors());
 app.use(express.json());
@@ -51,15 +61,6 @@ app.post('/api', (req, res) => {
     const nachname = req.body.nachname;
     var sprache = req.body.sprache;
 
-    const transporter = nodemailer.createTransport({
-        host: process.env.host,
-        port: process.env.port,
-        auth: {
-            user: process.env.user,
-            pass: process.env.pass
-        }
-    });
-
     var mailOptions = {};
 
     if (checkbox) {
@@ -76,6 +77,7 @@ app.post('/api', (req, res) => {
         mailOptions = {
             from: process.env.from,
             to: process.env.to,
+            cc: apmail, //Ansprechpartner wenn ausgewählt in CC gepackt
             subject: `Kontaktaufnahme mit ${apmail} zur Erstberatung`,
             text: `
             Folgende Informationen wurden in das ${formulartyp} eingegeben:
