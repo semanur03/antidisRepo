@@ -31,7 +31,6 @@ export class LoginComponent implements OnInit{
     this.errorMessage = null;
 
     console.log('values username', username)
-    console.log('values password', password)
 
     this.auth.loginAdmin(username!, password!).subscribe({
       next: (response) => {

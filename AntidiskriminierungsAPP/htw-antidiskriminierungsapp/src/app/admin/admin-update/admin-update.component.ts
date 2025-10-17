@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/shared/auth.service';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
+import { Admin } from 'src/app/shared/admin';
 
 @Component({
   selector: 'app-admin-update',
@@ -10,20 +11,45 @@ import { TranslateService } from '@ngx-translate/core';
   styleUrls: ['./admin-update.component.css'],
   standalone: false,
 })
-export class AdminUpdateComponent implements OnInit{
+export class AdminUpdateComponent implements OnInit {
   updateForm: FormGroup;
   hideCurrent = true;
   hideNew = true;
   errorMessage: string | null = null;
   successMessage: string | null = null;
+  loggedInAdmin?: Admin;
 
-  constructor(private fb: FormBuilder, private authService: AuthService, private router: Router, private translate: TranslateService
+  constructor(
+    private fb: FormBuilder,
+    private authService: AuthService,
+    private router: Router,
+    private translate: TranslateService
   ) {
     this.updateForm = this.fb.group({
-      username: [this.authService.admin.username, []],
-      email: [this.authService.admin.email, [Validators.required, Validators.email]],
+      username: ['', []],
+      email: ['', [Validators.required, Validators.email]],
       currentPassword: ['', [Validators.required]],
       newPassword: ['', [Validators.minLength(8)]]
+    });
+  }
+
+  ngOnInit(): void {
+    // Admin aus AuthService laden
+    this.loggedInAdmin = this.authService.admin;
+
+    // Formulardaten initial setzen, currentPassword bleibt leer
+    this.updateForm.patchValue({
+      username: this.loggedInAdmin?.username || '',
+      email: this.loggedInAdmin?.email || ''
+    });
+
+    // auf Änderungen des Admins im Service reagieren
+    this.authService.adminChange.subscribe(admin => {
+      this.loggedInAdmin = admin;
+      this.updateForm.patchValue({
+        username: admin.username,
+        email: admin.email
+      });
     });
   }
 
@@ -37,23 +63,8 @@ export class AdminUpdateComponent implements OnInit{
     return emailRegex.test(email);
   }
 
-  isUpdateFormValid(): boolean {
-    const email = this.updateForm.get('email')?.value || '';
-    const newPassword = this.updateForm.get('newPassword')?.value || '';
-    const username = this.updateForm.get('username')?.value || '';
-
-    const emailValid = this.isEmailValid(email);
-
-    // Passwort nur prüfen, wenn eines eingegeben wurde
-    const passwordValid = newPassword ? this.isPasswordValid(newPassword) : true;
-
-    // username nicht leer, email gültig und Passwort valid (wenn eingegeben)
-    return !!username && emailValid && passwordValid;
-  }
-
   get passwordChecks() {
     const password = this.updateForm.get('newPassword')?.value || '';
-
     return {
       length: password.length >= 8,
       uppercase: /[A-Z]/.test(password),
@@ -74,24 +85,25 @@ export class AdminUpdateComponent implements OnInit{
       return;
     }
 
-    const adminId = this.authService.admin.id!; // ID aus dem Service
+    const adminId = this.authService.admin.id!;
     const formData = this.updateForm.value;
 
     this.authService.updateAdmin(adminId, formData).subscribe({
       next: (res) => {
         this.translate.get('admin-update.page.sucess.update').subscribe(msg => {
-          this.successMessage = msg; 
+          this.successMessage = msg;
 
           setTimeout(() => {
             this.router.navigate(['/admin-home']);
           }, 1500);
         });
+
+        // AdminService aktualisieren
         this.authService.adminChange.next(res.user);
         this.authService.admin = res.user;
       },
       error: (err) => {
         console.error(err);
-
         if (err.error?.error === 'username_exists') {
           this.translate.get('admin-update.page.error.username_exists').subscribe(msg => this.errorMessage = msg);
         } else if (err.error?.error === 'email_exists') {
@@ -105,8 +117,5 @@ export class AdminUpdateComponent implements OnInit{
         }
       }
     });
-  }
-
-   ngOnInit(): void {
   }
 }

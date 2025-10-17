@@ -40,7 +40,8 @@
             <mat-label for="currentPassword">{{ 'admin-update.page.n.3' | translate }}</mat-label>
             <input matInput id="currentPassword"
                    formControlName="currentPassword"
-                   [type]="hideCurrent ? 'password' : 'text'">
+                   [type]="hideCurrent ? 'password' : 'text'"
+                   autocomplete="new-password">
             <button mat-icon-button matSuffix (click)="hideCurrent = !hideCurrent" type="button"
                     [attr.aria-label]="'Hide Password'"
                     [attr.aria-pressed]="!hideCurrent">
@@ -57,7 +58,8 @@
             <mat-label for="newPassword">{{ 'admin-update.page.n.4' | translate }}</mat-label>
             <input matInput id="newPassword"
                    formControlName="newPassword"
-                   [type]="hideNew ? 'password' : 'text'">
+                   [type]="hideNew ? 'password' : 'text'"
+                   autocomplete="new-password">
             <button mat-icon-button matSuffix (click)="hideNew = !hideNew" type="button"
                     [attr.aria-label]="'Hide Password'"
                     [attr.aria-pressed]="!hideNew">

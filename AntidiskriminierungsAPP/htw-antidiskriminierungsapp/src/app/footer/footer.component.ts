@@ -35,6 +35,25 @@ export class FooterComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.isLoggedIn = this.auth.isLoggedin();
+    if (this.isLoggedIn) {
+      this.username = this.auth.admin.username;
+    }
+
+    this.auth.loggedInChange.subscribe(value => {
+      this.isLoggedIn = value;
+      if (this.isLoggedIn) {
+        this.username = this.auth.admin.username;
+      } else {
+        this.username = '';
+      }
+    });
+
+    this.auth.adminChange.subscribe(val => {
+      if (val) {
+        this.username = val.username;
+      }
+    });
   }
 
   switchLanguage(language: string) {

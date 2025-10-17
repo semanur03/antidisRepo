@@ -72,18 +72,18 @@
                 <div class="modal-body">
                     <div class="mb-3">
                     <label for="username">{{ 'admin-management.page.add_modal.n.1' | translate }}:</label>
-                    <input id="username" type="text" class="form-control" [(ngModel)]="newAdmin.username" name="username" required/>
+                    <input id="username" type="text" class="form-control" [(ngModel)]="newAdmin.username" name="newAdminUsername" autocomplete="off" required/>
                     </div>
                     <div class="mb-3">
                     <label for="email">{{ 'admin-management.page.add_modal.n.2' | translate }}:</label>
-                    <input id="email" type="email" class="form-control" [(ngModel)]="newAdmin.email" name="email" required email />
+                    <input id="email" type="email" class="form-control" [(ngModel)]="newAdmin.email" name="newAdminEmail" autocomplete="off" required email />
                         <small class="text-danger" *ngIf="newAdmin.email && !isEmailValid(newAdmin.email)">
                             {{ 'admin-management.page.add_modal.w.1' | translate }}
                         </small>
                     </div>
                     <div class="mb-3">
                     <label for="password">{{ 'admin-management.page.add_modal.n.3' | translate }}:</label>
-                    <input id="password" type="password" class="form-control" [(ngModel)]="newAdmin.password" name="password" required minlength="8"/>
+                    <input id="password" type="password" class="form-control" [(ngModel)]="newAdmin.password" name="newAdminPassword"  autocomplete="new-password" required minlength="8"/>
                         <small>
                             <ul class="list-unstyled mt-2">
                                 <li [ngClass]="{'text-success': passwordChecks.length, 'text-danger': !passwordChecks.length}">
