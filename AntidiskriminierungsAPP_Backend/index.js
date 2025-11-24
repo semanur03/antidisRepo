@@ -76,8 +76,7 @@ app.post('/api', (req, res) => {
     if (formulartyp == 'Kontaktformular' && nachname !== 'NA') {
         mailOptions = {
             from: process.env.from,
-            to: process.env.to,
-            cc: apmail, //Ansprechpartner wenn ausgewählt in CC gepackt
+            to: apmail, //Ansprechpartner bekommen die Mail
             subject: `Kontaktaufnahme mit ${apmail} zur Erstberatung`,
             text: `
             Folgende Informationen wurden in das ${formulartyp} eingegeben:
